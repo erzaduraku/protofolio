@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+:root {
+  --background: oklch(16% 0.035 260);
+  --foreground: oklch(96% 0.008 250);
+  --card: oklch(19% 0.034 260);
+  --card-foreground: oklch(96% 0.008 250);
+  --primary: oklch(62% 0.2 255);
+  --primary-foreground: oklch(99% 0.004 250);
+  --secondary: oklch(20% 0.035 258);
+  --secondary-foreground: oklch(96% 0.008 250);
+  --muted: oklch(23% 0.03 258);
+  --muted-foreground: oklch(70% 0.025 255);
+  --accent: oklch(68% 0.17 35);
+  --accent-foreground: oklch(14% 0.025 260);
+  --border: oklch(31% 0.035 258);
+  --ring: oklch(62% 0.2 255);
+  --radius: 0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--primary) 55%, transparent);
+  color: var(--foreground);
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+/* Section eyebrow: blue number + grey caps + extending line (from reference CSS) */
+.section-label {
+  color: var(--muted-foreground);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  text-transform: uppercase;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  display: flex;
+}
+
+.section-label span:first-child {
+  color: var(--primary);
+}
+
+.section-label:after {
+  background: var(--border);
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+.section-title {
+  max-width: 44rem;
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 78rem; /* ~1248px */
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Joined grid cards share borders */
+.grid-join {
+  border: 1px solid var(--border);
+}
+
+.grid-join > * {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.mono-caps {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+}
+
+/* Event photo placeholder grid */
+.event-photo {
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.timeline-rail {
+  border-left: 1px solid var(--border);
+}
+
+.timeline-dot {
+  border: 2px solid var(--primary);
+  background: var(--background);
+  width: 0.55rem;
+  height: 0.55rem;
+  position: absolute;
+  top: 0.15rem;
+  left: -0.3rem;
+}

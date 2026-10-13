@@ -1,0 +1,393 @@
+{
+  "profile": {
+    "name": "Erza Duraku",
+    "role": "Software Engineering",
+    "eyebrow": "Software engineer in the making",
+    "headlineLine1": "Building with logic.",
+    "headlineLine2": "Creating with purpose.",
+    "tagline": "I build software with logic, curiosity, and a little bit of creativity—focused on software development, AI, and full-stack engineering.",
+    "intro": "Software Engineering student at the University of Pristina, interested in software development, AI, backend systems, cloud computing, DevOps, and full-stack engineering.",
+    "currently": "Software Engineering Intern · AnchorzUp",
+    "exploring": "AI · Cloud · DevOps · Full-stack",
+    "basedIn": "Prishtina, Kosovo",
+    "linkedin": "https://www.linkedin.com/in/erza-duraku-bb6950389",
+    "github": "https://github.com/erzaduraku",
+    "facts": [
+      "University of Pristina",
+      "Software Engineering",
+      "Prishtina, Kosovo",
+      "Open to opportunities"
+    ],
+    "heroCaption": "01 / logic × craft"
+  },
+  "projects": [
+    {
+      "id": "1",
+      "slug": "parkeasy",
+      "title": "ParkEasy",
+      "oneLiner": "A mobile parking application designed to make finding and managing parking simpler.",
+      "summary": "Built as a team, with a focus on application structure, frontend experience, authentication, and core functionality.",
+      "category": "Mobile",
+      "problem": "The project focused on creating a practical mobile experience around parking and making the main user flows simple to understand.",
+      "whatIBuilt": "Worked mainly on the frontend and application structure, collaborating with the team on core functionality and authentication flows.",
+      "technologies": [
+        "React Native",
+        "Expo Router",
+        "Firebase"
+      ],
+      "learned": "Building a mobile application as part of a team, structuring screens and navigation, and connecting the interface with application services.",
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "2",
+      "slug": "predictive-text-engine",
+      "title": "Predictive Text Engine",
+      "oneLiner": "A text prediction system exploring algorithms, language patterns, and efficient suggestions.",
+      "summary": "A problem-solving project focused on turning data structures and prediction logic into a practical interaction.",
+      "category": "AI",
+      "problem": "The goal was to predict likely next words and provide autocomplete while handling different n-gram approaches and text filtering.",
+      "whatIBuilt": "Worked with bigram and trigram models, the Brown corpus, profanity filtering, and Trie-based autocomplete. The project evolved from a Java/JavaFX version into a Python/Tkinter implementation.",
+      "technologies": [
+        "Java",
+        "Algorithms",
+        "Data Structures"
+      ],
+      "learned": "How language can be represented computationally, how different n-gram approaches behave, and how data structures such as Tries can support fast autocomplete.",
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "3",
+      "slug": "signspeak",
+      "title": "SignSpeak",
+      "oneLiner": "A technology concept designed to make communication more accessible and inclusive.",
+      "summary": "An exploration of how software and AI can help bridge communication gaps through thoughtful product design.",
+      "category": "Web",
+      "problem": "The project explored how a digital interface can make communication more accessible and easier to use.",
+      "whatIBuilt": "Worked on the frontend and UX design, focusing on structure, usability, and the experience of moving through the application.",
+      "technologies": [
+        "AI",
+        "Accessibility",
+        "Product Design"
+      ],
+      "learned": "The importance of designing around the user rather than only around the implementation, and how frontend decisions affect the overall experience.",
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "4",
+      "slug": "hr-contracts-payroll",
+      "title": "HR Contracts / Payroll",
+      "oneLiner": "A structured system for managing employee contracts and payroll-related information.",
+      "summary": "Built around reliable data modeling, clear workflows, and the practical needs of administrative software.",
+      "category": "Data",
+      "problem": "The system needed to represent employees, contracts, payroll-related information, permissions, and relationships across a larger relational model.",
+      "whatIBuilt": "Worked with the database structure, relationships, SQL, and role-based access concepts across an 18-table PostgreSQL design.",
+      "technologies": [
+        "C#",
+        "SQL",
+        "Database Design"
+      ],
+      "learned": "How to model a larger relational system, think about relationships between entities, and keep data access structured and controlled.",
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "5",
+      "slug": "aws-tickethub",
+      "title": "AWS TicketHub",
+      "oneLiner": "A cloud-focused ticketing project built while learning modern infrastructure workflows.",
+      "summary": "Connected application development with deployment, automation, and infrastructure concepts.",
+      "category": "Cloud",
+      "problem": "The project explored how a backend can be structured using managed cloud services instead of maintaining a traditional server.",
+      "whatIBuilt": "Worked with the core serverless architecture and service integration.",
+      "technologies": [
+        "AWS",
+        "Terraform",
+        "GitHub Actions"
+      ],
+      "learned": "How cloud services can be combined into a backend system, and how serverless architecture changes the way application components communicate.",
+      "featured": false,
+      "published": false
+    }
+  ],
+  "experience": {
+    "company": "AnchorzUp",
+    "role": "Software Engineering Intern",
+    "period": "2026 — Present",
+    "summary": "My first professional engineering environment—contributing to real product development, translating requirements and designs into functional interfaces, and learning to work carefully inside an existing codebase.",
+    "comparison": "University projects taught me how to build something from the beginning. Working professionally taught me how to build inside something that already exists. That difference changed how I think about software.",
+    "chips": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Git",
+      "Tailwind CSS"
+    ],
+    "learningPoints": [
+      "Working inside an existing codebase rather than starting everything from zero.",
+      "Understanding how requirements and designs translate into implementation.",
+      "Collaborating with other people and communicating about technical work.",
+      "Using Git and development workflows in a professional environment.",
+      "Thinking about maintainability and how a feature fits into the larger product.",
+      "Connecting frontend work with backend systems and real product requirements."
+    ]
+  },
+  "volunteering": [
+    {
+      "id": "sfk-2025",
+      "title": "SFK 2025 — 10th Edition",
+      "date": "October 2025",
+      "place": "FLOSSK · Prishtina",
+      "short": "I helped with event coordination, workshop setup, participant guidance, and speaker support—experiencing the open-source community from the inside.",
+      "body": [
+        "SFK 2025 was one of my first opportunities to become actively involved in the local technology and open-source community. Instead of experiencing the event only as a participant, I joined the volunteer team and became part of the work happening behind the scenes.",
+        "During the event, I helped with workshop setup, guided participants, supported speakers, and assisted with the overall coordination of activities."
+      ],
+      "tookFromIt": [
+        "Communication",
+        "Teamwork",
+        "Responsibility",
+        "Community",
+        "Adaptability",
+        "Open Source"
+      ],
+      "role": [
+        "Event coordination",
+        "Workshop setup",
+        "Participant support",
+        "Speaker support"
+      ],
+      "image": "/events/sfk-01.jpg",
+      "images": [
+        "/events/sfk-01.jpg",
+        "/events/sfk-02.jpg",
+        "/events/sfk-03.jpg",
+        "/events/sfk-04.jpg",
+        "/events/sfk-05.jpg"
+      ]
+    },
+    {
+      "id": "devfest-prishtina-2025",
+      "title": "DevFest Prishtina 2025",
+      "date": "December 2025",
+      "place": "Prishtina",
+      "short": "I supported speaker coordination, technical setup, and event logistics while learning how a large technical event comes together.",
+      "body": [
+        "Volunteering at DevFest Prishtina gave me the opportunity to experience a large technology event from the organizational side.",
+        "My responsibilities focused mainly on speaker coordination and event logistics."
+      ],
+      "tookFromIt": [
+        "Communication",
+        "Organization",
+        "Teamwork",
+        "Networking",
+        "Responsibility",
+        "Adaptability"
+      ],
+      "role": [
+        "Speaker coordination",
+        "Schedule management",
+        "Technical setup",
+        "Event logistics"
+      ],
+      "image": "/events/devfest-01.jpg",
+      "images": [
+        "/events/devfest-01.jpg",
+        "/events/devfest-02.jpg",
+        "/events/devfest-03.jpg",
+        "/events/devfest-04.jpg"
+      ]
+    },
+    {
+      "id": "digi-camp-2026",
+      "title": "Digi Camp & Digital Skills Festival",
+      "date": "May 2026",
+      "place": "ITP · Prizren",
+      "short": "Across three days at Digi Camp & Digital Skills Festival, I supported workshops, sessions, and festival activities alongside professionals and mentors. I am very glad I got to explore ITP while I was there—it made the whole experience feel bigger than the tasks alone.",
+      "body": [
+        "Digi Camp & Digital Skills Festival was a three-day technology and digital skills event. I joined the volunteer team and supported workshops, sessions, and festival activities alongside professionals and mentors.",
+        "I am very glad I got to explore ITP at Digi Camp. Walking through the park, seeing how everything was set up, and being part of that space for several days made the event feel real in a way that volunteering from the outside never quite does.",
+        "ITP—Innovation & Training Park Prizren—is a hub for entrepreneurship, innovation, and skills in Kosovo and the Western Balkans. Built on the former KFOR camp site in Prizren, it brings together companies, start-ups, universities, and public bodies, with a focus on ICT and creative industries. Digi Camp & Digital Skills Festival was held there.",
+        "Being involved for three consecutive days asked for consistency and adaptability, but what stayed with me most was the community around it—people sharing skills, showing up for each other, and creating space for others to learn."
+      ],
+      "tookFromIt": [
+        "Teamwork",
+        "Communication",
+        "Responsibility",
+        "Adaptability",
+        "Networking",
+        "Community",
+        "Event Organization"
+      ],
+      "role": [
+        "Workshop support",
+        "Session support",
+        "Event operations",
+        "Participant assistance",
+        "Collaboration with professionals and mentors"
+      ],
+      "image": "/events/digi-camp-01.jpg",
+      "images": [
+        "/events/digi-camp-01.jpg",
+        "/events/digi-camp-02.jpg",
+        "/events/digi-camp-03.jpg",
+        "/events/digi-camp-04.jpg",
+        "/events/digi-camp-05.jpg"
+      ]
+    }
+  ],
+  "volunteeringQuote": {
+    "quote": "I came to these events to help. I left each one having learned something.",
+    "reflection": "Volunteering has given me experiences that I could not get from university projects alone. It taught me how to communicate with different people, work as part of a team, adapt when plans change, and take responsibility for making things work."
+  },
+  "learning": [
+    {
+      "id": "intern-anchorzup",
+      "title": "Software Engineering Intern",
+      "place": "AnchorzUp",
+      "year": "2026 — Present",
+      "detail": "My first professional engineering environment—contributing to real product development, translating requirements and designs into functional interfaces, and learning to work carefully inside an existing codebase.",
+      "chips": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Git",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "id": "uni-se",
+      "title": "Software Engineering",
+      "place": "University of Pristina",
+      "year": "2026",
+      "detail": "Building deeper experience in software development, databases, frontend systems, algorithms, and modern development workflows.",
+      "chips": []
+    },
+    {
+      "id": "kren-cloud",
+      "title": "Cloud Computing & DevOps",
+      "place": "KREN × World Bank",
+      "year": "2025",
+      "detail": "Connecting application development to infrastructure, deployment, automation, and dependable engineering practices.",
+      "chips": [
+        "AWS",
+        "Terraform",
+        "GitHub Actions",
+        "Linux",
+        "DevOps"
+      ]
+    }
+  ],
+  "interests": [
+    {
+      "id": "sewing",
+      "title": "Sewing & handcrafting",
+      "text": "Creating things from scratch, with patience and close attention to detail.",
+      "icon": "scissors"
+    },
+    {
+      "id": "cooking",
+      "title": "Cooking",
+      "text": "Experimenting, problem-solving, and creating something from separate ingredients.",
+      "icon": "cooking-pot"
+    },
+    {
+      "id": "sudoku",
+      "title": "Sudoku",
+      "text": "A quiet practice in logic, patience, and pattern recognition.",
+      "icon": "puzzle"
+    }
+  ],
+  "skills": [
+    {
+      "id": "languages",
+      "category": "Languages",
+      "items": [
+        "Java",
+        "C",
+        "C++",
+        "C#",
+        "JavaScript"
+      ]
+    },
+    {
+      "id": "web",
+      "category": "Web & development",
+      "items": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "JavaFX",
+        "Java Swing",
+        "Android"
+      ]
+    },
+    {
+      "id": "databases",
+      "category": "Databases",
+      "items": [
+        "MySQL",
+        "PostgreSQL",
+        "JDBC"
+      ]
+    },
+    {
+      "id": "tools",
+      "category": "Tools",
+      "items": [
+        "Git",
+        "GitHub",
+        "Microsoft Excel",
+        "Microsoft Word"
+      ]
+    },
+    {
+      "id": "exploring",
+      "category": "Currently exploring",
+      "items": [
+        "AI",
+        "Cloud Computing",
+        "DevOps",
+        "Full-stack development"
+      ]
+    }
+  ],
+  "about": {
+    "heading": "Somewhere between two worlds, I found software engineering.",
+    "lead": "I am, in many ways, a product of two very different kinds of work.",
+    "logicCard": "Logic from engineering",
+    "craftCard": "Care from craft",
+    "paragraphs": [
+      "My father is a mechanic; my mother is a tailor. One world of engines and tools, the other of fabrics and patterns. From my father I learned the value of showing up, being patient, and finishing what you start—the kind of work ethic that comes from fixing things carefully, not rushing past the hard parts.",
+      "From my mother I inherited a different kind of attention: creativity, and the habit of noticing small details. Growing up around sewing, patterns, measurements, and handmade work taught me that creating something takes both an idea and the patience to turn that idea into something real.",
+      "Somewhere between those two sides, I found software. I enjoy understanding how things work, breaking complex problems into smaller pieces, and building solutions that make sense. I care about how something works, but also how it feels, looks, and comes together as a whole—because building well, for me, has always meant both logic and care."
+    ],
+    "quote": "\"I don't know yet\" is not a weakness. It is the beginning of figuring it out.",
+    "beyondLead": "These interests may seem unrelated to software, but they all share something: patience, curiosity, and the satisfaction of creating or understanding something."
+  },
+  "contact": {
+    "heading": "Let's build something thoughtful.",
+    "body": "Whether it's a software project, an internship opportunity, or simply a conversation about technology, I'm always interested in connecting.",
+    "email": "erzaaduraku15@gmail.com",
+    "studentEmail": "erza.duraku@student.uni-pr.edu",
+    "phone": "(+383) 043 597 172",
+    "phoneHref": "tel:+38343597172",
+    "location": "Prishtina, Kosovo",
+    "linkedin": "https://www.linkedin.com/in/erza-duraku-bb6950389",
+    "linkedinLabel": "linkedin.com/in/erza-duraku-bb6950389",
+    "github": "https://github.com/erzaduraku",
+    "githubLabel": "github.com/erzaduraku"
+  },
+  "purpose": {
+    "label": "Where I want to go",
+    "heading": "Something I care about beyond code.",
+    "paragraphs": [
+      "I grew up close to a child with Down syndrome, so I have seen up close what daily life can look like for a child with special needs and for the family around them. In Kosovo, I saw how hard it can be to find the right support, and how often families are left to figure it out alone.",
+      "I did not understand all of that when I was younger. I only understood it later, and it has never really left me.",
+      "I am studying software engineering, and I love it. But I do not want it to be only a career. Someday I would like to work with organizations that support children with autism, Down syndrome, and other special needs, and to use what I know to make things a little easier for them: a tool that saves a teacher time, an app a family can actually use, or simply an interface that is calm and clear for someone who finds most of the digital world overwhelming.",
+      "I do not know yet exactly what that will look like. I am still at the beginning, and I would rather be honest about that than pretend otherwise. But I know the kind of engineer I want to become: one who builds things well, and who builds them for people who are too often forgotten."
+    ]
+  }
+}
