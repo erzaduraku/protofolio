@@ -59,6 +59,20 @@ export default async function AboutSection({ headingLevel = 'h2', showSkills = f
           </div>
         </div>
 
+        {about.motto ? (
+          <figure className="mt-14 max-w-3xl border-l-2 border-thread pl-6 lg:ml-[33%]">
+            <blockquote className="display-italic text-[clamp(1.9rem,3.4vw,2.75rem)] leading-[1.1] text-ink">
+              {about.motto}
+            </blockquote>
+            {about.mottoLabel ? (
+              <figcaption className="mt-3 text-sm text-ink-soft">{about.mottoLabel}</figcaption>
+            ) : null}
+          </figure>
+        ) : null}
+        {about.mottoWhy ? (
+          <p className="mt-6 max-w-2xl text-ink-soft lg:ml-[33%] lg:pl-6">{about.mottoWhy}</p>
+        ) : null}
+
         {rest.map((p) => (
           <p key={p.slice(0, 48)} className="mt-10 max-w-3xl text-xl leading-relaxed text-ink lg:ml-[33%] lg:text-[1.4rem]">
             {p}
