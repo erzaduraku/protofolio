@@ -14,6 +14,7 @@
   --paper-fold: #e0ded4;    /* paper + ~9% ink: folded corners */
   --paper-light: #fbf9f5;   /* lifted paper: polaroids, form sheet */
   --ink: #1f3d2b;           /* primary dark green: text, headings, dark bands */
+  --ink-deep: #142a1d;      /* deeper green: footer band, distinct from --ink sections */
   --ink-soft: rgb(31 61 43 / 0.78);
   --line: rgb(31 61 43 / 0.16);
   --line-strong: rgb(31 61 43 / 0.4);
@@ -31,6 +32,7 @@
   --color-paper-fold: var(--paper-fold);
   --color-paper-light: var(--paper-light);
   --color-ink: var(--ink);
+  --color-ink-deep: var(--ink-deep);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
@@ -346,15 +348,10 @@ html.pin-cursor textarea,
 html.pin-cursor select { cursor: text !important; }
 
 /* Reveal-on-scroll: hidden start state exists only when the inline boot
-   script set html.motion-ready (JS on + motion allowed). */
+   script set html.motion-ready (JS on + motion allowed). RevealObserver then
+   animates each element in with the Web Animations API (no DOM changes). */
 .motion-ready main section:not([data-no-reveal]),
 .motion-ready main [data-reveal] {
-  transition:
-    opacity 800ms var(--ease-thread),
-    transform 800ms var(--ease-thread);
-}
-.motion-ready main section:not([data-no-reveal]):not(.is-revealed),
-.motion-ready main [data-reveal]:not(.is-revealed) {
   opacity: 0;
   transform: translate3d(0, 28px, 0);
 }

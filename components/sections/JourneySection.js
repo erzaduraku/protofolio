@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getJourney } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 import PolaroidStack from '@/components/PolaroidStack';
@@ -36,12 +37,11 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
           </p>
         </div>
 
-        {/* Internship */}
+        {/* Internship: ink "envelope" card, photo in the dark half */}
         <article
-          data-reveal
           aria-labelledby="exp-heading"
+          data-reveal
           className="sheet-shadow mt-16 grid lg:mt-24 lg:grid-cols-12"
-          style={{ '--notch': 'var(--paper)' }}
         >
           <div className="on-ink bg-ink p-8 text-paper sm:p-10 lg:col-span-5">
             <p className="mono-label text-paper/75">{experience.period}</p>
@@ -57,6 +57,25 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                 </li>
               ))}
             </ul>
+            {experience.images?.[0] ? (
+              <figure className="relative mt-10 max-w-md lg:max-w-none">
+                <span aria-hidden="true" className="polaroid-tape" />
+                <div className="relative aspect-6/5 overflow-hidden border border-paper/20">
+                  <Image
+                    src={experience.images[0]}
+                    alt={experience.imageAlts?.[0] || experience.company}
+                    fill
+                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 28rem, 100vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+                {experience.imageCaptions?.[0] ? (
+                  <figcaption className="mt-3 font-display text-base italic text-paper/75">
+                    {experience.imageCaptions[0]}
+                  </figcaption>
+                ) : null}
+              </figure>
+            ) : null}
           </div>
           <div className="bg-paper-light p-8 sm:p-10 lg:col-span-7">
             <p className="display-italic text-[1.55rem] leading-snug">{experience.comparison}</p>

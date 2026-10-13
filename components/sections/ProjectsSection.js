@@ -8,7 +8,7 @@ import ProjectCard from '@/components/ProjectCard';
  * Cards link to GitHub; /projects/[slug] detail pages stay off (published: false).
  */
 const FEATURED = ['collabai-project-management', 'erza-master-project', 'predictive-text-engine'];
-const MORE = ['text-rule-processor', 'maze-solver', 'group1-master-webapp', 'firebase-auth-erza'];
+const MORE = ['text-rule-processor', 'maze-solver', 'firebase-auth-erza'];
 
 export default async function ProjectsSection({ headingLevel = 'h2' }) {
   const all = await getAllProjects();

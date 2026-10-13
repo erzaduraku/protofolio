@@ -12,6 +12,8 @@ export default function BeyondCodePage() {
     <>
       <BeyondSection headingLevel="h1" />
       <PurposeSection />
+      {/* paper gap so the dark purpose band doesn't run straight into the footer */}
+      <div aria-hidden="true" className="h-16 sm:h-24" />
     </>
   );
 }

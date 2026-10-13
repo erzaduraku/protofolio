@@ -14,7 +14,6 @@ export default async function ContactSection({ headingLevel = 'h2' }) {
 
   const rows = [
     { id: 'email', kind: 'Email', label: contact.email, href: `mailto:${contact.email}`, Icon: IconMail },
-    { id: 'student', kind: 'Student email', label: contact.studentEmail, href: `mailto:${contact.studentEmail}`, Icon: IconMail },
     { id: 'phone', kind: 'Phone', label: contact.phone, href: contact.phoneHref, Icon: IconPhone },
     { id: 'location', kind: 'Based in', label: contact.location, href: null, Icon: IconMapPin },
     { id: 'linkedin', kind: 'LinkedIn', label: contact.linkedinLabel, href: contact.linkedin, external: true, Icon: IconLinkedin },
@@ -42,7 +41,7 @@ export default async function ContactSection({ headingLevel = 'h2' }) {
                     {href ? (
                       <a
                         href={href}
-                        className="link-stitch break-words"
+                        className="link-stitch wrap-break-word"
                         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       >
                         {label}
@@ -56,7 +55,7 @@ export default async function ContactSection({ headingLevel = 'h2' }) {
             </ul>
           </div>
 
-          <div className="relative lg:col-span-7 lg:-mt-10">
+          <div className="relative lg:col-span-7 lg:mt-6">
             {/* decorative pin */}
             <svg aria-hidden="true" className="absolute -top-5 left-10 z-10 h-12 w-12" viewBox="0 0 48 48" fill="none">
               <path d="M10 40 L34 14" stroke="var(--ink)" strokeWidth="1.8" strokeLinecap="round" />

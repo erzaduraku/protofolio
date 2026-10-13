@@ -153,23 +153,6 @@
       "published": false
     },
     {
-      "id": "10",
-      "slug": "group1-master-webapp",
-      "title": "Group 1 Master Web App",
-      "category": "Cloud",
-      "oneLiner": "The static web page for the DCADD Master Project (Group 1), served from private EC2 instances behind the load balancer.",
-      "technologies": [
-        "HTML",
-        "CSS",
-        "AWS"
-      ],
-      "language": "HTML",
-      "team": true,
-      "repoUrl": "https://github.com/erzaduraku/group1-master-webapp",
-      "featured": false,
-      "published": false
-    },
-    {
       "id": "11",
       "slug": "firebase-auth-erza",
       "title": "Firebase Auth",
@@ -206,6 +189,15 @@
       "Using Git and development workflows in a professional environment.",
       "Thinking about maintainability and how a feature fits into the larger product.",
       "Connecting frontend work with backend systems and real product requirements."
+    ],
+    "images": [
+      "/events/anchorzup-01.jpg"
+    ],
+    "imageAlts": [
+      "Erza at the AnchorzUp office"
+    ],
+    "imageCaptions": [
+      "At AnchorzUp"
     ]
   },
   "volunteering": [
@@ -305,11 +297,10 @@
       "title": "Digi Camp & Digital Skills Festival",
       "date": "21–23 May 2026",
       "place": "ITP · Prizren",
-      "short": "For three days in May, I volunteered at Digi Camp & Digital Skills Festival at ITP Prizren, helping the workshops, sessions, and festival activities run smoothly. I was glad to be part of it, and even more glad that I got to explore ITP itself.",
+      "short": "Over three days at ITP Prizren, I helped run workshops, sessions, and festival activities, and I was very glad I got to explore ITP itself.",
       "body": [
-        "From 21 to 23 May 2026, ITP Prizren hosted Digi Camp & Digital Skills Festival, a three-day, international-level technology festival. I joined as a volunteer, and most of my time went into helping organize and run the workshops, sessions, and festival activities, along with the operational tasks that keep an event like this moving.",
-        "I collaborated with professionals and mentors throughout, and being close to their work taught me a lot about how a festival like this actually comes together.",
-        "I was also very glad I got to explore ITP. The Innovation & Training Park Prizren is a hub for entrepreneurship, innovation, and skills, built on the former KFOR camp site, and it connects companies, start-ups, and universities with a focus on ICT and the creative industries. Spending three days there showed me what it looks like when a place is built for people to learn and create."
+        "From 21 to 23 May 2026, ITP Prizren hosted Digi Camp & Digital Skills Festival, a three-day international technology festival. As a volunteer, I helped organize and run workshops, sessions, and festival activities, working alongside professionals and mentors.",
+        "I was very glad I got to explore ITP, a hub for entrepreneurship, innovation, and skills in Prizren."
       ],
       "tookFromIt": [
         "Teamwork",
@@ -317,14 +308,12 @@
         "Responsibility",
         "Adaptability",
         "Networking",
-        "Community",
-        "Event Organization"
+        "Community"
       ],
       "role": [
         "Workshop support",
         "Session support",
         "Event operations",
-        "Participant assistance",
         "Collaboration with professionals and mentors"
       ],
       "image": "/events/digi-camp-01.jpg",
@@ -484,7 +473,6 @@
     "heading": "Let's build something thoughtful.",
     "body": "Whether it's a software project, an internship opportunity, or simply a conversation about technology, I'm always interested in connecting.",
     "email": "erzaaduraku15@gmail.com",
-    "studentEmail": "erza.duraku@student.uni-pr.edu",
     "phone": "(+383) 043 597 172",
     "phoneHref": "tel:+38343597172",
     "location": "Prishtina, Kosovo",
