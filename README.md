@@ -2,7 +2,7 @@
 
 Personal portfolio for **Erza Duraku**, Software Engineering student at the University of Pristina. Built with **Next.js 16** (App Router), **React 19**, and **Tailwind CSS v4** while learning Next.js concepts from a Udemy course.
 
-**Design:** dark blueprint / “logic × craft” aesthetic restyled to match Erza’s Lovable draft (`beje-creativity-spark.lovable.app`) — Inter + JetBrains Mono, oklch navy/blue/terracotta tokens, sharp borders, numbered section labels.
+**Design:** “logic meets craft” — a tailor’s studio. Off-white paper `#F5F1EA`, dark-green ink `#1F3D2B`, chalk pink `#F2B8C6` (fills only) and thread red `#C8372D` (thread, links, focus, tape). Fraunces display (italic emphasis, opsz/SOFT/WONK axes), Instrument Sans body, DM Mono for a few labels. Pattern-making details: dashed stitch lines, notch marks, measuring-tape scroll bar, paper grain, a red thread drawn down the page, a pin cursor and polaroid stacks.
 
 **Projects status:** all entries in `data/db.json` have `"published": false` → Coming soon UI; `/projects/[slug]` 404s. Set `"published": true` to reveal a project.
 
@@ -22,22 +22,26 @@ If json-server is offline, `lib/api.js` falls back to `data/db.json`.
 
 | # | Concept | Where it shows up |
 |---|---------|-------------------|
-| 1 | Component extraction & props/children | `Header`, `Footer`, `Card`, `SectionLabel`, `Tag`, `ProjectCard` (ready to reuse) |
+| 1 | Component extraction & props/children | `Header`, `Footer`, `ProjectCard`, `PolaroidStack`, `components/sections/*` (each section reused by Home and its own route) |
 | 2 | `<Link>` vs `<a>` + active nav | Internal `next/link`; external `<a target="_blank" rel="noopener noreferrer">`; `NavLink` (`'use client'` + `usePathname`) |
 | 3 | Static routes | `/`, `/about`, `/projects`, `/journey`, `/beyond-code`, `/contact` |
 | 4 | Dynamic route + `params` Promise + `notFound` + `generateStaticParams` + `generateMetadata` | `app/projects/[slug]/page.js` — unpublished → `notFound()` |
 | 5 | Data fetching in Server Components | `data/db.json` + `lib/api.js` |
 | 6 | json-server + fetch caching + fallback | `npm run json-server`; `{ next: { revalidate: 60 } }` + local fallback + short timeout |
-| 7 | Separate async components on Home | `HomeAboutPreview`, `CurrentlyCard`, `HomeBeyondPreview`, `HomeContactPreview` |
-| 8 | Streaming / Suspense / `loading.js` | Home `<Suspense>`; `projects/loading.js`, `[slug]/loading.js`, `journey/loading.js` |
-| 9 | Stable keys | `slug` / `id` — never index |
-| 10 | Client `useState` filter | `ProjectFilter.js` kept for when projects publish |
+| 7 | Separate async components on Home | `AboutSection`, `ProjectsSection`, `JourneySection`, `BeyondSection`, `PurposeSection`, `ContactSection` |
+| 8 | Streaming / Suspense / `loading.js` | Home: one `<Suspense>` per section; `projects/loading.js`, `[slug]/loading.js`, `journey/loading.js` |
+| 9 | Stable keys | `slug` / `id` / image path — never index |
+| 10 | Client `useState` | `PolaroidStack` (fan / cycle state), `ContactForm` (form + status) |
+
+## Motion
+
+`framer-motion` (thread `pathLength`, measuring tape `scaleX`, polaroid drag/fan, pin cursor, hero mouse parallax) and `lenis` (smooth scroll). Hero entrances and reveal-on-scroll are CSS (so content is visible without JS). Only transform/opacity animate. With `prefers-reduced-motion`: no Lenis, full thread shown, no parallax, no cursor, no fan animation or dragging.
 
 ## Content sources
 
 - Original portfolio document (facts, LinkedIn/GitHub URLs)
 - Erza’s Lovable reference site (section copy, tools list, timeline chips, hobby blurbs, “Available on request”)
-- Hero image: real asset from the Lovable site (`public/engineering-craft.jpg`)
+- Hero image: real asset from the Lovable site (`public/engineering-craft.jpg`), recoloured to the site palette as `public/engineering-craft-ink.jpg` and cut into three pattern pieces in the hero
 
 ## Contact form (Web3Forms)
 

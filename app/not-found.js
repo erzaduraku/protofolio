@@ -5,15 +5,17 @@ import Link from 'next/link';
  */
 export default function NotFound() {
   return (
-    <div className="container-page py-24 text-center sm:py-32">
-      <p className="mono-caps text-primary">404</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight">Page not found</h1>
-      <p className="mt-4 text-muted-foreground">
+    <section className="container-page relative overflow-x-clip py-24 sm:py-32">
+      <span aria-hidden="true" className="numeral block">404</span>
+      <h1 className="display -mt-8 text-[clamp(2.4rem,5vw,4.4rem)]">
+        Page <em>not found</em>
+      </h1>
+      <p className="mt-6 max-w-md text-lg text-ink-soft">
         That page doesn&apos;t exist — or the project isn&apos;t published yet.
       </p>
-      <Link href="/" className="mt-8 inline-block text-primary hover:underline">
-        Back home →
+      <Link href="/" className="btn-ink mt-10">
+        Back home <span aria-hidden="true">→</span>
       </Link>
-    </div>
+    </section>
   );
 }

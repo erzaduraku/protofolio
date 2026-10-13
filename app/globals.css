@@ -1,143 +1,453 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Erza Duraku · "logic meets craft"
+   Pattern-making & tailoring, "Tailor's studio": off-white paper, dark-green
+   ink, chalk pink, thread red. Every other colour is a tint of these four.
+   ========================================================================== */
+
 :root {
-  --background: oklch(16% 0.035 260);
-  --foreground: oklch(96% 0.008 250);
-  --card: oklch(19% 0.034 260);
-  --card-foreground: oklch(96% 0.008 250);
-  --primary: oklch(62% 0.2 255);
-  --primary-foreground: oklch(99% 0.004 250);
-  --secondary: oklch(20% 0.035 258);
-  --secondary-foreground: oklch(96% 0.008 250);
-  --muted: oklch(23% 0.03 258);
-  --muted-foreground: oklch(70% 0.025 255);
-  --accent: oklch(68% 0.17 35);
-  --accent-foreground: oklch(14% 0.025 260);
-  --border: oklch(31% 0.035 258);
-  --ring: oklch(62% 0.2 255);
-  --radius: 0;
+  /* "Tailor's studio" palette. Contrast on --paper:
+     ink 10.6:1 · ink-soft ~5.5:1 · thread 4.6:1 (AA for small text) */
+  --paper: #f5f1ea;         /* off-white background */
+  --paper-deep: #edeae1;    /* paper + ~4% ink: bands, swatches */
+  --paper-fold: #e0ded4;    /* paper + ~9% ink: folded corners */
+  --paper-light: #fbf9f5;   /* lifted paper: polaroids, form sheet */
+  --ink: #1f3d2b;           /* primary dark green: text, headings, dark bands */
+  --ink-soft: rgb(31 61 43 / 0.78);
+  --line: rgb(31 61 43 / 0.16);
+  --line-strong: rgb(31 61 43 / 0.4);
+  --chalk: #f2b8c6;         /* chalk pink: fills, tape, highlights only, never text on paper */
+  --thread: #c8372d;        /* thread red: thread, links, focus, tape fill */
+
+  --tape-h: 10px;
+  --header-h: 4rem;
+  --ease-thread: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
-  --color-ring: var(--ring);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains);
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-paper-fold: var(--paper-fold);
+  --color-paper-light: var(--paper-light);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-thread: var(--thread);
+  --color-chalk: var(--chalk);
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-instrument), "DM Sans", system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
 }
 
-* {
-  border-color: var(--border);
-}
-
+/* ---------- Base ---------- */
 html {
-  scroll-behavior: smooth;
+  background-color: var(--paper);
+  color: var(--ink);
+  scroll-padding-top: calc(var(--tape-h) + var(--header-h) + 1.5rem);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--primary) 55%, transparent);
-  color: var(--foreground);
+  background: var(--ink);
+  color: var(--paper);
 }
 
-.font-mono {
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
+/* Keyboard focus: thread outline everywhere (3.7:1 on paper, 4.1:1 on ink) */
+:focus-visible {
+  outline: 2px solid var(--thread);
+  outline-offset: 3px;
 }
 
-/* Section eyebrow: blue number + grey caps + extending line (from reference CSS) */
-.section-label {
-  color: var(--muted-foreground);
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
-  text-transform: uppercase;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  display: flex;
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  transform: translateY(-300%);
 }
-
-.section-label span:first-child {
-  color: var(--primary);
-}
-
-.section-label:after {
-  background: var(--border);
-  content: "";
-  flex: 1;
-  height: 1px;
-}
-
-.section-title {
-  max-width: 44rem;
-  font-size: clamp(2.25rem, 5vw, 4.5rem);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+.skip-link:focus {
+  transform: none;
 }
 
 .container-page {
   width: 100%;
-  max-width: 78rem; /* ~1248px */
+  max-width: 76rem;
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
-
-/* Joined grid cards share borders */
-.grid-join {
-  border: 1px solid var(--border);
+@media (min-width: 640px) {
+  .container-page { padding-inline: 2rem; }
+}
+@media (min-width: 1024px) {
+  .container-page { padding-inline: 3rem; }
 }
 
-.grid-join > * {
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+/* ---------- Type ---------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 380;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  font-variation-settings: "SOFT" 30, "WONK" 0;
+}
+.display em,
+.display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+.display em {
+  color: var(--thread); /* 4.6:1 on paper */
+  padding-right: 0.04em;
 }
 
-.mono-caps {
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
+/* DM Mono: used sparingly (hero eyebrow, tags, project stamps, dates) */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.6875rem;
 }
 
-/* Event photo placeholder grid */
-.event-photo {
-  background-color: var(--secondary);
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 20px 20px;
+.kicker {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
-.timeline-rail {
-  border-left: 1px solid var(--border);
+/* Rotated vertical side labels */
+.side-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
-.timeline-dot {
-  border: 2px solid var(--primary);
-  background: var(--background);
-  width: 0.55rem;
-  height: 0.55rem;
+/* Oversized outlined section numerals */
+.numeral {
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 19vw, 16rem);
+  font-weight: 300;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-strong);
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  pointer-events: none;
+  user-select: none;
+}
+.on-ink .numeral {
+  -webkit-text-stroke-color: rgb(245 241 234 / 0.3);
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 4.4em;
+  line-height: 0.8;
+  padding: 0.06em 0.12em 0 0;
+  color: var(--thread);
+}
+
+/* ---------- Sewing details ---------- */
+.stitch { border: 1.5px dashed var(--line-strong); }
+
+/* Stitch line just inside an edge (used once: the featured project card visual) */
+.stitch-inset {
+  outline: 1px dashed var(--line-strong);
+  outline-offset: -10px;
+}
+.on-ink .stitch-inset,
+.on-ink.stitch-inset {
+  outline-color: rgb(245 241 234 / 0.35);
+}
+
+/* Notch marks (used once: the hero caption tag) */
+.notched { position: relative; }
+.notched::before,
+.notched::after {
+  content: "";
   position: absolute;
-  top: 0.15rem;
-  left: -0.3rem;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  pointer-events: none;
+  z-index: 2;
 }
+.notched::before {
+  top: -1px;
+  left: 22%;
+  border-top: 9px solid var(--notch, var(--ink));
+}
+.notched::after {
+  bottom: -1px;
+  right: 16%;
+  border-bottom: 9px solid var(--notch, var(--ink));
+}
+
+/* Paper grain: inline SVG feTurbulence noise, fixed overlay, never interactive */
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.24 0 0 0 0 0.17 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Measuring-tape scroll progress (ticks drawn with gradients) */
+.tape {
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--line-strong);
+}
+.tape-ticks {
+  background-image:
+    repeating-linear-gradient(to right, var(--ink) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(to right, var(--ink) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(to right, var(--ink) 0 1px, transparent 1px 80px);
+  background-size: 100% 3px, 100% 6px, 100% 10px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  opacity: 0.6;
+}
+
+/* ---------- Controls ---------- */
+.btn-ink,
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-ink:hover { background: var(--thread); }
+.btn-ink:disabled { opacity: 0.6; }
+.btn-line {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+.btn-line:hover {
+  border-color: var(--ink);
+}
+
+.btn-chip {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-light);
+  color: var(--ink);
+}
+.btn-chip:hover { border-color: var(--ink); }
+.btn-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.8rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+.on-ink .chip {
+  border-color: rgb(245 241 234 / 0.35);
+  color: rgb(245 241 234 / 0.82);
+}
+
+.link-stitch {
+  text-decoration-line: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+.link-stitch:hover {
+  text-decoration-color: var(--thread);
+}
+
+.nav-link-active {
+  text-decoration-line: underline;
+  text-decoration-color: var(--thread);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.45em;
+}
+
+.field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 0.7rem 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.field::placeholder { color: rgb(31 61 43 / 0.45); }
+.field:focus { border-bottom: 1.5px solid var(--thread); }
+.field:disabled { opacity: 0.6; }
+
+/* Folded paper corner on project cards (hidden until hover) */
+.project-fold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 3.25rem;
+  height: 3.25rem;
+  background: linear-gradient(225deg, var(--fold-bg, var(--paper-deep)) 50%, var(--flap, var(--paper-fold)) 50%);
+  box-shadow: -3px 3px 6px -3px rgb(31 61 43 / 0.35);
+  transform: scale(0);
+  transform-origin: top right;
+  pointer-events: none;
+}
+
+.sheet-shadow {
+  box-shadow:
+    0 1px 0 var(--line),
+    0 22px 40px -26px rgb(31 61 43 / 0.45);
+}
+
+/* Lenis (smooth scroll) base rules */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* Custom pin cursor: native cursor hidden ONLY while the pin is active */
+html.pin-cursor,
+html.pin-cursor * { cursor: none !important; }
+html.pin-cursor input,
+html.pin-cursor textarea,
+html.pin-cursor select { cursor: text !important; }
+
+/* Reveal-on-scroll: hidden start state exists only when the inline boot
+   script set html.motion-ready (JS on + motion allowed). */
+.motion-ready main section:not([data-no-reveal]),
+.motion-ready main [data-reveal] {
+  transition:
+    opacity 800ms var(--ease-thread),
+    transform 800ms var(--ease-thread);
+}
+.motion-ready main section:not([data-no-reveal]):not(.is-revealed),
+.motion-ready main [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+/* Headline lines are always block-level; the mask only matters when animating */
+.line-mask,
+.line-mask > span { display: block; }
+
+/* ==========================================================================
+   Motion: only when the visitor has not asked for reduced motion.
+   Everything is fully visible by default; these only add entrances/hover.
+   Only transform and opacity are animated.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+
+  /* Hero headline: line-by-line rise out of a mask */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding: 0 0.08em 0.1em 0;
+    margin-bottom: -0.1em;
+  }
+  .line-mask > span {
+    display: block;
+    animation: line-rise 1000ms var(--ease-thread) both;
+    animation-delay: calc(var(--i, 0) * 120ms + 120ms);
+  }
+
+  .fade-up {
+    animation: fade-up 900ms var(--ease-thread) both;
+    animation-delay: calc(var(--i, 0) * 110ms + 120ms);
+  }
+
+  /* Hero pattern pieces slide in and settle onto the grid */
+  .piece {
+    animation: piece-settle 1300ms var(--ease-thread) both;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  /* Project cards: slight tilt, corner folds, title slides */
+  .project-sheet { transition: transform 550ms var(--ease-thread); transform-origin: 30% 100%; }
+  .project-card:hover .project-sheet { transform: rotate(-0.8deg) translate3d(0, -6px, 0); }
+  .project-fold { transition: transform 450ms var(--ease-thread); }
+  .project-card:hover .project-fold { transform: scale(1); }
+  .project-title { transition: transform 450ms var(--ease-thread); }
+  .project-card:hover .project-title { transform: translate3d(0.6rem, 0, 0); }
+
+  /* Hobby swatches straighten up on hover */
+  .swatch-card { transition: rotate 450ms var(--ease-thread), translate 450ms var(--ease-thread); }
+  .swatch-card:hover { rotate: 0deg; translate: 0 -5px; }
+
+  .nudge { transition: transform 300ms var(--ease-thread); }
+  a:hover .nudge, button:hover .nudge { transform: translate3d(3px, 0, 0); }
+}
+
+@keyframes line-rise {
+  from { transform: translate3d(0, 108%, 0); }
+  to { transform: none; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes piece-settle {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--fx, 0), var(--fy, 0), 0) rotate(var(--fr, 0deg));
+  }
+  to { opacity: 1; transform: none; }
+}
+
+/* On the dark-green band, thread red is only 2.3:1, so emphasis and focus
+   switch to paper / chalk pink there. */
+.on-ink .display em,
+.on-ink .drop-cap::first-letter { color: var(--paper); }
+.on-ink .drop-cap::first-letter { color: var(--chalk); }
+.on-ink :focus-visible { outline-color: var(--chalk); }
+.on-ink .text-thread { color: var(--chalk); }
+.on-ink .bg-thread { background-color: var(--chalk); }
+.on-ink .border-thread { border-color: var(--chalk); }
+
+/* Chalk-pink washi tape holding each polaroid */
+.polaroid-tape {
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  width: 4.5rem;
+  height: 1.4rem;
+  margin-left: -2.25rem;
+  background: var(--chalk);
+  opacity: 0.85;
+  rotate: -4deg;
+  pointer-events: none;
+}
+::selection { background: var(--chalk); color: var(--ink); }

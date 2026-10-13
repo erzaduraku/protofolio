@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getProjects, getProjectBySlug } from '@/lib/api';
-import SectionLabel from '@/components/SectionLabel';
-import Tag from '@/components/Tag';
 
 /**
  * Concept: generateStaticParams pre-renders published project pages at build time.
@@ -38,50 +36,40 @@ export default async function ProjectDetailPage({ params }) {
     notFound();
   }
 
+  const blocks = [
+    { id: 'problem', title: 'Problem', text: project.problem },
+    { id: 'built', title: 'What I built', text: project.whatIBuilt },
+    { id: 'learned', title: 'What I learned', text: project.learned },
+  ];
+
   return (
-    <article className="container-page space-y-12 py-16 sm:py-24">
-      <div>
-        <SectionLabel number="02">Selected projects</SectionLabel>
-        <p className="mb-4 text-sm text-muted-foreground">
-          <Link href="/projects" className="hover:text-primary">
-            ← All projects
-          </Link>
-        </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          {project.title}
-        </h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          {project.oneLiner}
-        </p>
-        <div className="mt-4 flex flex-wrap gap-x-2 gap-y-1">
-          {project.technologies.map((tech) => (
-            <Tag key={tech}>{tech}</Tag>
-          ))}
-        </div>
+    <article className="container-page py-20 sm:py-28">
+      <p className="text-sm">
+        <Link href="/projects" className="link-stitch">
+          ← All projects
+        </Link>
+      </p>
+      <p className="mt-10 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
+      <h1 className="display mt-3 text-[clamp(2.8rem,7vw,6rem)]">{project.title}</h1>
+      <p className="mt-6 max-w-2xl text-xl text-ink-soft">{project.oneLiner}</p>
+      <ul className="mt-6 flex flex-wrap gap-2" aria-label="Technologies">
+        {project.technologies.map((tech) => (
+          <li key={tech} className="chip">
+            {tech}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-16 grid gap-12 lg:grid-cols-3">
+        {blocks.map((block) => (
+          <section key={block.id} className="border-t border-line-strong pt-6">
+            <h2 className="display text-3xl">{block.title}</h2>
+            <p className="mt-4 text-ink-soft">{block.text}</p>
+          </section>
+        ))}
       </div>
 
-      <section>
-        <h2 className="text-2xl font-semibold">Problem</h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
-          {project.problem}
-        </p>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold">What I built</h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
-          {project.whatIBuilt}
-        </p>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold">What I learned</h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
-          {project.learned}
-        </p>
-      </section>
-
-      <p className="border border-dashed border-border bg-secondary/40 px-4 py-3 text-sm text-muted-foreground">
+      <p className="mt-16 border border-line-strong px-4 py-3 text-sm text-ink-soft">
         Coming soon: screenshots · repository · demo
       </p>
     </article>

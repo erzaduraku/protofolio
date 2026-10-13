@@ -22,24 +22,6 @@
   },
   "projects": [
     {
-      "id": "1",
-      "slug": "parkeasy",
-      "title": "ParkEasy",
-      "oneLiner": "A mobile parking application designed to make finding and managing parking simpler.",
-      "summary": "Built as a team, with a focus on application structure, frontend experience, authentication, and core functionality.",
-      "category": "Mobile",
-      "problem": "The project focused on creating a practical mobile experience around parking and making the main user flows simple to understand.",
-      "whatIBuilt": "Worked mainly on the frontend and application structure, collaborating with the team on core functionality and authentication flows.",
-      "technologies": [
-        "React Native",
-        "Expo Router",
-        "Firebase"
-      ],
-      "learned": "Building a mobile application as part of a team, structuring screens and navigation, and connecting the interface with application services.",
-      "featured": true,
-      "published": false
-    },
-    {
       "id": "2",
       "slug": "predictive-text-engine",
       "title": "Predictive Text Engine",
@@ -55,25 +37,11 @@
       ],
       "learned": "How language can be represented computationally, how different n-gram approaches behave, and how data structures such as Tries can support fast autocomplete.",
       "featured": true,
-      "published": false
-    },
-    {
-      "id": "3",
-      "slug": "signspeak",
-      "title": "SignSpeak",
-      "oneLiner": "A technology concept designed to make communication more accessible and inclusive.",
-      "summary": "An exploration of how software and AI can help bridge communication gaps through thoughtful product design.",
-      "category": "Web",
-      "problem": "The project explored how a digital interface can make communication more accessible and easier to use.",
-      "whatIBuilt": "Worked on the frontend and UX design, focusing on structure, usability, and the experience of moving through the application.",
-      "technologies": [
-        "AI",
-        "Accessibility",
-        "Product Design"
-      ],
-      "learned": "The importance of designing around the user rather than only around the implementation, and how frontend decisions affect the overall experience.",
-      "featured": true,
-      "published": false
+      "published": false,
+      "repoUrl": "https://github.com/erzaduraku/grupi22-predictive-text-engine",
+      "language": "Python",
+      "team": true,
+      "showcase": 1
     },
     {
       "id": "4",
@@ -108,6 +76,112 @@
         "GitHub Actions"
       ],
       "learned": "How cloud services can be combined into a backend system, and how serverless architecture changes the way application components communicate.",
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "6",
+      "slug": "collabai-project-management",
+      "title": "CollabAI",
+      "category": "AI",
+      "oneLiner": "A full-stack, AI-powered project management platform for organizing teams, projects and tasks, with a built-in AI assistant that uses RAG and semantic search over the organization’s data.",
+      "technologies": [
+        "Django REST",
+        "React",
+        "PostgreSQL",
+        "Redis",
+        "Docker"
+      ],
+      "language": "Python",
+      "team": true,
+      "repoUrl": "https://github.com/erzaduraku/collabai-project-management",
+      "showcase": 0,
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "7",
+      "slug": "erza-master-project",
+      "title": "DCADD Master Project",
+      "category": "Cloud",
+      "oneLiner": "Terraform infrastructure on AWS for a highly available web application: a multi-AZ VPC, private EC2 instances in an Auto Scaling Group behind an Application Load Balancer, deployed with GitHub Actions.",
+      "technologies": [
+        "Terraform",
+        "AWS",
+        "GitHub Actions"
+      ],
+      "language": "HCL",
+      "team": false,
+      "repoUrl": "https://github.com/erzaduraku/erza-master-project",
+      "showcase": 2,
+      "featured": true,
+      "published": false
+    },
+    {
+      "id": "8",
+      "slug": "text-rule-processor",
+      "title": "Text Rule Processor",
+      "category": "Web",
+      "oneLiner": "A rule-based content filter web app: users define rules that detect patterns in text and mark them with highlights or tooltips, with a history of processed text.",
+      "technologies": [
+        "React",
+        "Node.js",
+        "Express",
+        "PostgreSQL"
+      ],
+      "language": "JavaScript",
+      "team": false,
+      "repoUrl": "https://github.com/erzaduraku/text-rule-processor",
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "9",
+      "slug": "maze-solver",
+      "title": "Maze Solver Visualizer",
+      "category": "AI",
+      "oneLiner": "An interactive maze editor and pathfinding visualizer that uses A* search with a Manhattan-distance heuristic to find the shortest path.",
+      "technologies": [
+        "Python",
+        "Tkinter",
+        "A* search"
+      ],
+      "language": "Python",
+      "team": false,
+      "repoUrl": "https://github.com/erzaduraku/Maze_Solver_Project",
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "10",
+      "slug": "group1-master-webapp",
+      "title": "Group 1 Master Web App",
+      "category": "Cloud",
+      "oneLiner": "The static web page for the DCADD Master Project (Group 1), served from private EC2 instances behind the load balancer.",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "AWS"
+      ],
+      "language": "HTML",
+      "team": true,
+      "repoUrl": "https://github.com/erzaduraku/group1-master-webapp",
+      "featured": false,
+      "published": false
+    },
+    {
+      "id": "11",
+      "slug": "firebase-auth-erza",
+      "title": "Firebase Auth",
+      "category": "Web",
+      "oneLiner": "Firebase Authentication project using Email/Password and Google Sign-In.",
+      "technologies": [
+        "Firebase",
+        "JavaScript"
+      ],
+      "language": "HTML",
+      "team": false,
+      "repoUrl": "https://github.com/erzaduraku/firebase-auth-erza",
       "featured": false,
       "published": false
     }
@@ -166,6 +240,20 @@
         "/events/sfk-03.jpg",
         "/events/sfk-04.jpg",
         "/events/sfk-05.jpg"
+      ],
+      "imageAlts": [
+        "Speaker at the podium in front of the SFK 2025 10th Edition screen, seen from the audience",
+        "SFK 2025 volunteers outside the Faculty of Electrical and Computer Engineering in Prishtina",
+        "Erza and a fellow volunteer beside the SFK 2025 banner at the University of Prishtina entrance",
+        "SFK 2025 volunteers sharing pizza at a long table during a lunch break",
+        "Erza and a fellow volunteer in matching event shirts listening to a talk at SFK 2025"
+      ],
+      "imageCaptions": [
+        "Opening of the 10th edition",
+        "The SFK volunteer team",
+        "At the university entrance",
+        "Pizza break",
+        "Listening in the audience"
       ]
     },
     {
@@ -198,19 +286,30 @@
         "/events/devfest-02.jpg",
         "/events/devfest-03.jpg",
         "/events/devfest-04.jpg"
+      ],
+      "imageAlts": [
+        "Two speakers on stage in front of the DevFest Kosovo 2025 screen, with the audience seated in rows",
+        "Speaker at the podium in front of the DevFest Kosovo screen, seen from the back of the hall",
+        "Erza with two fellow volunteers wearing DevFest badges in a hallway",
+        "DevFest volunteers posing with the tiger mascot"
+      ],
+      "imageCaptions": [
+        "Talks on the main stage",
+        "From the back of the hall",
+        "Badges on",
+        "With the DevFest mascot"
       ]
     },
     {
       "id": "digi-camp-2026",
       "title": "Digi Camp & Digital Skills Festival",
-      "date": "May 2026",
+      "date": "21–23 May 2026",
       "place": "ITP · Prizren",
-      "short": "Across three days at Digi Camp & Digital Skills Festival, I supported workshops, sessions, and festival activities alongside professionals and mentors. I am very glad I got to explore ITP while I was there—it made the whole experience feel bigger than the tasks alone.",
+      "short": "For three days in May, I volunteered at Digi Camp & Digital Skills Festival at ITP Prizren, helping the workshops, sessions, and festival activities run smoothly. I was glad to be part of it, and even more glad that I got to explore ITP itself.",
       "body": [
-        "Digi Camp & Digital Skills Festival was a three-day technology and digital skills event. I joined the volunteer team and supported workshops, sessions, and festival activities alongside professionals and mentors.",
-        "I am very glad I got to explore ITP at Digi Camp. Walking through the park, seeing how everything was set up, and being part of that space for several days made the event feel real in a way that volunteering from the outside never quite does.",
-        "ITP—Innovation & Training Park Prizren—is a hub for entrepreneurship, innovation, and skills in Kosovo and the Western Balkans. Built on the former KFOR camp site in Prizren, it brings together companies, start-ups, universities, and public bodies, with a focus on ICT and creative industries. Digi Camp & Digital Skills Festival was held there.",
-        "Being involved for three consecutive days asked for consistency and adaptability, but what stayed with me most was the community around it—people sharing skills, showing up for each other, and creating space for others to learn."
+        "From 21 to 23 May 2026, ITP Prizren hosted Digi Camp & Digital Skills Festival, a three-day, international-level technology festival. I joined as a volunteer, and most of my time went into helping organize and run the workshops, sessions, and festival activities, along with the operational tasks that keep an event like this moving.",
+        "I collaborated with professionals and mentors throughout, and being close to their work taught me a lot about how a festival like this actually comes together.",
+        "I was also very glad I got to explore ITP. The Innovation & Training Park Prizren is a hub for entrepreneurship, innovation, and skills, built on the former KFOR camp site, and it connects companies, start-ups, and universities with a focus on ICT and the creative industries. Spending three days there showed me what it looks like when a place is built for people to learn and create."
       ],
       "tookFromIt": [
         "Teamwork",
@@ -235,6 +334,20 @@
         "/events/digi-camp-03.jpg",
         "/events/digi-camp-04.jpg",
         "/events/digi-camp-05.jpg"
+      ],
+      "imageAlts": [
+        "Erza wearing her Digi Camp shirt and event badge",
+        "Group selfie with friends and coworkers indoors at Digi Camp",
+        "Outdoor directory sign of ITP, Innovation and Training Park Prizren",
+        "Four volunteers in Digi Festival shirts outdoors in the evening",
+        "Audience in the Digi Camp hall in front of the large Digi Camp and Digital Skills Festival screen at ITP"
+      ],
+      "imageCaptions": [
+        "Ready for Digi Camp",
+        "The team",
+        "Innovation & Training Park Prizren",
+        "After dark at ITP",
+        "A full hall"
       ]
     }
   ],
@@ -384,10 +497,9 @@
     "label": "Where I want to go",
     "heading": "Something I care about beyond code.",
     "paragraphs": [
-      "I grew up close to a child with Down syndrome, so I have seen up close what daily life can look like for a child with special needs and for the family around them. In Kosovo, I saw how hard it can be to find the right support, and how often families are left to figure it out alone.",
-      "I did not understand all of that when I was younger. I only understood it later, and it has never really left me.",
-      "I am studying software engineering, and I love it. But I do not want it to be only a career. Someday I would like to work with organizations that support children with autism, Down syndrome, and other special needs, and to use what I know to make things a little easier for them: a tool that saves a teacher time, an app a family can actually use, or simply an interface that is calm and clear for someone who finds most of the digital world overwhelming.",
-      "I do not know yet exactly what that will look like. I am still at the beginning, and I would rather be honest about that than pretend otherwise. But I know the kind of engineer I want to become: one who builds things well, and who builds them for people who are too often forgotten."
+      "I grew up close to a child with Down syndrome, and I saw what daily life can look like for a family like theirs. In Kosovo, the right support is hard to find, and many families are left to figure it out alone.",
+      "I study software engineering, and I love it. Someday I want to work with organizations that support children with autism, Down syndrome, and other special needs, building tools that save teachers time, apps families can actually use, and interfaces that feel calm. I am still at the beginning.",
+      "I want to build things well, for people who are too often forgotten."
     ]
   }
 }

@@ -1,43 +1,160 @@
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import Tag from './Tag';
+import ProjectVisual from './ProjectVisual';
 
 /**
- * Concept: reusable ProjectCard with props.
- * Uses <Link> for client-side navigation (prefetch + no full page reload)
- * instead of a plain <a> for internal routes.
- * Kept for reuse when projects are published (published: true).
+ * Concept: reusable presentational component (props in, markup out).
+ * Editorial project card linking to the project's public GitHub repo
+ * (external, new tab).
+ * Detail pages /projects/[slug] stay off (published: false).
+ *
+ * Variants give each card a different composition:
+ * - feature: large, drawing on top, text below
+ * - compact: dark ink sheet, text-led with a small drawing
+ * - wide:    drawing left, text right
+ * - row:     small list row for the rest of the repositories
  */
-export default function ProjectCard({ project, index }) {
-  const num = String(index + 1).padStart(2, '0');
+function Meta({ project, onInk = false }) {
+  return (
+    <p className={`mono-label flex flex-wrap items-center gap-x-3 gap-y-1 ${onInk ? 'text-paper/80' : 'text-ink-soft'}`}>
+      <span className="flex items-center gap-2">
+        <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-thread" />
+        {project.language}
+      </span>
+      {project.team ? <span>· Team project</span> : null}
+    </p>
+  );
+}
+
+function Tags({ items, className = 'mt-6' }) {
+  return (
+    <ul className={`${className} flex flex-wrap gap-2`} aria-label="Technologies">
+      {items.map((tech) => (
+        <li key={tech} className="chip">
+          {tech}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Title that links to the repo; ::after stretches the click target over the card. */
+function CardTitle({ project, as: Tag, className }) {
+  const id = `project-${project.slug}`;
+  if (!project.repoUrl) {
+    return (
+      <Tag id={id} className={className}>
+        {project.title}
+      </Tag>
+    );
+  }
+  return (
+    <Tag id={id} className={className}>
+      <a
+        href={project.repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="after:absolute after:inset-0 after:z-4 after:content-['']"
+      >
+        {project.title}
+        <span className="sr-only"> (GitHub repository, opens in a new tab)</span>
+      </a>
+    </Tag>
+  );
+}
+
+function RepoHint({ project, onInk = false }) {
+  if (!project.repoUrl) return null;
+  return (
+    <p aria-hidden="true" className={`mt-6 text-sm font-medium ${onInk ? 'text-paper' : 'text-thread'}`}>
+      View on GitHub <span className="nudge inline-block">↗</span>
+    </p>
+  );
+}
+
+export default function ProjectCard({ project, variant = 'feature', titleLevel = 'h3', className = '' }) {
+  const labelledBy = `project-${project.slug}`;
+
+  if (variant === 'row') {
+    return (
+      <article aria-labelledby={labelledBy} className={`project-card relative border-t border-line-strong py-6 ${className}`}>
+        <div className="grid gap-3 sm:grid-cols-[1fr_1.4fr] sm:gap-8">
+          <div>
+            <Meta project={project} />
+            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[1.9rem]" />
+          </div>
+          <div>
+            <p className="text-ink-soft">{project.oneLiner}</p>
+            <Tags items={project.technologies} className="mt-4" />
+          </div>
+        </div>
+        <span aria-hidden="true" className="absolute right-0 top-6 text-thread">↗</span>
+      </article>
+    );
+  }
+
+  if (variant === 'compact') {
+    return (
+      <article aria-labelledby={labelledBy} className={`project-card relative ${className}`}>
+        <div
+          className="project-sheet on-ink sheet-shadow relative bg-ink p-7 text-paper sm:p-9"
+          style={{ '--fold-bg': 'var(--paper-deep)', '--flap': '#2c4a37' }}
+        >
+          <span aria-hidden="true" className="project-fold" />
+          <Meta project={project} onInk />
+          <div className="mx-auto mt-6 h-36 w-48 text-paper">
+            <ProjectVisual kind={project.slug} />
+          </div>
+          <p className="mt-6 text-sm uppercase tracking-[0.2em] text-paper/70">{project.category}</p>
+          <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
+          <p className="mt-4 text-paper/80">{project.oneLiner}</p>
+          <Tags items={project.technologies} />
+          <RepoHint project={project} onInk />
+        </div>
+      </article>
+    );
+  }
+
+  if (variant === 'wide') {
+    return (
+      <article aria-labelledby={labelledBy} className={`project-card relative ${className}`}>
+        <div className="project-sheet sheet-shadow relative grid gap-6 bg-paper-light p-5 sm:grid-cols-[1fr_1.15fr] sm:gap-8 sm:p-7">
+          <span aria-hidden="true" className="project-fold" />
+          <div className="relative aspect-4/3 bg-paper-deep text-ink">
+            <ProjectVisual kind={project.slug} />
+          </div>
+          <div className="flex flex-col justify-center">
+            <Meta project={project} />
+            <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
+            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
+            <p className="mt-4 text-ink-soft">{project.oneLiner}</p>
+            <Tags items={project.technologies} />
+            <RepoHint project={project} />
+          </div>
+        </div>
+      </article>
+    );
+  }
 
   return (
-    <article className="group flex flex-col p-6 transition-colors hover:bg-secondary/50">
-      <Link href={`/projects/${project.slug}`} className="flex flex-1 flex-col">
-        <div className="mb-6 flex items-start justify-between">
-          <span className="mono-caps text-primary">{num}</span>
-          <ArrowUpRight
-            className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
-            aria-hidden
-          />
+    <article aria-labelledby={labelledBy} className={`project-card relative ${className}`}>
+      <div className="project-sheet sheet-shadow relative bg-paper-light p-5 sm:p-7">
+        <span aria-hidden="true" className="project-fold" />
+        <div className="stitch-inset relative aspect-4/3 bg-paper-deep text-ink">
+          <ProjectVisual kind={project.slug} />
         </div>
-        <h3 className="text-xl font-semibold text-foreground sm:text-2xl">
-          {project.title}
-        </h3>
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-          {project.oneLiner}
-        </p>
-        {project.summary ? (
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground/80">
-            {project.summary}
-          </p>
-        ) : null}
-        <div className="mt-6 flex flex-wrap gap-x-2 gap-y-1">
-          {project.technologies.map((tech) => (
-            <Tag key={tech}>{tech}</Tag>
-          ))}
+        <div className="mt-7 grid gap-6 sm:grid-cols-[1.1fr_1fr]">
+          <div>
+            <Meta project={project} />
+            <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
+            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2.4rem,4.6vw,3.8rem)]" />
+          </div>
+          <div className="text-ink-soft sm:pt-12">
+            <p className="text-ink">{project.oneLiner}</p>
+            {project.summary ? <p className="mt-3">{project.summary}</p> : null}
+          </div>
         </div>
-      </Link>
+        <Tags items={project.technologies} />
+        <RepoHint project={project} />
+      </div>
     </article>
   );
 }

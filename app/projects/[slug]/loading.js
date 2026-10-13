@@ -1,10 +1,6 @@
-import Skeleton from '@/components/Skeleton';
+import { SectionSkeleton } from '@/components/Skeleton';
 
+/** Concept: loading.js for the dynamic project route. */
 export default function ProjectDetailLoading() {
-  return (
-    <div className="container-page space-y-6 py-16">
-      <Skeleton lines={2} />
-      <Skeleton lines={4} />
-    </div>
-  );
+  return <SectionSkeleton lines={4} />;
 }

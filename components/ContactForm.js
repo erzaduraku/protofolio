@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 /**
  * Concept: Client Component with useState for form UI + fetch to Route Handler.
- * Posts to /api/contact (server keeps Web3Forms key private).
- * Blueprint fields: tall inputs, mono labels, 1px borders, blue focus.
+ * Posts to /api/contact (server keeps the Web3Forms key private).
+ * Styled as a lifted paper sheet with simple underlined fields.
  */
 export default function ContactForm() {
   const [name, setName] = useState('');
@@ -48,31 +48,24 @@ export default function ContactForm() {
     }
   }
 
-  const fieldClass =
-    'w-full border border-border bg-transparent px-4 py-3.5 text-[15px] leading-normal text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-muted-foreground/50 focus:border-primary focus:shadow-[0_0_0_1px_var(--primary)] disabled:opacity-60';
+  const labelClass = 'block text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft';
+  const sheetClass = 'sheet-shadow relative bg-paper-light p-7 sm:p-10';
 
   if (status === 'success') {
     return (
-      <div className="border border-border p-8 sm:p-10">
-        <p className="mono-caps text-primary">Message sent</p>
-        <p className="mt-4 text-xl font-semibold tracking-tight text-foreground">
-          Thank you — I got your note.
+      <div className={sheetClass} role="status">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink">Message sent</p>
+        <p className="display mt-4 text-4xl">
+          Thank you — I got your <em>note</em>.
         </p>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-4 max-w-md text-ink-soft">
           I will get back to you soon. You can also reach me anytime at{' '}
-          <a
-            href="mailto:erzaaduraku15@gmail.com"
-            className="text-primary hover:underline"
-          >
+          <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
             erzaaduraku15@gmail.com
           </a>
           .
         </p>
-        <button
-          type="button"
-          onClick={() => setStatus('idle')}
-          className="mt-8 border border-border px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-        >
+        <button type="button" onClick={() => setStatus('idle')} className="btn-line mt-8">
           Send another message
         </button>
       </div>
@@ -80,17 +73,10 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="border border-border bg-card/30 p-6 sm:p-8"
-      noValidate={false}
-    >
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2.5">
-          <label
-            htmlFor="contact-name"
-            className="mono-caps block text-muted-foreground"
-          >
+    <form onSubmit={onSubmit} className={sheetClass} noValidate={false}>
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div>
+          <label htmlFor="contact-name" className={labelClass}>
             Name
           </label>
           <input
@@ -101,17 +87,14 @@ export default function ContactForm() {
             autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={fieldClass}
+            className="field mt-1"
             placeholder="Your name"
             disabled={status === 'loading'}
           />
         </div>
 
-        <div className="space-y-2.5">
-          <label
-            htmlFor="contact-email"
-            className="mono-caps block text-muted-foreground"
-          >
+        <div>
+          <label htmlFor="contact-email" className={labelClass}>
             Email
           </label>
           <input
@@ -122,18 +105,15 @@ export default function ContactForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={fieldClass}
+            className="field mt-1"
             placeholder="you@example.com"
             disabled={status === 'loading'}
           />
         </div>
       </div>
 
-      <div className="mt-6 space-y-2.5">
-        <label
-          htmlFor="contact-message"
-          className="mono-caps block text-muted-foreground"
-        >
+      <div className="mt-8">
+        <label htmlFor="contact-message" className={labelClass}>
           Message
         </label>
         <textarea
@@ -143,27 +123,21 @@ export default function ContactForm() {
           rows={6}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className={`${fieldClass} min-h-[10rem] resize-y`}
+          className="field mt-1 min-h-40 resize-y"
           placeholder="What would you like to build or talk about?"
           disabled={status === 'loading'}
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="mt-8 w-full bg-primary py-3.5 text-sm font-medium text-primary-foreground transition-colors hover:brightness-110 disabled:opacity-60"
-      >
+      <button type="submit" disabled={status === 'loading'} className="btn-ink mt-10 w-full justify-center sm:w-auto">
         {status === 'loading' ? 'Sending…' : 'Send message'}
+        <span aria-hidden="true" className="nudge inline-block">→</span>
       </button>
 
       {status === 'error' ? (
-        <p className="mt-4 border border-border px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+        <p role="alert" className="mt-6 border-l-2 border-thread pl-4 text-sm text-ink-soft">
           {error}{' '}
-          <a
-            href="mailto:erzaaduraku15@gmail.com"
-            className="text-primary hover:underline"
-          >
+          <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
             erzaaduraku15@gmail.com
           </a>
         </p>

@@ -1,10 +1,6 @@
-import Skeleton from '@/components/Skeleton';
+import { SectionSkeleton } from '@/components/Skeleton';
 
+/** Concept: loading.js for /journey (route-level Suspense boundary). */
 export default function JourneyLoading() {
-  return (
-    <div className="container-page space-y-8 py-16">
-      <Skeleton lines={2} />
-      <Skeleton lines={8} />
-    </div>
-  );
+  return <SectionSkeleton lines={8} />;
 }

@@ -3,8 +3,7 @@ import NavLink from './NavLink';
 
 /**
  * Concept: Server Component that composes a Client Component (NavLink).
- * Header itself does not need 'use client'.
- * Internal nav uses <Link>; never plain <a> for same-site routes.
+ * Sits right under the measuring tape. Internal nav uses <Link>.
  */
 const links = [
   { href: '/about', label: 'About' },
@@ -16,20 +15,21 @@ const links = [
 
 export default function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container-page flex h-full items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center border border-primary text-xs font-semibold text-foreground">
-            ED
-          </span>
-          <span className="text-sm font-medium text-foreground">Erza Duraku</span>
+    <header className="fixed inset-x-0 top-(--tape-h) z-50 h-(--header-h) border-b border-line-strong bg-paper">
+      <div className="container-page flex h-full items-center justify-between gap-4">
+        <Link href="/" className="flex shrink-0 items-baseline gap-1.5 text-ink" aria-label="Erza Duraku, home">
+          <span className="font-display text-[1.35rem] italic leading-none">Erza</span>
+          <span className="font-display text-[1.35rem] leading-none">Duraku</span>
+          <span aria-hidden="true" className="ml-0.5 inline-block h-1.5 w-1.5 rounded-full bg-thread" />
         </Link>
-        <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2">
-          {links.map((link) => (
-            <NavLink key={link.href} href={link.href}>
-              {link.label}
-            </NavLink>
-          ))}
+        <nav aria-label="Main" className="-mr-2 min-w-0 overflow-x-auto">
+          <ul className="flex items-center gap-0.5 whitespace-nowrap sm:gap-2">
+            {links.map((link) => (
+              <li key={link.href}>
+                <NavLink href={link.href}>{link.label}</NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
       </div>
     </header>

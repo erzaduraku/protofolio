@@ -1,147 +1,114 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getProfile } from '@/lib/api';
-import Skeleton from '@/components/Skeleton';
-import SectionLabel from '@/components/SectionLabel';
-import HomeAboutPreview from '@/components/HomeAboutPreview';
-import CurrentlyCard from '@/components/CurrentlyCard';
-import HomeBeyondPreview from '@/components/HomeBeyondPreview';
-import HomePurposePreview from '@/components/HomePurposePreview';
-import HomeContactPreview from '@/components/HomeContactPreview';
+import HeroPieces from '@/components/HeroPieces';
+import { SectionSkeleton } from '@/components/Skeleton';
+import AboutSection from '@/components/sections/AboutSection';
+import ProjectsSection from '@/components/sections/ProjectsSection';
+import JourneySection from '@/components/sections/JourneySection';
+import BeyondSection from '@/components/sections/BeyondSection';
+import PurposeSection from '@/components/sections/PurposeSection';
+import ContactSection from '@/components/sections/ContactSection';
+
+/*
+ * Hero headline options (written from Erza's story: tailor mother, mechanic
+ * father, software engineering student in Prishtina, logic × craft, building
+ * for people too often forgotten). Option 1 is live below.
+ *
+ * 1. "A tailor's eye, a mechanic's patience — in code."
+ * 2. "Between engines and fabric, I found software."
+ * 3. "Software, cut to fit the people too often forgotten."
+ */
 
 /**
- * Concept: Home is a Server Component with a long one-page overview.
- * Separate async children each fetch their own data and stream via <Suspense>.
- * Projects stay "Coming soon" (published: false) — no project cards here.
+ * Concept: Home is a Server Component. The hero renders straight away;
+ * every section below is a separate async Server Component that fetches its
+ * own data and streams in through its own <Suspense> boundary.
  */
 export default async function HomePage() {
   const profile = await getProfile();
 
   return (
-    <div id="top">
-      {/* Hero */}
-      <section className="container-page pb-10 pt-16 sm:pt-24">
-        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7">
-            <p className="mono-caps mb-6 flex items-center gap-2 text-primary">
-              <span aria-hidden>○</span>
-              {profile.eyebrow}
-            </p>
-            <h1 className="text-[clamp(2.75rem,8vw,5.75rem)] font-semibold leading-[1.02] tracking-tight">
-              <span className="block text-foreground">{profile.headlineLine1}</span>
-              <span className="block text-muted-foreground">
-                {profile.headlineLine2}
-              </span>
-            </h1>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              {profile.tagline}
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link
-                href="/projects"
-                className="inline-flex items-center bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:brightness-110"
-              >
-                View my work ↓
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center border border-border px-5 py-3 text-sm font-medium text-foreground transition-colors hover:border-primary"
-              >
-                About me
-              </Link>
-            </div>
-          </div>
+    <>
+      <section data-no-reveal id="top" aria-labelledby="hero-heading" className="relative overflow-x-clip">
+        <div className="container-page relative pb-24 pt-12 sm:pt-16 lg:pb-32 lg:pt-20">
+          <p aria-hidden="true" className="side-label absolute left-0 top-20 hidden xl:block">
+            {profile.basedIn} — {profile.role}
+          </p>
 
-          <div className="relative lg:col-span-5">
-            <div className="relative">
-              <div
-                className="pointer-events-none absolute inset-[-0.75rem_0.75rem_0.75rem_-0.75rem] -z-10 border border-border"
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute right-0 top-0 h-20 w-20 border-r border-t border-primary"
-                aria-hidden
-              />
-              <Image
-                src="/engineering-craft.jpg"
-                alt="Blueprint-style illustration representing logic and craft"
-                width={900}
-                height={700}
-                priority
-                className="h-auto w-full border border-border object-cover"
-              />
-              <div className="absolute bottom-4 left-4 border border-primary bg-background px-3 py-2">
-                <p className="mono-caps text-primary">{profile.heroCaption}</p>
+          <p className="fade-up mono-label text-thread" style={{ '--i': 0 }}>
+            {profile.eyebrow}
+          </p>
+
+          <h1 id="hero-heading" className="display relative z-10 mt-6 text-[clamp(2.6rem,6.8vw,6.75rem)]">
+            <span className="line-mask">
+              <span style={{ '--i': 0 }}>
+                A tailor&rsquo;s <em>eye</em>,
+              </span>
+            </span>
+            <span className="line-mask">
+              <span style={{ '--i': 1 }}>
+                a mechanic&rsquo;s <em>patience</em>
+              </span>
+            </span>
+            <span className="line-mask">
+              <span style={{ '--i': 2 }} className="sm:pl-[8%]">
+                &mdash; in code.
+              </span>
+            </span>
+          </h1>
+
+          <div className="mt-12 grid gap-16 lg:mt-0 lg:grid-cols-12 lg:items-start lg:gap-10">
+            <div className="relative z-10 lg:col-span-5 lg:pt-20">
+              <p className="fade-up max-w-md text-lg text-ink-soft" style={{ '--i': 4 }}>
+                {profile.tagline}
+              </p>
+              <div className="fade-up mt-8 flex flex-wrap gap-3" style={{ '--i': 5 }}>
+                <Link href="#projects" className="btn-ink">
+                  View my work <span aria-hidden="true">↓</span>
+                </Link>
+                <Link href="#about" className="btn-line">
+                  About me
+                </Link>
               </div>
             </div>
+            <div className="relative lg:col-span-6 lg:col-start-7 lg:mt-[-6.4vw]">
+              <HeroPieces
+                label="Paper pattern pieces laid out on a technical drafting grid: logic meets craft"
+                caption={profile.heroCaption}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="mt-16 border-y border-border py-5">
-          <p className="mono-caps flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center text-muted-foreground">
+          <ul className="fade-up mt-20 flex flex-wrap gap-x-6 gap-y-2 border-y border-line-strong py-4 text-sm text-ink-soft" style={{ '--i': 6 }}>
             {profile.facts.map((fact, i) => (
-              <span key={fact} className="inline-flex items-center gap-3">
-                {i > 0 ? (
-                  <span className="text-primary" aria-hidden>
-                    *
-                  </span>
-                ) : null}
-                <span>{fact}</span>
-              </span>
+              <li key={fact} className="flex items-center gap-6">
+                {i > 0 ? <span aria-hidden="true" className="text-thread">×</span> : null}
+                {fact}
+              </li>
             ))}
-          </p>
+          </ul>
         </div>
       </section>
 
-      <Suspense fallback={<div className="container-page py-24"><Skeleton lines={6} /></div>}>
-        <HomeAboutPreview />
+      <Suspense fallback={<SectionSkeleton />}>
+        <AboutSection />
       </Suspense>
-
-      <section id="projects" className="container-page py-24 sm:py-32">
-        <SectionLabel number="02">Selected projects</SectionLabel>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 className="section-title">
-              Problems explored. Systems built. Lessons kept.
-            </h2>
-          </div>
-          <p className="max-w-xl leading-relaxed text-muted-foreground lg:col-span-7 lg:pt-3">
-            Each project is a record of learning—how I understood a problem, made
-            choices, and turned an idea into working software.
-          </p>
-        </div>
-        <div className="mt-12 border border-border p-8 sm:p-12">
-          <p className="mono-caps text-primary">Coming soon</p>
-          <p className="mt-4 max-w-lg text-muted-foreground">
-            Projects are being polished and deployed. Check back soon.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-4 text-sm">
-            <Link href="/projects" className="text-primary hover:underline">
-              Projects page →
-            </Link>
-            <Link href="/journey" className="text-muted-foreground hover:text-foreground">
-              Read my journey →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <Suspense fallback={<div className="container-page py-24"><Skeleton lines={8} /></div>}>
-        <CurrentlyCard />
+      <Suspense fallback={<SectionSkeleton />}>
+        <ProjectsSection />
       </Suspense>
-
-      <Suspense fallback={<div className="container-page py-24"><Skeleton lines={4} /></div>}>
-        <HomeBeyondPreview />
+      <Suspense fallback={<SectionSkeleton lines={8} />}>
+        <JourneySection />
       </Suspense>
-
-      <Suspense fallback={<div className="container-page py-24"><Skeleton lines={5} /></div>}>
-        <HomePurposePreview />
+      <Suspense fallback={<SectionSkeleton />}>
+        <BeyondSection />
       </Suspense>
-
-      <Suspense fallback={<div className="container-page py-24"><Skeleton lines={3} /></div>}>
-        <HomeContactPreview />
+      <Suspense fallback={<SectionSkeleton />}>
+        <PurposeSection />
       </Suspense>
-    </div>
+      <Suspense fallback={<SectionSkeleton />}>
+        <ContactSection />
+      </Suspense>
+    </>
   );
 }
