@@ -1,15 +1,6 @@
 import { getContact } from '@/lib/api';
 
-/**
- * Concept: reusable async Footer rendered once from layout.js.
- * A deep-green closing band (darker than the --ink sections, so it never
- * blends with the dark "Where I want to go" band) inside the site container:
- * - left: closing line + email
- * - right (top-aligned): LinkedIn / GitHub + small sign-off
- * - bottom row under a hairline: © + location, Back to top
- * The only tailoring accent is a thin red "thread" hairline on the top edge.
- * External links use <a target="_blank" rel="noopener noreferrer">.
- */
+/** Uses --ink-deep so it stays distinct from the dark purpose band above it. */
 export default async function Footer() {
   const contact = await getContact();
 

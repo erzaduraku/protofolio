@@ -1,7 +1,4 @@
-/**
- * Decorative "pattern draft" drawings for project cards (placeholders until real screenshots are added).
- * Pure SVG, aria-hidden. Replace with real screenshots when projects ship.
- */
+/** Decorative SVG drawings for project cards (aria-hidden). */
 export default function ProjectVisual({ kind }) {
   if (kind === 'collabai-project-management') {
     // a task board: three columns of cards
@@ -25,6 +22,21 @@ export default function ProjectVisual({ kind }) {
         ))}
         <circle cx="330" cy="236" r="16" fill="var(--thread)" />
         <path d="M322 236 h16 M330 228 v16" stroke="var(--paper-light)" strokeWidth="2" />
+      </svg>
+    );
+  }
+
+  // a parking lot with one reserved bay and a location pin
+  if (kind === 'parkeasy') {
+    return (
+      <svg viewBox="0 0 400 300" className="h-full w-full" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <path d="M60 230 H340" strokeOpacity="0.5" />
+        {[60, 116, 172, 228, 284, 340].map((x) => (
+          <path key={x} d={`M${x} 230 V150`} strokeOpacity="0.5" />
+        ))}
+        <rect x="176" y="158" width="48" height="64" fill="var(--color-thread)" fillOpacity="0.12" stroke="var(--color-thread)" />
+        <path d="M200 60 c-22 0 -36 16 -36 34 c0 26 36 52 36 52 s36 -26 36 -52 c0 -18 -14 -34 -36 -34 z" />
+        <text x="200" y="104" textAnchor="middle" fontSize="30" fontStyle="italic" fill="currentColor" stroke="none">P</text>
       </svg>
     );
   }

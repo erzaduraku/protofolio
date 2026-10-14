@@ -3,19 +3,9 @@
 import { useEffect } from 'react';
 
 /**
- * Reveal-on-scroll for every <section> in <main> (and anything with data-reveal).
- * One shared IntersectionObserver; a MutationObserver picks up sections that
- * stream in later through <Suspense> or arrive with client-side navigation.
- *
- * Hydration-safe: this never touches DOM attributes or classes (streamed
- * sections may not be hydrated yet, and changed attributes would cause a
- * mismatch). "Already watched" is tracked in a WeakSet, and the reveal itself
- * is a Web Animations API animation (fill: forwards) layered over the CSS
- * start state, so React's markup stays exactly as rendered on the server.
- *
- * The hidden start state only applies when <html> has .motion-ready (set by the
- * inline boot script in layout.js). Without JS or with reduced motion,
- * everything is simply visible.
+ * Hydration-safe: never changes DOM attributes or classes (streamed sections may
+ * not be hydrated yet). Watched elements live in a WeakSet and reveals use the
+ * Web Animations API. The hidden start state only applies with html.motion-ready.
  */
 const SELECTOR = 'main section:not([data-no-reveal]), main [data-reveal]';
 const KEYFRAMES = [

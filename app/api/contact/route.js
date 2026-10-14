@@ -58,7 +58,18 @@ export async function POST(request) {
       }),
     });
 
-    const data = await res.json().catch(() => ({}));
+    const text = await res.text();
+    let data = {};
+    try {
+      data = JSON.parse(text);
+    } catch {
+      // Web3Forms' Cloudflare answers server-side calls with an HTML challenge (403).
+    }
+    if (!res.ok || data.success === false) {
+      console.error(
+        `[api/contact] Web3Forms ${res.status} (${res.headers.get('content-type')}): ${(data.message || text).slice(0, 200)}`
+      );
+    }
 
     if (!res.ok || data.success === false) {
       return Response.json(
@@ -73,7 +84,8 @@ export async function POST(request) {
     }
 
     return Response.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error('[api/contact] failed:', err?.message);
     return Response.json(
       {
         ok: false,

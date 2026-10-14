@@ -4,12 +4,7 @@ import { emphasize } from '@/lib/emphasize';
 import PolaroidStack from '@/components/PolaroidStack';
 import Parallax from '@/components/Parallax';
 
-/**
- * Journey: AnchorzUp internship as an ink "pattern envelope", the learning
- * timeline on a tape line, then volunteering events (SFK, DevFest, Digi Camp)
- * in alternating rows, each with a polaroid stack.
- * showBody (on /journey) shows the full event write-ups; Home shows the short text.
- */
+/** showBody (on /journey) renders the full event write-ups; Home shows the short text. */
 export default async function JourneySection({ headingLevel = 'h2', showBody = false }) {
   const { experience, volunteering, volunteeringQuote, learning } = await getJourney();
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
@@ -37,7 +32,6 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
           </p>
         </div>
 
-        {/* Internship: ink "envelope" card, photo in the dark half */}
         <article
           aria-labelledby="exp-heading"
           data-reveal
@@ -89,10 +83,34 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                 </li>
               ))}
             </ol>
+            {experience.course ? (
+              <div className="mt-8 border-l-2 border-thread pl-4">
+                <p className="text-sm text-ink-soft">{experience.course.label}</p>
+                <p className="mt-1 font-display text-xl leading-snug">
+                  {experience.course.url ? (
+                    <a
+                      href={experience.course.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-line-strong underline-offset-4 hover:decoration-thread"
+                    >
+                      {experience.course.title}
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    experience.course.title
+                  )}
+                </p>
+                <p className="mt-1 text-sm text-ink-soft">
+                  {[experience.course.platform, experience.course.instructor, experience.course.status]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </p>
+              </div>
+            ) : null}
           </div>
         </article>
 
-        {/* Learning timeline on a tape line */}
         {timeline.length > 0 ? (
           <ol className="mt-20 grid gap-12 border-t-2 border-ink pt-10 sm:grid-cols-2 lg:ml-[16%]">
             {timeline.map((item) => (
@@ -116,7 +134,6 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
           </ol>
         ) : null}
 
-        {/* Volunteering */}
         <div className="mt-28 grid gap-6 lg:grid-cols-12">
           <p className="kicker lg:col-span-12">Outside the code</p>
           <Sub className="display text-[clamp(2.2rem,4.6vw,4rem)] lg:col-span-9">

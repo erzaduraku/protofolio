@@ -3,11 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-/**
- * Concept: small Client Component for active-nav highlighting.
- * Header stays a Server Component; only this leaf needs 'use client'
- * because usePathname requires the browser.
- */
+/** Only this leaf is a Client Component, because usePathname needs the browser. */
 export default function NavLink({ href, children }) {
   const pathname = usePathname();
   const isActive =

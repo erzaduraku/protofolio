@@ -5,17 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
 
-/**
- * Concept: Client Component with useState — a stacked polaroid gallery.
- *
- * - Photos rest in a loose stack (slight rotations); they fan out on
- *   hover or keyboard focus, or with the "Fan out" button (aria-pressed).
- * - "Next photo" moves the top print to the back (keyboard-friendly cycling).
- * - Each print can be dragged around inside the stack area (Framer drag with
- *   constraints) and springs back when released.
- * - Natural aspect ratios (h-auto), so no faces get cropped.
- * - Reduced motion: no fan animation (instant), no dragging.
- */
+/** Reduced motion: no fan animation and no dragging. */
 const STACK = [
   { x: 0, y: 0, rotate: -3 },
   { x: 5, y: -3, rotate: 4 },
@@ -29,20 +19,21 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
   const count = images.length;
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const [order, setOrder] = useState(() => images.map((_, i) => i)); // order[0] = top print
-  const [pinned, setPinned] = useState(null); // null = follow hover/focus; true/false = user choice
   const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
   const areaRef = useRef(null);
+  const dragged = useRef(false); // a drag should not count as a click
 
   if (count === 0) return null;
 
-  const open = pinned ?? (hovered || focused);
+  const open = hovered;
   const top = order[0];
   const altFor = (i) => alts[i] || `${title}, photo ${i + 1} of ${count}`;
   const captionFor = (i) => captions[i] || title;
   const transition = reducedMotion
     ? { duration: 0 }
     : { type: 'spring', stiffness: 210, damping: 24, mass: 0.8 };
+
+  const next = () => setOrder((prev) => [...prev.slice(1), prev[0]]);
 
   function poseFor(i) {
     const depth = order.indexOf(i);
@@ -55,25 +46,26 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
   }
 
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => {
-        setHovered(false);
-        setPinned(null);
-      }}
-      onFocus={() => setFocused(true)}
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          setFocused(false);
-          setPinned(null);
-        }
-      }}
-    >
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div
         ref={areaRef}
-        role="group"
-        aria-label={`${title}: ${count} photos`}
-        className="relative grid min-h-76 place-items-center px-[8%] py-10 sm:min-h-100"
+        role="button"
+        tabIndex={0}
+        aria-label={`Next photo, ${top + 1} of ${count}: ${captionFor(top)}`}
+        onClick={() => {
+          if (dragged.current) {
+            dragged.current = false;
+            return;
+          }
+          next();
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            next();
+          }
+        }}
+        className="relative grid min-h-76 cursor-pointer rounded-sm place-items-center px-[8%] py-10 sm:min-h-100"
       >
         {images.map((src, i) => {
           const pose = poseFor(i);
@@ -91,6 +83,9 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
               dragConstraints={areaRef}
               dragElastic={0.2}
               dragSnapToOrigin
+              onDragStart={() => {
+                dragged.current = true;
+              }}
               whileDrag={reducedMotion ? undefined : { scale: 1.04, rotate: 0 }}
             >
               <span aria-hidden="true" className="polaroid-tape" />
@@ -111,27 +106,9 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
         })}
       </div>
 
-      <div className="mt-2 flex flex-wrap items-center gap-2.5">
-        <button
-          type="button"
-          className="btn-chip"
-          aria-pressed={open}
-          onClick={() => setPinned(!open)}
-        >
-          {open ? 'Stack photos' : 'Fan out photos'}
-        </button>
-        <button
-          type="button"
-          className="btn-chip"
-          onClick={() => setOrder((prev) => [...prev.slice(1), prev[0]])}
-        >
-          Next photo
-        </button>
-        <p className="text-sm text-ink-soft" aria-live="polite">
-          <span className="sr-only">On top: </span>
-          {top + 1}/{count} · {captionFor(top)}
-        </p>
-      </div>
+      <p className="sr-only" aria-live="polite">
+        Photo {top + 1} of {count}: {captionFor(top)}
+      </p>
     </div>
   );
 }

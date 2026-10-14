@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* ==========================================================================
-   Erza Duraku · "logic meets craft"
-   Pattern-making & tailoring, "Tailor's studio": off-white paper, dark-green
-   ink, chalk pink, thread red. Every other colour is a tint of these four.
-   ========================================================================== */
 
 :root {
   /* "Tailor's studio" palette. Contrast on --paper:
@@ -340,7 +335,7 @@ html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: clip; }
 
-/* Custom pin cursor: native cursor hidden ONLY while the pin is active */
+/* Custom cursor: native cursor hidden ONLY while it is active */
 html.pin-cursor,
 html.pin-cursor * { cursor: none !important; }
 html.pin-cursor input,
@@ -360,11 +355,7 @@ html.pin-cursor select { cursor: text !important; }
 .line-mask,
 .line-mask > span { display: block; }
 
-/* ==========================================================================
-   Motion: only when the visitor has not asked for reduced motion.
-   Everything is fully visible by default; these only add entrances/hover.
-   Only transform and opacity are animated.
-   ========================================================================== */
+/* Motion (no-preference only): transform/opacity only; content is visible by default. */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 

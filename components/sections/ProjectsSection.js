@@ -1,20 +1,15 @@
 import { getAllProjects } from '@/lib/api';
 import ProjectCard from '@/components/ProjectCard';
 
-/**
- * Projects: three featured repositories as editorial cards of different sizes,
- * and the rest of the public GitHub repos as a compact list.
- * Only projects with a GitHub repo are shown.
- * Cards link to GitHub; /projects/[slug] detail pages stay off (published: false).
- */
-const FEATURED = ['collabai-project-management', 'erza-master-project', 'predictive-text-engine'];
-const MORE = ['text-rule-processor', 'maze-solver', 'firebase-auth-erza'];
+/** Featured: CollabAI, ParkEasy, DCADD. Cards link to /projects/[slug]. */
+const FEATURED = ['collabai-project-management', 'parkeasy', 'erza-master-project'];
+const MORE = ['predictive-text-engine', 'text-rule-processor', 'maze-solver', 'firebase-auth-erza'];
 
 export default async function ProjectsSection({ headingLevel = 'h2' }) {
   const all = await getAllProjects();
   const bySlug = Object.fromEntries(all.map((p) => [p.slug, p]));
   const pick = (slugs) => slugs.map((slug) => bySlug[slug]).filter((p) => p?.repoUrl);
-  const [collab, infra, predictive] = FEATURED.map((slug) => bySlug[slug]);
+  const [collab, parkeasy, infra] = FEATURED.map((slug) => bySlug[slug]);
   const more = pick(MORE);
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
   const Sub = headingLevel === 'h1' ? 'h2' : 'h3';
@@ -51,11 +46,11 @@ export default async function ProjectsSection({ headingLevel = 'h2' }) {
           {collab ? (
             <ProjectCard project={collab} variant="feature" titleLevel={featureTitle} className="lg:col-span-7" />
           ) : null}
-          {infra ? (
-            <ProjectCard project={infra} variant="compact" titleLevel={featureTitle} className="lg:col-span-5 lg:mt-36" />
+          {parkeasy ? (
+            <ProjectCard project={parkeasy} variant="compact" titleLevel={featureTitle} className="lg:col-span-5 lg:mt-36" />
           ) : null}
-          {predictive ? (
-            <ProjectCard project={predictive} variant="wide" titleLevel={featureTitle} className="lg:col-span-9 lg:col-start-3" />
+          {infra ? (
+            <ProjectCard project={infra} variant="wide" titleLevel={featureTitle} className="lg:col-span-9 lg:col-start-3" />
           ) : null}
         </div>
 

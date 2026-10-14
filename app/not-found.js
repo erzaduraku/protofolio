@@ -1,8 +1,6 @@
 import Link from 'next/link';
 
-/**
- * Concept: custom 404 page used by notFound() from dynamic routes.
- */
+/** Concept: custom 404 used by notFound() in dynamic routes. */
 export default function NotFound() {
   return (
     <section className="container-page relative overflow-x-clip py-24 sm:py-32">

@@ -20,11 +20,7 @@ import ContactSection from '@/components/sections/ContactSection';
  * 3. "Software, cut to fit the people too often forgotten."
  */
 
-/**
- * Concept: Home is a Server Component. The hero renders straight away;
- * every section below is a separate async Server Component that fetches its
- * own data and streams in through its own <Suspense> boundary.
- */
+/** Concept: the hero renders immediately; each section streams in through its own <Suspense>. */
 export default async function HomePage() {
   const profile = await getProfile();
 

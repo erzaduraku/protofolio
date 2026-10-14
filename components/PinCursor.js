@@ -4,13 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import useMediaQuery, { FINE_POINTER_MOTION } from '@/lib/useMediaQuery';
 
-/**
- * Subtle custom cursor: a small dark-green dot that grows into a soft
- * chalk-pink ring over links and buttons.
- * - Only on fine pointers (mouse/trackpad) with motion allowed; never on touch.
- * - The native cursor is hidden only while this is active (html.pin-cursor);
- *   text fields keep the normal text caret (the dot hides there).
- */
+/** Fine pointers with motion allowed only; never on touch. Text fields keep the native caret. */
 const INTERACTIVE = 'a, button, [role="button"], summary, label[for]';
 const TEXT_FIELD = 'input, textarea, select, [contenteditable="true"]';
 

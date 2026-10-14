@@ -3,11 +3,7 @@
 import { useEffect, useRef } from 'react';
 import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
 
-/**
- * Light scroll parallax for photos: shifts children a few pixels vertically
- * depending on their position in the viewport. Transform only, rAF-throttled,
- * idle while off-screen, disabled for reduced motion.
- */
+/** Transform only, rAF-throttled, disabled for reduced motion. */
 export default function Parallax({ children, strength = 14, className = '' }) {
   const ref = useRef(null);
   const reducedMotion = useMediaQuery(REDUCED_MOTION);

@@ -3,16 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
-/**
- * A red thread sewn down the left margin of the page, connecting the
- * sections. It follows a faint dashed stitch guide and is drawn with
- * pathLength tied to scroll progress (Framer useScroll).
- *
- * - The SVG is sized in real pixels to the page height (ResizeObserver),
- *   so the curve never stretches.
- * - Hidden below lg, where the margin is too narrow.
- * - Reduced motion: the full thread is shown, not animated.
- */
+/** Sized in real pixels (ResizeObserver) so the curve never stretches. Reduced motion: full thread, not animated. */
 const WIDTH = 40;
 
 function buildPath(height) {

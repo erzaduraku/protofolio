@@ -1,7 +1,4 @@
-/**
- * Concept: Suspense / loading.js fallback while streamed server data loads.
- * Pulses with opacity only.
- */
+/** Concept: Suspense / loading.js fallback. */
 export default function Skeleton({ lines = 3 }) {
   return (
     <div className="animate-pulse space-y-3" aria-hidden="true">

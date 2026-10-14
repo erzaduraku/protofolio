@@ -1,7 +1,4 @@
-/**
- * Simple line icons for contact rows.
- * Lucide no longer ships brand icons (LinkedIn / GitHub), so these are tiny inline SVGs.
- */
+/** Lucide no longer ships brand icons, so these are inline SVGs. */
 export function IconMail({ className }) {
   return (
     <svg

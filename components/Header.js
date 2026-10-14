@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import NavLink from './NavLink';
 
-/**
- * Concept: Server Component that composes a Client Component (NavLink).
- * Sits right under the measuring tape. Internal nav uses <Link>.
- */
+/** Concept: Server Component composing a Client Component (NavLink). */
 const links = [
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Projects' },

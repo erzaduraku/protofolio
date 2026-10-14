@@ -1,10 +1,6 @@
 import { getPurpose } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 
-/**
- * "Where I want to go": full-bleed ink band (the one dark moment on the page).
- * Text is rendered verbatim from db.json.
- */
 export default async function PurposeSection({ headingLevel = 'h2' }) {
   const purpose = await getPurpose();
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';

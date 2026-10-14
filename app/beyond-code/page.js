@@ -6,7 +6,6 @@ export const metadata = {
   description: 'Things that shape how I think — beyond software.',
 };
 
-/** Concept: static route /beyond-code: hobbies + "Where I want to go". */
 export default function BeyondCodePage() {
   return (
     <>

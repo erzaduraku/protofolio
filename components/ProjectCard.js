@@ -1,17 +1,7 @@
+import Link from 'next/link';
 import ProjectVisual from './ProjectVisual';
 
-/**
- * Concept: reusable presentational component (props in, markup out).
- * Editorial project card linking to the project's public GitHub repo
- * (external, new tab).
- * Detail pages /projects/[slug] stay off (published: false).
- *
- * Variants give each card a different composition:
- * - feature: large, drawing on top, text below
- * - compact: dark ink sheet, text-led with a small drawing
- * - wide:    drawing left, text right
- * - row:     small list row for the rest of the repositories
- */
+/** Variants: feature | compact | wide | row. */
 function Meta({ project, onInk = false }) {
   return (
     <p className={`mono-label flex flex-wrap items-center gap-x-3 gap-y-1 ${onInk ? 'text-paper/80' : 'text-ink-soft'}`}>
@@ -36,10 +26,10 @@ function Tags({ items, className = 'mt-6' }) {
   );
 }
 
-/** Title that links to the repo; ::after stretches the click target over the card. */
+/** Title links to the detail page; ::after stretches the click target over the card. */
 function CardTitle({ project, as: Tag, className }) {
   const id = `project-${project.slug}`;
-  if (!project.repoUrl) {
+  if (!project.published) {
     return (
       <Tag id={id} className={className}>
         {project.title}
@@ -48,25 +38,36 @@ function CardTitle({ project, as: Tag, className }) {
   }
   return (
     <Tag id={id} className={className}>
-      <a
-        href={project.repoUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href={`/projects/${project.slug}`}
         className="after:absolute after:inset-0 after:z-4 after:content-['']"
       >
         {project.title}
-        <span className="sr-only"> (GitHub repository, opens in a new tab)</span>
-      </a>
+      </Link>
     </Tag>
   );
 }
 
+/** "View project" cue plus a separate GitHub link layered above the stretched card link (no nested anchors). */
 function RepoHint({ project, onInk = false }) {
-  if (!project.repoUrl) return null;
   return (
-    <p aria-hidden="true" className={`mt-6 text-sm font-medium ${onInk ? 'text-paper' : 'text-thread'}`}>
-      View on GitHub <span className="nudge inline-block">↗</span>
-    </p>
+    <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
+      {project.published ? (
+        <span aria-hidden="true" className={onInk ? 'text-paper' : 'text-thread'}>
+          View project <span className="nudge inline-block">→</span>
+        </span>
+      ) : null}
+      {project.repoUrl ? (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`relative z-5 underline underline-offset-4 ${onInk ? 'text-paper/80 decoration-paper/40 hover:text-paper' : 'text-ink-soft decoration-line-strong hover:text-ink'}`}
+        >
+          GitHub ↗<span className="sr-only"> repository for {project.title} (opens in a new tab)</span>
+        </a>
+      ) : null}
+    </div>
   );
 }
 
@@ -76,7 +77,7 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
   if (variant === 'row') {
     return (
       <article aria-labelledby={labelledBy} className={`project-card relative border-t border-line-strong py-6 ${className}`}>
-        <div className="grid gap-3 sm:grid-cols-[1fr_1.4fr] sm:gap-8">
+        <div className="grid gap-3 pr-8 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:gap-8">
           <div>
             <Meta project={project} />
             <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[1.9rem]" />
@@ -84,9 +85,10 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
           <div>
             <p className="text-ink-soft">{project.oneLiner}</p>
             <Tags items={project.technologies} className="mt-4" />
+            <RepoHint project={project} />
           </div>
         </div>
-        <span aria-hidden="true" className="absolute right-0 top-6 text-thread">↗</span>
+        <span aria-hidden="true" className="absolute right-0 top-6 text-thread">→</span>
       </article>
     );
   }
@@ -116,12 +118,12 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
   if (variant === 'wide') {
     return (
       <article aria-labelledby={labelledBy} className={`project-card relative ${className}`}>
-        <div className="project-sheet sheet-shadow relative grid gap-6 bg-paper-light p-5 sm:grid-cols-[1fr_1.15fr] sm:gap-8 sm:p-7">
+        <div className="project-sheet sheet-shadow relative grid gap-6 bg-paper-light p-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:items-center sm:gap-8 sm:p-7">
           <span aria-hidden="true" className="project-fold" />
-          <div className="relative aspect-4/3 bg-paper-deep text-ink">
+          <div className="relative aspect-4/3 self-start overflow-hidden bg-paper-deep text-ink sm:self-center">
             <ProjectVisual kind={project.slug} />
           </div>
-          <div className="flex flex-col justify-center">
+          <div className="flex min-w-0 flex-col justify-center">
             <Meta project={project} />
             <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
             <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
@@ -138,10 +140,10 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
     <article aria-labelledby={labelledBy} className={`project-card relative ${className}`}>
       <div className="project-sheet sheet-shadow relative bg-paper-light p-5 sm:p-7">
         <span aria-hidden="true" className="project-fold" />
-        <div className="stitch-inset relative aspect-4/3 bg-paper-deep text-ink">
+        <div className="stitch-inset relative aspect-4/3 overflow-hidden bg-paper-deep text-ink">
           <ProjectVisual kind={project.slug} />
         </div>
-        <div className="mt-7 grid gap-6 sm:grid-cols-[1.1fr_1fr]">
+        <div className="mt-7 grid gap-6 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <div>
             <Meta project={project} />
             <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>

@@ -3,36 +3,73 @@
 import { useState } from 'react';
 
 /**
- * Concept: Client Component with useState for form UI + fetch to Route Handler.
- * Posts to /api/contact (server keeps the Web3Forms key private).
- * Styled as a lifted paper sheet with simple underlined fields.
+ * Concept: Client Component with form state.
+ * Submits straight from the browser to Web3Forms: its Cloudflare protection
+ * blocks server-side requests (403 challenge), and access keys are public by design.
+ * Falls back to the /api/contact Route Handler if no public key is set.
  */
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+const FALLBACK_ERROR = 'Could not send your message. Please try again or email me directly.';
+
+function validate(name, email, message) {
+  if (!name || !email || !message) return 'Please fill in name, email, and message.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+  if (message.length < 10) return 'Message is a bit short, please write a little more.';
+  return '';
+}
+
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [botcheck, setBotcheck] = useState(false); // honeypot: real visitors never tick it
 
   async function onSubmit(e) {
     e.preventDefault();
     setStatus('loading');
     setError('');
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
-      });
-      const data = await res.json().catch(() => ({}));
+    const fields = { name: name.trim(), email: email.trim(), message: message.trim() };
+    const invalid = validate(fields.name, fields.email, fields.message);
+    if (invalid) {
+      setStatus('error');
+      setError(invalid);
+      return;
+    }
 
-      if (!res.ok || !data.ok) {
+    try {
+      let ok;
+      let data;
+      if (ACCESS_KEY) {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: ACCESS_KEY,
+            subject: `Portfolio contact from ${fields.name}`,
+            from_name: fields.name,
+            ...fields,
+            botcheck,
+          }),
+        });
+        data = await res.json().catch(() => ({}));
+        ok = res.ok && data.success !== false;
+      } else {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(fields),
+        });
+        data = await res.json().catch(() => ({}));
+        ok = res.ok && data.ok;
+        data.message = data.error;
+      }
+
+      if (!ok) {
         setStatus('error');
-        setError(
-          data.error ||
-            'Could not send your message. Please try again or email me directly.'
-        );
+        setError(data.message || FALLBACK_ERROR);
         return;
       }
 
@@ -42,9 +79,7 @@ export default function ContactForm() {
       setMessage('');
     } catch {
       setStatus('error');
-      setError(
-        'Could not send your message. Please try again or email me directly.'
-      );
+      setError(FALLBACK_ERROR);
     }
   }
 
@@ -128,6 +163,17 @@ export default function ContactForm() {
           disabled={status === 'loading'}
         />
       </div>
+
+      <input
+        type="checkbox"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+        checked={botcheck}
+        onChange={(e) => setBotcheck(e.target.checked)}
+      />
 
       <button type="submit" disabled={status === 'loading'} className="btn-ink mt-10 w-full justify-center sm:w-auto">
         {status === 'loading' ? 'Sending…' : 'Send message'}

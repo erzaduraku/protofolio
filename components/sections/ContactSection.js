@@ -3,11 +3,7 @@ import { emphasize } from '@/lib/emphasize';
 import ContactForm from '@/components/ContactForm';
 import { IconMail, IconPhone, IconMapPin, IconLinkedin, IconGithub } from '@/components/SocialIcons';
 
-/**
- * Contact: oversized heading, details as a ruled list on the left,
- * and the form on a lifted paper sheet pinned to the page on the right.
- * Concept: Server Component composing data + the client ContactForm.
- */
+/** Concept: Server Component composing data + the client ContactForm. */
 export default async function ContactSection({ headingLevel = 'h2' }) {
   const contact = await getContact();
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';

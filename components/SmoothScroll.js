@@ -3,11 +3,7 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
-/**
- * Lenis smooth scrolling (native scroll position, so useScroll, sticky and
- * IntersectionObserver keep working). Not started at all for reduced motion.
- * anchors: true makes in-page links like #projects glide too.
- */
+/** Not started for reduced motion. */
 export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

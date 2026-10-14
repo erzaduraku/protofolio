@@ -7,17 +7,10 @@ import PinCursor from '@/components/PinCursor';
 import Thread from '@/components/Thread';
 import RevealObserver from '@/components/RevealObserver';
 import PaperGrain from '@/components/PaperGrain';
+import ChatWidget from '@/components/ChatWidget';
 import './globals.css';
 
-/**
- * Concept: Root layout wraps every page (Header, Footer and the global
- * "atelier" layer: measuring tape, thread, pin cursor, paper grain).
- *
- * Fonts via next/font/google (self-hosted at build time, no layout shift):
- * - Fraunces: display serif, variable with opsz / SOFT / WONK axes + italics
- * - Instrument Sans: body
- * - DM Mono: a few small labels only
- */
+/** Concept: root layout. Fonts via next/font (self-hosted at build time, no layout shift). */
 const fraunces = Fraunces({
   variable: '--font-fraunces',
   subsets: ['latin'],
@@ -81,6 +74,7 @@ export default function RootLayout({ children }) {
         </div>
         <Footer />
         <PaperGrain />
+        <ChatWidget />
       </body>
     </html>
   );

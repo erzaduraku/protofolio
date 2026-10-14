@@ -2,13 +2,7 @@ import { Wrench, Scissors } from 'lucide-react';
 import { getAbout, getSkills } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 
-/**
- * About: the two-worlds story (mechanic father, tailor mother).
- * Composition: heading left with the lead floating low on the right,
- * two overlapping fabric swatches, a two-column text block, and a
- * wide pull quote. /about adds the tools "measurement chart".
- * Concept: async Server Component that fetches its own data.
- */
+/** Concept: async Server Component that fetches its own data. */
 export default async function AboutSection({ headingLevel = 'h2', showSkills = false }) {
   const [about, skills] = await Promise.all([
     getAbout(),
@@ -38,7 +32,6 @@ export default async function AboutSection({ headingLevel = 'h2', showSkills = f
         </div>
 
         <div className="mt-16 grid gap-16 lg:mt-20 lg:grid-cols-12 lg:gap-10">
-          {/* Two worlds: overlapping swatches */}
           <div className="relative mx-auto h-75 w-full max-w-88 lg:col-span-4 lg:mx-0">
             <div className="sheet-shadow absolute left-0 top-0 w-[72%] -rotate-3 bg-paper-deep p-6">
               <Wrench className="h-6 w-6 text-ink" aria-hidden="true" strokeWidth={1.5} />

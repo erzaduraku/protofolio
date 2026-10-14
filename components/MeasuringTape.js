@@ -2,10 +2,7 @@
 
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
-/**
- * Scroll progress as a tailor's measuring tape across the top of the page.
- * Tick marks are CSS gradients; the thread fill grows with scaleX only.
- */
+/** Scroll progress bar; animates scaleX only. */
 export default function MeasuringTape() {
   const { scrollYProgress } = useScroll();
   const reducedMotion = useReducedMotion();

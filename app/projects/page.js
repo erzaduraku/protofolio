@@ -5,10 +5,7 @@ export const metadata = {
   description: 'Selected projects by Erza Duraku, with links to GitHub.',
 };
 
-/**
- * Concept: static route /projects (with loading.js).
- * Cards link to GitHub; detail pages stay off while published: false.
- */
+/** Concept: static route /projects (with loading.js). Detail pages stay off while published: false. */
 export default function ProjectsPage() {
   return <ProjectsSection headingLevel="h1" />;
 }

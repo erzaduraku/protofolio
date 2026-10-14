@@ -5,15 +5,7 @@ import { useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import useMediaQuery, { FINE_POINTER_MOTION } from '@/lib/useMediaQuery';
 
-/**
- * Hero artwork: the engineering-craft image (pattern pieces on a technical
- * grid) cut into three layered "pattern pieces" with CSS clip-paths.
- * - On load each piece slides in and settles into place (CSS keyframes,
- *   so it also runs before hydration; skipped for reduced motion).
- * - Each piece carries a dashed stitch line along its cut edges.
- * - Fine pointers only: pieces drift at different depths with the mouse.
- * The three crops tile the full image exactly, so once settled it reads as one.
- */
+/** Load animation is CSS keyframes so it runs before hydration; mouse parallax on fine pointers only. */
 const SRC = '/engineering-craft-ink.jpg';
 
 const PIECES = [
@@ -115,7 +107,6 @@ export default function HeroPieces({ label, caption }) {
 
   return (
     <figure className="relative">
-      {/* offset stitched frame behind the artwork */}
       <div
         aria-hidden="true"
         className="absolute -inset-3 translate-x-5 translate-y-5 border border-dashed border-line-strong"

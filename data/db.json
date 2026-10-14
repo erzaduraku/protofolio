@@ -31,17 +31,94 @@
       "problem": "The goal was to predict likely next words and provide autocomplete while handling different n-gram approaches and text filtering.",
       "whatIBuilt": "Worked with bigram and trigram models, the Brown corpus, profanity filtering, and Trie-based autocomplete. The project evolved from a Java/JavaFX version into a Python/Tkinter implementation.",
       "technologies": [
-        "Java",
-        "Algorithms",
-        "Data Structures"
+        "Python",
+        "Tkinter",
+        "NLTK",
+        "Markov chains"
       ],
       "learned": "How language can be represented computationally, how different n-gram approaches behave, and how data structures such as Tries can support fast autocomplete.",
-      "featured": true,
-      "published": false,
+      "featured": false,
+      "published": true,
       "repoUrl": "https://github.com/erzaduraku/grupi22-predictive-text-engine",
       "language": "Python",
       "team": true,
-      "showcase": 1
+      "overview": "A predictive text engine built on Markov chains. It is trained with bigrams and trigrams, adds prefix-based autocomplete, and shows live next-word suggestions in a Tkinter desktop app.",
+      "features": [
+        "Text cleaning pipeline: punctuation removal, lowercasing and tokenization",
+        "Bigram and trigram models with normalized transition probabilities",
+        "Top 3–5 next-word suggestions in real time",
+        "Prefix-based autocomplete while typing",
+        "Model selector: Bigram, Trigram or Both",
+        "Training on the NLTK Brown corpus plus a custom corpus file",
+        "Unit tests with pytest"
+      ],
+      "howItWorks": [
+        "The Brown corpus and corpus/corpus.txt are cleaned and merged into one training set.",
+        "Bigram and trigram frequency tables are built and turned into probability distributions.",
+        "For a prediction the engine checks the trigram context first, falls back to the bigram, then to prefix autocomplete, and ranks results by probability.",
+        "In the Tkinter GUI, every key press triggers the engine and suggestions appear under the input field."
+      ],
+      "techStack": [
+        {
+          "group": "Language",
+          "items": [
+            "Python 3.10+"
+          ]
+        },
+        {
+          "group": "NLP",
+          "items": [
+            "NLTK (Brown corpus)"
+          ]
+        },
+        {
+          "group": "Interface",
+          "items": [
+            "Tkinter"
+          ]
+        },
+        {
+          "group": "Testing",
+          "items": [
+            "pytest"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "members": [
+          "Fatlinda Osdautaj",
+          "Edonita Gashi",
+          "Engji Osmani",
+          "Erza Duraku"
+        ],
+        "note": "Group 22 team project."
+      },
+      "screenshots": [
+        {
+          "src": "/projects/predictive-text-engine/photo1.jpg",
+          "width": 1214,
+          "height": 585,
+          "alt": "Predictive Text Engine main window with input box, live predictions and model selector"
+        },
+        {
+          "src": "/projects/predictive-text-engine/photo2.jpg",
+          "width": 1212,
+          "height": 588,
+          "alt": "Suggestions in Bigram mode"
+        },
+        {
+          "src": "/projects/predictive-text-engine/photo3.jpg",
+          "width": 1213,
+          "height": 584,
+          "alt": "Suggestions in Trigram mode"
+        },
+        {
+          "src": "/projects/predictive-text-engine/photo4.jpg",
+          "width": 1219,
+          "height": 587,
+          "alt": "Suggestions in combined “Both” mode"
+        }
+      ]
     },
     {
       "id": "4",
@@ -90,6 +167,7 @@
         "React",
         "PostgreSQL",
         "Redis",
+        "Groq",
         "Docker"
       ],
       "language": "Python",
@@ -97,7 +175,361 @@
       "repoUrl": "https://github.com/erzaduraku/collabai-project-management",
       "showcase": 0,
       "featured": true,
-      "published": false
+      "published": true,
+      "overview": "CollabAI is a full-stack project management platform for organizing teams, projects, tasks and collaboration, with a built-in AI assistant powered by retrieval-augmented generation (RAG) and semantic search. It is built for multi-tenant use: one platform can serve several organizations while keeping each organization’s data isolated.",
+      "features": [
+        "JWT authentication with registration, token refresh and blacklisting, and password reset by email",
+        "Organizations, workspaces and email invitations with scoped roles (Org Admin, Workspace Admin, Manager, Member)",
+        "Projects and tasks with status, priority, labels, assignee, due date and file attachments",
+        "Task comments with an activity log, in-app notifications and an admin audit trail",
+        "Dashboard with a summary of tasks, projects and team activity",
+        "AI chatbot, text analysis (summary, action items, sentiment), semantic search across tasks and comments, and RAG question answering over the organization’s own project data"
+      ],
+      "howItWorks": [
+        "A React single-page app talks to a Django REST Framework API under /api/v1/, sending a JWT and an organization ID with every request.",
+        "Middleware validates the token and resolves the tenant; the backend re-checks tenant scope and role-based access before every response.",
+        "Views and serializers hand work to service classes; data lives in PostgreSQL, with Redis for caching and Celery for background jobs.",
+        "For AI answers, organization data is embedded with sentence-transformers and stored in a Redis vector store; relevant items are retrieved and sent as context to a LLaMA 3.1 model through the Groq API."
+      ],
+      "techStack": [
+        {
+          "group": "Backend",
+          "items": [
+            "Python 3.12+",
+            "Django 6",
+            "Django REST Framework",
+            "Simple JWT",
+            "drf-spectacular (OpenAPI)",
+            "Celery"
+          ]
+        },
+        {
+          "group": "Data",
+          "items": [
+            "PostgreSQL",
+            "Redis Stack (cache + vector search)",
+            "redisvl"
+          ]
+        },
+        {
+          "group": "AI",
+          "items": [
+            "Groq API (LLaMA 3.1 8B Instant)",
+            "sentence-transformers (all-MiniLM-L6-v2)"
+          ]
+        },
+        {
+          "group": "Frontend",
+          "items": [
+            "React 19",
+            "React Router v7",
+            "Axios",
+            "React Hook Form",
+            "Recharts"
+          ]
+        },
+        {
+          "group": "Tooling",
+          "items": [
+            "Docker Compose",
+            "GitHub Actions (tests, lint, Cypress E2E, Docker build)"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "members": [
+          "Edonita Gashi",
+          "Engji Osmani",
+          "Erza Duraku",
+          "Fatlinda Osdautaj",
+          "Leona Zullufi"
+        ],
+        "note": "Team project with five contributors on GitHub."
+      },
+      "demoVideo": {
+        "src": "/projects/collabai/demo.mp4",
+        "poster": "/projects/collabai/demo-poster.jpg",
+        "width": 1574,
+        "height": 720,
+        "caption": "A walkthrough of CollabAI, starting from the organization dashboard."
+      }
+    },
+    {
+      "id": "12",
+      "slug": "parkeasy",
+      "title": "ParkEasy",
+      "category": "Mobile",
+      "oneLiner": "A cross-platform mobile app for finding, reserving and managing parking in Kosovo, with separate experiences for drivers, parking owners and admins.",
+      "overview": "ParkEasy is a mobile parking management app built with React Native, Expo and Firebase for the Mobile Application Programming course at FIEK. Drivers can discover parking nearby on a map, search, reserve and manage bookings; parking owners manage their spaces and reservations; administrators review parking requests and manage users.",
+      "features": [
+        "Login and registration with role-based access for Users, Owners and Admins, plus Google sign-in",
+        "Nearby view: real-time map of parking spots with reservation from the map",
+        "Location-based search for parking spaces",
+        "Reserve, edit and cancel bookings, with booking history",
+        "Favorites for saving preferred parking locations",
+        "Profile with photo upload and notification settings, and in-app notifications for bookings",
+        "Owner dashboard for parking spaces, earnings and reservations",
+        "Admin panel for parking requests, parking lists, reservations and user management"
+      ],
+      "howItWorks": [
+        "The app uses Expo Router with separate route groups for authentication, the user tabs (Nearby, Search, Bookings, Favorites, Profile), the owner area and the admin area.",
+        "Firebase Authentication handles sign-in, and Firestore and Storage hold parkings, bookings, users and photos with real-time updates.",
+        "Maps are built with react-native-maps and Leaflet; distances to parkings are calculated with haversine-distance and the device location from expo-location.",
+        "Booking confirmations and updates are delivered with expo-notifications; behaviour is covered by Jest tests with React Native Testing Library."
+      ],
+      "techStack": [
+        {
+          "group": "Mobile",
+          "items": [
+            "React Native",
+            "Expo",
+            "Expo Router",
+            "React 19"
+          ]
+        },
+        {
+          "group": "Backend",
+          "items": [
+            "Firebase Authentication",
+            "Cloud Firestore",
+            "Firebase Storage"
+          ]
+        },
+        {
+          "group": "Maps & device",
+          "items": [
+            "react-native-maps",
+            "Leaflet",
+            "expo-location",
+            "expo-notifications",
+            "expo-image-picker"
+          ]
+        },
+        {
+          "group": "Testing",
+          "items": [
+            "Jest",
+            "React Native Testing Library"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "members": [
+          "Edonita Gashi",
+          "Fatlinda Osdautaj",
+          "Erza Duraku",
+          "Engji Osmani",
+          "Albi Kallaba",
+          "Arila Behrami"
+        ],
+        "note": "Team project for the Mobile Application Programming course at FIEK. The repository is owned by Edonita Gashi; Erza is one of six developers."
+      },
+      "technologies": [
+        "React Native",
+        "Expo",
+        "Firebase"
+      ],
+      "language": "JavaScript",
+      "team": true,
+      "repoUrl": "https://github.com/edonitagashi/ParkEasy",
+      "featured": true,
+      "published": true,
+      "showcase": 1,
+      "screenshotGroups": [
+        {
+          "title": "Getting started",
+          "items": [
+            {
+              "src": "/projects/parkeasy/parkeasy.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Welcome screen"
+            },
+            {
+              "src": "/projects/parkeasy/login.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Login with email or Google"
+            },
+            {
+              "src": "/projects/parkeasy/signup.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Sign-up form"
+            },
+            {
+              "src": "/projects/parkeasy/signupasuser.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Sign-up with the Owner role and parking details"
+            }
+          ]
+        },
+        {
+          "title": "Driver",
+          "items": [
+            {
+              "src": "/projects/parkeasy/mapi.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Nearby map with parking spots and prices"
+            },
+            {
+              "src": "/projects/parkeasy/reserveatmaps.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Parking details opened from the map, with Reserve Spot"
+            },
+            {
+              "src": "/projects/parkeasy/search.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Search parking, sorted by nearest"
+            },
+            {
+              "src": "/projects/parkeasy/reserveparking.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Reserving a spot: date, time, duration and payment method"
+            },
+            {
+              "src": "/projects/parkeasy/mybookings.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "My bookings"
+            },
+            {
+              "src": "/projects/parkeasy/editbooking.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Editing a booking"
+            },
+            {
+              "src": "/projects/parkeasy/deletebooking.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Confirming a booking deletion"
+            },
+            {
+              "src": "/projects/parkeasy/favorites.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Favorite parkings"
+            },
+            {
+              "src": "/projects/parkeasy/notif.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Scheduled booking reminder notifications"
+            },
+            {
+              "src": "/projects/parkeasy/profile.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Editing the user profile"
+            },
+            {
+              "src": "/projects/parkeasy/profile2.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Profile options: about, help, privacy, terms and logout"
+            },
+            {
+              "src": "/projects/parkeasy/profilephoto.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Changing the profile photo from the library or camera"
+            }
+          ]
+        },
+        {
+          "title": "Owner",
+          "items": [
+            {
+              "src": "/projects/parkeasy/ownerhome.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Owner home with the parking’s bookings"
+            },
+            {
+              "src": "/projects/parkeasy/ownerprofile.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Owner profile and parking information"
+            }
+          ]
+        },
+        {
+          "title": "Admin",
+          "items": [
+            {
+              "src": "/projects/parkeasy/admindashboard.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Admin panel overview"
+            },
+            {
+              "src": "/projects/parkeasy/adminmanageparkings.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Admin: managing parkings"
+            },
+            {
+              "src": "/projects/parkeasy/adminusermenagment.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Admin: user management"
+            }
+          ]
+        },
+        {
+          "title": "Earlier version",
+          "items": [
+            {
+              "src": "/projects/parkeasy/early-foto1.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Earlier version: welcome screen"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto2.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Earlier version: login screen (Albanian)"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto3.jpg",
+              "width": 720,
+              "height": 1558,
+              "alt": "Earlier version: registration screen (Albanian)"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto4.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Earlier version: nearby parkings with map"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto5.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Earlier version: search parking"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto6.jpg",
+              "width": 720,
+              "height": 1559,
+              "alt": "Earlier version: favorites"
+            },
+            {
+              "src": "/projects/parkeasy/early-foto7.jpg",
+              "width": 720,
+              "height": 1561,
+              "alt": "Earlier version: edit profile"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "7",
@@ -115,7 +547,51 @@
       "repoUrl": "https://github.com/erzaduraku/erza-master-project",
       "showcase": 2,
       "featured": true,
-      "published": false
+      "published": true,
+      "overview": "Terraform code that provisions AWS infrastructure for a highly available web application, built for the DCADD Master Project course. It creates a multi-AZ network, runs the app on private EC2 instances behind an Application Load Balancer, and deploys changes automatically with GitHub Actions.",
+      "features": [
+        "VPC (10.0.0.0/16) with three public and three private subnets across eu-central-1a, 1b and 1c",
+        "Internet-facing Application Load Balancer on HTTP port 80",
+        "Auto Scaling Group of t3.micro instances (min 2, desired 3, max 6) in private subnets with no public IPs",
+        "NAT Gateway for outbound internet from the private subnets",
+        "Security groups that allow HTTP to the instances only from the load balancer",
+        "Remote Terraform state in S3; configuration through variables with sensible defaults"
+      ],
+      "howItWorks": [
+        "Terraform files are split by concern: networking, security, compute, load balancing, data (Amazon Linux 2023 AMI lookup) and outputs.",
+        "Each EC2 instance boots with a user-data script that deploys the course’s group web application.",
+        "On a pull request, GitHub Actions runs terraform fmt, init, validate and plan; on merge to main it runs terraform apply.",
+        "After apply, the load balancer’s DNS name is output as the public URL of the app."
+      ],
+      "techStack": [
+        {
+          "group": "Infrastructure as code",
+          "items": [
+            "Terraform (>= 1.5)",
+            "HCL"
+          ]
+        },
+        {
+          "group": "AWS",
+          "items": [
+            "VPC",
+            "EC2",
+            "Auto Scaling",
+            "Application Load Balancer",
+            "NAT Gateway",
+            "S3 (state)"
+          ]
+        },
+        {
+          "group": "CI/CD",
+          "items": [
+            "GitHub Actions"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "note": "Individual project by Erza for the DCADD Master Project course."
+      }
     },
     {
       "id": "8",
@@ -133,7 +609,85 @@
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/text-rule-processor",
       "featured": false,
-      "published": false
+      "published": true,
+      "overview": "A rule-based content filter web app. Users define rules that detect patterns in text and mark every match with a coloured highlight or a tooltip label. It was created as an internship assignment to demonstrate full-stack development.",
+      "features": [
+        "Create, edit, delete, enable and disable rules",
+        "Match types: contains, starts with and exact match",
+        "Actions: highlight with a custom colour, or tooltip with a label",
+        "Process typed text or an uploaded .txt file against all enabled rules, with match statistics",
+        "History of processed text that can be viewed and deleted",
+        "Rule priority, search and filter, preview before saving, and toast notifications"
+      ],
+      "howItWorks": [
+        "The React frontend calls a Node.js and Express API.",
+        "The API stores rules and history in PostgreSQL (Neon or local) through node-postgres; tables are created automatically on startup.",
+        "POST /process runs the text against all enabled rules and returns the matches, which the frontend renders as highlights and tooltips."
+      ],
+      "techStack": [
+        {
+          "group": "Frontend",
+          "items": [
+            "React 19",
+            "CSS"
+          ]
+        },
+        {
+          "group": "Backend",
+          "items": [
+            "Node.js",
+            "Express"
+          ]
+        },
+        {
+          "group": "Database",
+          "items": [
+            "PostgreSQL (Neon)",
+            "pg (node-postgres)"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "note": "Individual project by Erza, built as an internship assignment."
+      },
+      "screenshots": [
+        {
+          "src": "/projects/text-rule-processor/main-interface.jpg",
+          "width": 1600,
+          "height": 788,
+          "alt": "Main dashboard with rule management and text processing side by side"
+        },
+        {
+          "src": "/projects/text-rule-processor/add-new-rule.jpg",
+          "width": 818,
+          "height": 534,
+          "alt": "Form for adding a new rule with colour and tooltip options"
+        },
+        {
+          "src": "/projects/text-rule-processor/rule-management.jpg",
+          "width": 864,
+          "height": 755,
+          "alt": "List of rules with match types and actions"
+        },
+        {
+          "src": "/projects/text-rule-processor/process-text.jpg",
+          "width": 776,
+          "height": 800,
+          "alt": "Entering text to process against the enabled rules"
+        },
+        {
+          "src": "/projects/text-rule-processor/matched.jpg",
+          "width": 837,
+          "height": 195,
+          "alt": "Processed output with highlighted matches"
+        },
+        {
+          "src": "/projects/text-rule-processor/history1.jpg",
+          "width": 1600,
+          "height": 796,
+          "alt": "History of processed texts"
+        }
+      ]
     },
     {
       "id": "9",
@@ -150,23 +704,113 @@
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/Maze_Solver_Project",
       "featured": false,
-      "published": false
+      "published": true,
+      "overview": "An interactive maze editor and pathfinding visualizer. You draw a grid maze, place a start and a goal, and the A* algorithm finds and draws the shortest path. It demonstrates heuristic search, cost functions and path reconstruction visually.",
+      "features": [
+        "Grid maze editor: left click toggles walls, Shift + left click sets the start, right click sets the goal",
+        "A* search with a Manhattan-distance heuristic and 4-directional movement",
+        "Shortest path highlighted, with its length shown in the status bar",
+        "Status messages for invalid setups (start or goal on a wall, no path found)",
+        "Dark-themed Tkinter interface, plus a console version"
+      ],
+      "howItWorks": [
+        "Each cell is scored with f(n) = g(n) + h(n): the cost so far plus the Manhattan distance to the goal.",
+        "A min-heap priority queue (heapq) always expands the most promising cell next.",
+        "Because the heuristic is admissible, A* returns an optimal shortest path when one exists; the path is then reconstructed and drawn on the grid."
+      ],
+      "techStack": [
+        {
+          "group": "Language",
+          "items": [
+            "Python 3"
+          ]
+        },
+        {
+          "group": "Interface",
+          "items": [
+            "Tkinter"
+          ]
+        },
+        {
+          "group": "Algorithm",
+          "items": [
+            "A* search",
+            "Manhattan heuristic",
+            "heapq priority queue"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "note": "Individual project by Erza."
+      },
+      "screenshots": [
+        {
+          "src": "/projects/maze-solver/initial_maze.jpg",
+          "width": 1036,
+          "height": 699,
+          "alt": "Default maze when the app starts"
+        },
+        {
+          "src": "/projects/maze-solver/maze_editing.jpg",
+          "width": 992,
+          "height": 687,
+          "alt": "Editing the maze by adding walls and moving start and goal"
+        },
+        {
+          "src": "/projects/maze-solver/path_found.jpg",
+          "width": 975,
+          "height": 674,
+          "alt": "Shortest path found with A* highlighted on the grid"
+        }
+      ]
     },
     {
       "id": "11",
       "slug": "firebase-auth-erza",
       "title": "Firebase Auth",
       "category": "Web",
-      "oneLiner": "Firebase Authentication project using Email/Password and Google Sign-In.",
+      "oneLiner": "A small Firebase Authentication demo with Google Sign-In.",
       "technologies": [
         "Firebase",
-        "JavaScript"
+        "JavaScript",
+        "HTML"
       ],
       "language": "HTML",
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/firebase-auth-erza",
       "featured": false,
-      "published": false
+      "published": true,
+      "overview": "A small web demo of Firebase Authentication. A single page with a “Sign in with Google” button signs the user in through a Google popup and greets them by name.",
+      "features": [
+        "Google Sign-In with signInWithPopup and GoogleAuthProvider",
+        "Welcome message with the signed-in user’s name, and an error message if sign-in fails",
+        "Animated, pink-themed single page in plain HTML, CSS and JavaScript"
+      ],
+      "howItWorks": [
+        "index.html loads app.js as an ES module.",
+        "app.js initializes the Firebase app and Auth from the Firebase JavaScript SDK (v11, loaded from the CDN).",
+        "Clicking the button opens the Google sign-in popup; the result is shown in a temporary popup message."
+      ],
+      "techStack": [
+        {
+          "group": "Frontend",
+          "items": [
+            "HTML",
+            "CSS",
+            "JavaScript (ES modules)"
+          ]
+        },
+        {
+          "group": "Auth",
+          "items": [
+            "Firebase Authentication (JS SDK v11)",
+            "Google Sign-In"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "note": "Individual project by Erza."
+      }
     }
   ],
   "experience": {
@@ -198,7 +842,15 @@
     ],
     "imageCaptions": [
       "At AnchorzUp"
-    ]
+    ],
+    "course": {
+      "label": "Currently learning",
+      "title": "Next.js & Supabase Mastery: Build 2 Full-Stack Apps",
+      "platform": "Udemy",
+      "instructor": "Piotr Jura",
+      "status": "in progress",
+      "url": "https://www.udemy.com/course/master-nextjs-full-stack/"
+    }
   },
   "volunteering": [
     {

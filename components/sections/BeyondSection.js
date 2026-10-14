@@ -2,10 +2,6 @@ import { Scissors, CookingPot, Puzzle } from 'lucide-react';
 import { getAbout, getInterests } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 
-/**
- * Beyond code: hobbies as fabric swatches of different sizes and angles
- * (bottom edges, stitch lines), not three equal cards.
- */
 const ICONS = { scissors: Scissors, 'cooking-pot': CookingPot, puzzle: Puzzle };
 
 const LAYOUT = [
