@@ -5,6 +5,10 @@ const nextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  experimental: {
+    // app/global-not-found.js: the root layout lives in app/[locale], so unmatched URLs need their own 404 document.
+    globalNotFound: true,
+  },
 };
 
 export default nextConfig;

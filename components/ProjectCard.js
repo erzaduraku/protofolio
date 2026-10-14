@@ -1,22 +1,23 @@
 import Link from 'next/link';
 import ProjectVisual from './ProjectVisual';
+import { getDict, localePath } from '@/lib/i18n';
 
 /** Variants: feature | compact | wide | row. */
-function Meta({ project, onInk = false }) {
+function Meta({ project, t, onInk = false }) {
   return (
     <p className={`mono-label flex flex-wrap items-center gap-x-3 gap-y-1 ${onInk ? 'text-paper/80' : 'text-ink-soft'}`}>
       <span className="flex items-center gap-2">
         <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-thread" />
         {project.language}
       </span>
-      {project.team ? <span>· Team project</span> : null}
+      {project.team ? <span>· {t.teamProject}</span> : null}
     </p>
   );
 }
 
-function Tags({ items, className = 'mt-6' }) {
+function Tags({ items, label, className = 'mt-6' }) {
   return (
-    <ul className={`${className} flex flex-wrap gap-2`} aria-label="Technologies">
+    <ul className={`${className} flex flex-wrap gap-2`} aria-label={label}>
       {items.map((tech) => (
         <li key={tech} className="chip">
           {tech}
@@ -27,7 +28,7 @@ function Tags({ items, className = 'mt-6' }) {
 }
 
 /** Title links to the detail page; ::after stretches the click target over the card. */
-function CardTitle({ project, as: Tag, className }) {
+function CardTitle({ project, locale, as: Tag, className }) {
   const id = `project-${project.slug}`;
   if (!project.published) {
     return (
@@ -39,7 +40,7 @@ function CardTitle({ project, as: Tag, className }) {
   return (
     <Tag id={id} className={className}>
       <Link
-        href={`/projects/${project.slug}`}
+        href={localePath(locale, `/projects/${project.slug}`)}
         className="after:absolute after:inset-0 after:z-4 after:content-['']"
       >
         {project.title}
@@ -49,12 +50,12 @@ function CardTitle({ project, as: Tag, className }) {
 }
 
 /** "View project" cue plus a separate GitHub link layered above the stretched card link (no nested anchors). */
-function RepoHint({ project, onInk = false }) {
+function RepoHint({ project, t, onInk = false }) {
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
       {project.published ? (
         <span aria-hidden="true" className={onInk ? 'text-paper' : 'text-thread'}>
-          View project <span className="nudge inline-block">→</span>
+          {t.viewProject} <span className="nudge inline-block">→</span>
         </span>
       ) : null}
       {project.repoUrl ? (
@@ -64,28 +65,29 @@ function RepoHint({ project, onInk = false }) {
           rel="noopener noreferrer"
           className={`relative z-5 underline underline-offset-4 ${onInk ? 'text-paper/80 decoration-paper/40 hover:text-paper' : 'text-ink-soft decoration-line-strong hover:text-ink'}`}
         >
-          GitHub ↗<span className="sr-only"> repository for {project.title} (opens in a new tab)</span>
+          GitHub ↗<span className="sr-only">{t.repoFor(project.title)}</span>
         </a>
       ) : null}
     </div>
   );
 }
 
-export default function ProjectCard({ project, variant = 'feature', titleLevel = 'h3', className = '' }) {
+export default function ProjectCard({ project, locale = 'en', variant = 'feature', titleLevel = 'h3', className = '' }) {
   const labelledBy = `project-${project.slug}`;
+  const t = getDict(locale).projects;
 
   if (variant === 'row') {
     return (
       <article aria-labelledby={labelledBy} className={`project-card relative border-t border-line-strong py-6 ${className}`}>
         <div className="grid gap-3 pr-8 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] sm:gap-8">
           <div>
-            <Meta project={project} />
-            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[1.9rem]" />
+            <Meta project={project} t={t} />
+            <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[1.9rem]" />
           </div>
           <div>
             <p className="text-ink-soft">{project.oneLiner}</p>
-            <Tags items={project.technologies} className="mt-4" />
-            <RepoHint project={project} />
+            <Tags items={project.technologies} label={t.technologies} className="mt-4" />
+            <RepoHint project={project} t={t} />
           </div>
         </div>
         <span aria-hidden="true" className="absolute right-0 top-6 text-thread">→</span>
@@ -101,15 +103,15 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
           style={{ '--fold-bg': 'var(--paper-deep)', '--flap': '#2c4a37' }}
         >
           <span aria-hidden="true" className="project-fold" />
-          <Meta project={project} onInk />
+          <Meta project={project} t={t} onInk />
           <div className="mx-auto mt-6 h-36 w-48 text-paper">
             <ProjectVisual kind={project.slug} />
           </div>
           <p className="mt-6 text-sm uppercase tracking-[0.2em] text-paper/70">{project.category}</p>
-          <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
+          <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
           <p className="mt-4 text-paper/80">{project.oneLiner}</p>
-          <Tags items={project.technologies} />
-          <RepoHint project={project} onInk />
+          <Tags items={project.technologies} label={t.technologies} />
+          <RepoHint project={project} t={t} onInk />
         </div>
       </article>
     );
@@ -124,12 +126,12 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
             <ProjectVisual kind={project.slug} />
           </div>
           <div className="flex min-w-0 flex-col justify-center">
-            <Meta project={project} />
+            <Meta project={project} t={t} />
             <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
-            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
+            <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
             <p className="mt-4 text-ink-soft">{project.oneLiner}</p>
-            <Tags items={project.technologies} />
-            <RepoHint project={project} />
+            <Tags items={project.technologies} label={t.technologies} />
+            <RepoHint project={project} t={t} />
           </div>
         </div>
       </article>
@@ -145,17 +147,17 @@ export default function ProjectCard({ project, variant = 'feature', titleLevel =
         </div>
         <div className="mt-7 grid gap-6 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <div>
-            <Meta project={project} />
+            <Meta project={project} t={t} />
             <p className="mt-5 text-sm uppercase tracking-[0.2em] text-ink">{project.category}</p>
-            <CardTitle project={project} as={titleLevel} className="project-title display mt-2 text-[clamp(2.4rem,4.6vw,3.8rem)]" />
+            <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[clamp(2.4rem,4.6vw,3.8rem)]" />
           </div>
           <div className="text-ink-soft sm:pt-12">
             <p className="text-ink">{project.oneLiner}</p>
             {project.summary ? <p className="mt-3">{project.summary}</p> : null}
           </div>
         </div>
-        <Tags items={project.technologies} />
-        <RepoHint project={project} />
+        <Tags items={project.technologies} label={t.technologies} />
+        <RepoHint project={project} t={t} />
       </div>
     </article>
   );

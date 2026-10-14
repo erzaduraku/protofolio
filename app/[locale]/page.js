@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getProfile } from '@/lib/api';
+import { getDict } from '@/lib/i18n';
 import HeroPieces from '@/components/HeroPieces';
 import { SectionSkeleton } from '@/components/Skeleton';
 import AboutSection from '@/components/sections/AboutSection';
@@ -21,8 +22,10 @@ import ContactSection from '@/components/sections/ContactSection';
  */
 
 /** Concept: the hero renders immediately; each section streams in through its own <Suspense>. */
-export default async function HomePage() {
-  const profile = await getProfile();
+export default async function HomePage({ params }) {
+  const { locale } = await params;
+  const profile = await getProfile(locale);
+  const t = getDict(locale).hero;
 
   return (
     <>
@@ -39,17 +42,21 @@ export default async function HomePage() {
           <h1 id="hero-heading" className="display relative z-10 mt-6 text-[clamp(2.6rem,6.8vw,6.75rem)]">
             <span className="line-mask">
               <span style={{ '--i': 0 }}>
-                A tailor&rsquo;s <em>eye</em>,
+                {t.line1[0]}
+                <em>{t.line1[1]}</em>
+                {t.line1[2]}
               </span>
             </span>
             <span className="line-mask">
               <span style={{ '--i': 1 }}>
-                a mechanic&rsquo;s <em>patience</em>
+                {t.line2[0]}
+                <em>{t.line2[1]}</em>
+                {t.line2[2]}
               </span>
             </span>
             <span className="line-mask">
               <span style={{ '--i': 2 }} className="sm:pl-[8%]">
-                &mdash; in code.
+                {t.line3}
               </span>
             </span>
           </h1>
@@ -61,16 +68,16 @@ export default async function HomePage() {
               </p>
               <div className="fade-up mt-8 flex flex-wrap gap-3" style={{ '--i': 5 }}>
                 <Link href="#projects" className="btn-ink">
-                  View my work <span aria-hidden="true">↓</span>
+                  {t.viewWork} <span aria-hidden="true">↓</span>
                 </Link>
                 <Link href="#about" className="btn-line">
-                  About me
+                  {t.aboutMe}
                 </Link>
               </div>
             </div>
             <div className="relative lg:col-span-6 lg:col-start-7 lg:mt-[-6.4vw]">
               <HeroPieces
-                label="Paper pattern pieces laid out on a technical drafting grid: logic meets craft"
+                label={t.piecesLabel}
                 caption={profile.heroCaption}
               />
             </div>
@@ -88,22 +95,22 @@ export default async function HomePage() {
       </section>
 
       <Suspense fallback={<SectionSkeleton />}>
-        <AboutSection />
+        <AboutSection locale={locale} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <ProjectsSection />
+        <ProjectsSection locale={locale} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton lines={8} />}>
-        <JourneySection />
+        <JourneySection locale={locale} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <BeyondSection />
+        <BeyondSection locale={locale} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <PurposeSection />
+        <PurposeSection locale={locale} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
-        <ContactSection />
+        <ContactSection locale={locale} />
       </Suspense>
     </>
   );

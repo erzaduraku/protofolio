@@ -2,14 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { stripLocale } from '@/lib/i18n';
 
 /** Only this leaf is a Client Component, because usePathname needs the browser. */
 export default function NavLink({ href, children }) {
-  const pathname = usePathname();
+  const pathname = stripLocale(usePathname() || '/');
+  const target = stripLocale(href);
   const isActive =
-    href === '/'
+    target === '/'
       ? pathname === '/'
-      : pathname === href || pathname.startsWith(`${href}/`);
+      : pathname === target || pathname.startsWith(`${target}/`);
 
   return (
     <Link

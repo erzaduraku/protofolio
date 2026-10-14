@@ -1,13 +1,15 @@
 import { Wrench, Scissors } from 'lucide-react';
 import { getAbout, getSkills } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
+import { getDict } from '@/lib/i18n';
 
 /** Concept: async Server Component that fetches its own data. */
-export default async function AboutSection({ headingLevel = 'h2', showSkills = false }) {
+export default async function AboutSection({ locale = 'en', headingLevel = 'h2', showSkills = false }) {
   const [about, skills] = await Promise.all([
-    getAbout(),
-    showSkills ? getSkills() : Promise.resolve([]),
+    getAbout(locale),
+    showSkills ? getSkills(locale) : Promise.resolve([]),
   ]);
+  const t = getDict(locale).about;
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
   const SubHeading = headingLevel === 'h1' ? 'h2' : 'h3';
   const [first, second, ...rest] = about.paragraphs;
@@ -21,9 +23,9 @@ export default async function AboutSection({ headingLevel = 'h2', showSkills = f
 
         <div className="relative grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <p className="kicker">About</p>
+            <p className="kicker">{t.kicker}</p>
             <Heading id="about-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
-              {emphasize(about.heading, ['two worlds'])}
+              {emphasize(about.heading, ['two worlds', 'dy botëve'])}
             </Heading>
           </div>
           <p className="display-italic max-w-sm text-[1.6rem] leading-snug lg:col-span-4 lg:mt-48">
@@ -52,25 +54,41 @@ export default async function AboutSection({ headingLevel = 'h2', showSkills = f
           </div>
         </div>
 
-        {about.motto ? (
-          <figure className="mt-14 max-w-3xl border-l-2 border-thread pl-6 lg:ml-[33%]">
-            <blockquote className="display-italic text-[clamp(1.9rem,3.4vw,2.75rem)] leading-[1.1] text-ink">
-              {about.motto}
-            </blockquote>
-            {about.mottoLabel ? (
-              <figcaption className="mt-3 text-sm text-ink-soft">{about.mottoLabel}</figcaption>
-            ) : null}
-          </figure>
-        ) : null}
-        {about.mottoWhy ? (
-          <p className="mt-6 max-w-2xl text-ink-soft lg:ml-[33%] lg:pl-6">{about.mottoWhy}</p>
-        ) : null}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-10">
+          {about.motto ? (
+            <figure className="mt-14 max-w-3xl border-l-2 border-thread pl-6 lg:col-span-8 lg:col-start-5 lg:row-start-1">
+              <blockquote className="display-italic text-[clamp(1.9rem,3.4vw,2.75rem)] leading-[1.1] text-ink">
+                {about.motto}
+              </blockquote>
+              {about.mottoLabel ? (
+                <figcaption className="mt-3 text-sm text-ink-soft">{about.mottoLabel}</figcaption>
+              ) : null}
+            </figure>
+          ) : null}
+          {about.mottoWhy ? (
+            <p className="mt-6 max-w-2xl text-ink-soft lg:col-span-8 lg:col-start-5 lg:row-start-2 lg:pl-6">{about.mottoWhy}</p>
+          ) : null}
+          {about.funFact ? (
+            <aside
+              aria-label={about.funFactLabel || t.funFact}
+              className="sheet-shadow relative mt-12 max-w-sm -rotate-2 self-start bg-paper-light px-6 pt-8 pb-6 lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-16 lg:max-w-none"
+            >
+              <span aria-hidden="true" className="polaroid-tape" />
+              <p className="font-display text-lg italic text-thread">{about.funFactLabel || t.funFact}</p>
+              <p className="mt-2 text-ink-soft">{about.funFact}</p>
+            </aside>
+          ) : null}
 
-        {rest.map((p) => (
-          <p key={p.slice(0, 48)} className="mt-10 max-w-3xl text-xl leading-relaxed text-ink lg:ml-[33%] lg:text-[1.4rem]">
-            {p}
-          </p>
-        ))}
+          {rest.length ? (
+            <div className="lg:col-span-8 lg:col-start-5 lg:row-start-3">
+              {rest.map((p) => (
+                <p key={p.slice(0, 48)} className="mt-10 max-w-3xl text-xl leading-relaxed text-ink lg:text-[1.4rem]">
+                  {p}
+                </p>
+              ))}
+            </div>
+          ) : null}
+        </div>
 
         <figure className="mt-20 max-w-4xl border-t border-line-strong pt-10 lg:ml-[8%]">
           <blockquote className="display-italic text-[clamp(1.8rem,3.6vw,3rem)] leading-[1.1]">
@@ -81,7 +99,9 @@ export default async function AboutSection({ headingLevel = 'h2', showSkills = f
         {showSkills && skills.length > 0 ? (
           <div className="mt-24 grid gap-8 lg:grid-cols-12">
             <SubHeading className="display text-3xl lg:col-span-3">
-              Tools I use to <em>build</em>
+              {t.tools[0]}
+              <em>{t.tools[1]}</em>
+              {t.tools[2]}
             </SubHeading>
             <dl className="divide-y divide-line-strong border-y border-line-strong lg:col-span-9">
               {skills.map((group, i) => (

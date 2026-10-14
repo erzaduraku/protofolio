@@ -1063,19 +1063,37 @@
         "C",
         "C++",
         "C#",
-        "JavaScript"
+        "JavaScript",
+        "TypeScript",
+        "Python",
+        "HCL"
       ]
     },
     {
       "id": "web",
-      "category": "Web & development",
+      "category": "Frontend & UI",
       "items": [
         "HTML",
         "CSS",
-        "JavaScript",
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Framer Motion",
+        "React Native",
+        "Expo",
         "JavaFX",
-        "Java Swing",
-        "Android"
+        "Tkinter"
+      ]
+    },
+    {
+      "id": "backend",
+      "category": "Backend & APIs",
+      "items": [
+        "Node.js",
+        "Express",
+        "Django REST Framework",
+        "Celery",
+        "Firebase (Auth, Firestore, Storage)"
       ]
     },
     {
@@ -1084,15 +1102,37 @@
       "items": [
         "MySQL",
         "PostgreSQL",
+        "Redis",
         "JDBC"
       ]
     },
     {
+      "id": "cloud",
+      "category": "Cloud & DevOps",
+      "items": [
+        "AWS",
+        "Terraform",
+        "Docker",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "id": "ai",
+      "category": "AI & NLP",
+      "items": [
+        "Groq API (LLaMA)",
+        "sentence-transformers",
+        "NLTK"
+      ]
+    },
+    {
       "id": "tools",
-      "category": "Tools",
+      "category": "Tools & testing",
       "items": [
         "Git",
         "GitHub",
+        "Jest",
+        "pytest",
         "Microsoft Excel",
         "Microsoft Word"
       ]
@@ -1122,7 +1162,9 @@
     "beyondLead": "These interests may seem unrelated to software, but they all share something: patience, curiosity, and the satisfaction of creating or understanding something.",
     "motto": "Good enough is not good enough.",
     "mottoLabel": "My motto",
-    "mottoWhy": "It is not only about finishing the job. It means always trying to improve, in work and in life, and never stopping just because something looks good enough."
+    "mottoWhy": "It is not only about finishing the job. It means always trying to improve, in work and in life, and never stopping just because something looks good enough.",
+    "funFactLabel": "Fun fact",
+    "funFact": "I still mix up left and right. As a kid I came up with my own little conspiracy theory about it, and even though I know it makes no sense, I’ve never quite managed to shake it."
   },
   "contact": {
     "heading": "Let's build something thoughtful.",

@@ -10,7 +10,11 @@ export default function SmoothScroll() {
       return undefined;
     }
     const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.12 });
-    return () => lenis.destroy();
+    window.__lenis = lenis; // lets HomeLink scroll smoothly without a second scroller
+    return () => {
+      delete window.__lenis;
+      lenis.destroy();
+    };
   }, []);
 
   return null;

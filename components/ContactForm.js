@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getDict } from '@/lib/i18n';
 
 /**
  * Concept: Client Component with form state.
@@ -9,16 +10,16 @@ import { useState } from 'react';
  * Falls back to the /api/contact Route Handler if no public key is set.
  */
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-const FALLBACK_ERROR = 'Could not send your message. Please try again or email me directly.';
-
-function validate(name, email, message) {
-  if (!name || !email || !message) return 'Please fill in name, email, and message.';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
-  if (message.length < 10) return 'Message is a bit short, please write a little more.';
+function validate(t, name, email, message) {
+  if (!name || !email || !message) return t.missing;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return t.badEmail;
+  if (message.length < 10) return t.short;
   return '';
 }
 
-export default function ContactForm() {
+export default function ContactForm({ locale = 'en' }) {
+  const t = getDict(locale).form;
+  const FALLBACK_ERROR = t.failed;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -32,7 +33,7 @@ export default function ContactForm() {
     setError('');
 
     const fields = { name: name.trim(), email: email.trim(), message: message.trim() };
-    const invalid = validate(fields.name, fields.email, fields.message);
+    const invalid = validate(t, fields.name, fields.email, fields.message);
     if (invalid) {
       setStatus('error');
       setError(invalid);
@@ -89,19 +90,21 @@ export default function ContactForm() {
   if (status === 'success') {
     return (
       <div className={sheetClass} role="status">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink">Message sent</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink">{t.sent}</p>
         <p className="display mt-4 text-4xl">
-          Thank you — I got your <em>note</em>.
+          {t.thanks[0]}
+          <em>{t.thanks[1]}</em>
+          {t.thanks[2]}
         </p>
         <p className="mt-4 max-w-md text-ink-soft">
-          I will get back to you soon. You can also reach me anytime at{' '}
+          {t.reply}{' '}
           <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
             erzaaduraku15@gmail.com
           </a>
           .
         </p>
         <button type="button" onClick={() => setStatus('idle')} className="btn-line mt-8">
-          Send another message
+          {t.another}
         </button>
       </div>
     );
@@ -112,7 +115,7 @@ export default function ContactForm() {
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className={labelClass}>
-            Name
+            {t.name}
           </label>
           <input
             id="contact-name"
@@ -123,14 +126,14 @@ export default function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="field mt-1"
-            placeholder="Your name"
+            placeholder={t.namePh}
             disabled={status === 'loading'}
           />
         </div>
 
         <div>
           <label htmlFor="contact-email" className={labelClass}>
-            Email
+            {t.email}
           </label>
           <input
             id="contact-email"
@@ -141,7 +144,7 @@ export default function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="field mt-1"
-            placeholder="you@example.com"
+            placeholder={t.emailPh}
             disabled={status === 'loading'}
           />
         </div>
@@ -149,7 +152,7 @@ export default function ContactForm() {
 
       <div className="mt-8">
         <label htmlFor="contact-message" className={labelClass}>
-          Message
+          {t.message}
         </label>
         <textarea
           id="contact-message"
@@ -159,7 +162,7 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           className="field mt-1 min-h-40 resize-y"
-          placeholder="What would you like to build or talk about?"
+          placeholder={t.messagePh}
           disabled={status === 'loading'}
         />
       </div>
@@ -176,7 +179,7 @@ export default function ContactForm() {
       />
 
       <button type="submit" disabled={status === 'loading'} className="btn-ink mt-10 w-full justify-center sm:w-auto">
-        {status === 'loading' ? 'Sending…' : 'Send message'}
+        {status === 'loading' ? t.sending : t.send}
         <span aria-hidden="true" className="nudge inline-block">→</span>
       </button>
 

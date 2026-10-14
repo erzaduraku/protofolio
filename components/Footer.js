@@ -1,8 +1,10 @@
 import { getContact } from '@/lib/api';
+import { getDict } from '@/lib/i18n';
 
 /** Uses --ink-deep so it stays distinct from the dark purpose band above it. */
-export default async function Footer() {
-  const contact = await getContact();
+export default async function Footer({ locale = 'en' }) {
+  const contact = await getContact(locale);
+  const t = getDict(locale).footer;
 
   const links = [
     { id: 'linkedin', label: 'LinkedIn', href: contact.linkedin },
@@ -15,7 +17,9 @@ export default async function Footer() {
         <div className="grid items-start gap-10 md:grid-cols-12">
           <div className="md:col-span-8">
             <p className="display text-[clamp(1.75rem,2.6vw,2.25rem)]">
-              Let&rsquo;s make something <em>careful</em>.
+              {t.line[0]}
+              <em>{t.line[1]}</em>
+              {t.line[2]}
             </p>
             <a
               href={`mailto:${contact.email}`}
@@ -35,7 +39,7 @@ export default async function Footer() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 font-display text-sm italic text-paper/65">Designed between logic &amp; craft</p>
+            <p className="mt-6 font-display text-sm italic text-paper/65">{t.designed}</p>
           </div>
         </div>
 
@@ -44,7 +48,7 @@ export default async function Footer() {
             © 2026 Erza Duraku <span aria-hidden="true" className="mx-2">·</span> {contact.location}
           </p>
           <a href="#main" className="text-paper/85 hover:text-chalk">
-            Back to top <span aria-hidden="true">↑</span>
+            {t.top} <span aria-hidden="true">↑</span>
           </a>
         </div>
       </div>

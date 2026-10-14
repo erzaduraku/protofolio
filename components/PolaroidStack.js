@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
+import { getDict } from '@/lib/i18n';
 
 /** Reduced motion: no fan animation and no dragging. */
 const STACK = [
@@ -15,7 +16,8 @@ const STACK = [
   { x: 2, y: 5, rotate: -5 },
 ];
 
-export default function PolaroidStack({ images = [], alts = [], captions = [], title }) {
+export default function PolaroidStack({ images = [], alts = [], captions = [], title, locale = 'en' }) {
+  const t = getDict(locale).polaroid;
   const count = images.length;
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const [order, setOrder] = useState(() => images.map((_, i) => i)); // order[0] = top print
@@ -27,7 +29,7 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
 
   const open = hovered;
   const top = order[0];
-  const altFor = (i) => alts[i] || `${title}, photo ${i + 1} of ${count}`;
+  const altFor = (i) => alts[i] || t.photo(title, i + 1, count);
   const captionFor = (i) => captions[i] || title;
   const transition = reducedMotion
     ? { duration: 0 }
@@ -51,7 +53,7 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
         ref={areaRef}
         role="button"
         tabIndex={0}
-        aria-label={`Next photo, ${top + 1} of ${count}: ${captionFor(top)}`}
+        aria-label={t.next(top + 1, count, captionFor(top))}
         onClick={() => {
           if (dragged.current) {
             dragged.current = false;
@@ -107,7 +109,7 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
       </div>
 
       <p className="sr-only" aria-live="polite">
-        Photo {top + 1} of {count}: {captionFor(top)}
+        {t.live(top + 1, count, captionFor(top))}
       </p>
     </div>
   );

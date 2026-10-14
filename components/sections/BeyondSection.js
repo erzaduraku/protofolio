@@ -1,6 +1,7 @@
 import { Scissors, CookingPot, Puzzle } from 'lucide-react';
 import { getAbout, getInterests } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
+import { getDict } from '@/lib/i18n';
 
 const ICONS = { scissors: Scissors, 'cooking-pot': CookingPot, puzzle: Puzzle };
 
@@ -10,8 +11,9 @@ const LAYOUT = [
   'lg:col-span-5 lg:col-start-7 rotate-[-1.5deg] bg-paper-deep',
 ];
 
-export default async function BeyondSection({ headingLevel = 'h2' }) {
-  const [about, interests] = await Promise.all([getAbout(), getInterests()]);
+export default async function BeyondSection({ locale = 'en', headingLevel = 'h2' }) {
+  const [about, interests] = await Promise.all([getAbout(locale), getInterests(locale)]);
+  const t = getDict(locale).beyond;
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
   const Item = headingLevel === 'h1' ? 'h2' : 'h3';
 
@@ -19,13 +21,13 @@ export default async function BeyondSection({ headingLevel = 'h2' }) {
     <section id="beyond" aria-labelledby="beyond-heading" className="relative overflow-x-clip py-24 sm:py-32">
       <div className="container-page relative">
         <p aria-hidden="true" className="side-label absolute -left-1 top-24 hidden lg:block">
-          Beyond code
+          {t.side}
         </p>
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-6 lg:col-start-2">
             <span aria-hidden="true" className="numeral block">04</span>
             <Heading id="beyond-heading" className="display -mt-10 text-[clamp(2.4rem,5vw,4.4rem)] sm:-mt-16">
-              {emphasize('There is more to me than code.', ['more'])}
+              {emphasize(t.heading, [t.headingEm])}
             </Heading>
           </div>
           <p className="max-w-md text-lg text-ink-soft lg:col-span-4 lg:col-start-8 lg:self-end">

@@ -1,0 +1,353 @@
+{
+  "profile": {
+    "role": "Inxhinieri Softuerike",
+    "eyebrow": "Inxhiniere softueri në formim",
+    "headlineLine1": "Ndërtoj me logjikë.",
+    "headlineLine2": "Krijoj me qëllim.",
+    "tagline": "Ndërtoj softuer me logjikë, kureshtje dhe pak kreativitet, me fokus te zhvillimi i softuerit, AI dhe inxhinieria full-stack.",
+    "intro": "Studente e Inxhinierisë Softuerike në Universitetin e Prishtinës, e interesuar për zhvillimin e softuerit, AI, sistemet backend, cloud computing, DevOps dhe inxhinierinë full-stack.",
+    "currently": "Praktikante në Inxhinieri Softuerike · AnchorzUp",
+    "basedIn": "Prishtinë, Kosovë",
+    "facts": ["Universiteti i Prishtinës", "Inxhinieri Softuerike", "Prishtinë, Kosovë", "E hapur për mundësi"],
+    "heroCaption": "01 / logjikë × zanat"
+  },
+  "projects": {
+    "predictive-text-engine": {
+      "oneLiner": "Një sistem parashikimi teksti që eksploron algoritme, modele gjuhësore dhe sugjerime efikase.",
+      "summary": "Një projekt zgjidhjeje problemesh, i fokusuar në kthimin e strukturave të të dhënave dhe të logjikës së parashikimit në një ndërveprim praktik.",
+      "overview": "Një motor parashikimi teksti i ndërtuar mbi zinxhirët e Markovit. Trajnohet me bigrame dhe trigrame, ofron plotësim automatik sipas parashtesës dhe shfaq në kohë reale sugjerime për fjalën e radhës në një aplikacion desktopi me Tkinter.",
+      "features": [
+        "Përpunim i tekstit: heqja e shenjave të pikësimit, kthimi në shkronja të vogla dhe tokenizimi",
+        "Modele bigram dhe trigram me probabilitete tranzicioni të normalizuara",
+        "3–5 sugjerimet kryesore për fjalën e radhës në kohë reale",
+        "Plotësim automatik sipas parashtesës gjatë shkrimit",
+        "Përzgjedhës modeli: Bigram, Trigram ose Both (të dyja)",
+        "Trajnim me korpusin Brown të NLTK dhe me një skedar korpusi të personalizuar",
+        "Teste njësie me pytest"
+      ],
+      "howItWorks": [
+        "Korpusi Brown dhe corpus/corpus.txt pastrohen dhe bashkohen në një grup të vetëm trajnimi.",
+        "Ndërtohen tabelat e frekuencave për bigramet dhe trigramet, të cilat kthehen në shpërndarje probabiliteti.",
+        "Për një parashikim, motori kontrollon fillimisht kontekstin e trigramit, pastaj kalon te bigrami e më pas te plotësimi sipas parashtesës, dhe i rendit rezultatet sipas probabilitetit.",
+        "Në ndërfaqen grafike me Tkinter, çdo shtypje tasti aktivizon motorin dhe sugjerimet shfaqen nën fushën e shkrimit."
+      ],
+      "techStack": [{ "group": "Gjuha" }, { "group": "NLP" }, { "group": "Ndërfaqja" }, { "group": "Testimi" }],
+      "teamInfo": { "note": "Projekt ekipor i Grupit 22." },
+      "screenshots": [
+        { "alt": "Dritarja kryesore e Predictive Text Engine me fushën e shkrimit, parashikimet në kohë reale dhe përzgjedhësin e modelit" },
+        { "alt": "Sugjerimet në modalitetin Bigram" },
+        { "alt": "Sugjerimet në modalitetin Trigram" },
+        { "alt": "Sugjerimet në modalitetin e kombinuar “Both”" }
+      ]
+    },
+    "collabai-project-management": {
+      "oneLiner": "Një platformë full-stack për menaxhimin e projekteve, e fuqizuar nga AI, për organizimin e ekipeve, projekteve dhe detyrave, me një asistent AI të integruar që përdor RAG dhe kërkim semantik mbi të dhënat e organizatës.",
+      "overview": "CollabAI është një platformë full-stack për menaxhimin e projekteve, që organizon ekipet, projektet, detyrat dhe bashkëpunimin, me një asistent AI të integruar që mbështetet në retrieval-augmented generation (RAG) dhe në kërkimin semantik. Është ndërtuar për përdorim multi-tenant: një platformë e vetme mund t’u shërbejë disa organizatave, duke i mbajtur të ndara të dhënat e secilës.",
+      "features": [
+        "Autentifikim me JWT, me regjistrim, rifreskim dhe bllokim (blacklisting) të tokenëve, si dhe rivendosje të fjalëkalimit me email",
+        "Organizata, hapësira pune dhe ftesa me email, me role sipas fushëveprimit (Org Admin, Workspace Admin, Manager, Member)",
+        "Projekte dhe detyra me status, prioritet, etiketa, person përgjegjës, afat dhe skedarë të bashkëngjitur",
+        "Komente në detyra me regjistër aktiviteti, njoftime brenda aplikacionit dhe gjurmë auditimi për administratorët",
+        "Panel kryesor me përmbledhje të detyrave, projekteve dhe aktivitetit të ekipit",
+        "Chatbot me AI, analizë teksti (përmbledhje, detyra për t’u kryer, ndjenja), kërkim semantik nëpër detyra dhe komente, si dhe përgjigje pyetjesh me RAG mbi të dhënat e projekteve të vetë organizatës"
+      ],
+      "howItWorks": [
+        "Një aplikacion React me një faqe të vetme komunikon me një API të Django REST Framework nën /api/v1/, duke dërguar me çdo kërkesë një JWT dhe ID-në e organizatës.",
+        "Middleware-i verifikon tokenin dhe identifikon tenant-in; backend-i kontrollon sërish fushëveprimin e tenant-it dhe qasjen sipas roleve para çdo përgjigjeje.",
+        "Views dhe serializers ia kalojnë punën klasave të shërbimeve; të dhënat ruhen në PostgreSQL, me Redis për caching dhe Celery për punët në sfond.",
+        "Për përgjigjet me AI, të dhënat e organizatës kthehen në embeddings me sentence-transformers dhe ruhen në një vector store në Redis; elementet relevante gjenden dhe i dërgohen si kontekst një modeli LLaMA 3.1 përmes Groq API."
+      ],
+      "techStack": [{ "group": "Backend" }, { "group": "Të dhënat" }, { "group": "AI" }, { "group": "Frontend" }, { "group": "Mjetet" }],
+      "teamInfo": { "note": "Projekt ekipor me pesë kontribues në GitHub." },
+      "demoVideo": { "caption": "Një prezantim i CollabAI, duke nisur nga paneli i organizatës." }
+    },
+    "parkeasy": {
+      "oneLiner": "Një aplikacion mobil ndërplatformor për gjetjen, rezervimin dhe menaxhimin e parkingjeve në Kosovë, me përvoja të veçanta për shoferët, pronarët e parkingjeve dhe administratorët.",
+      "overview": "ParkEasy është një aplikacion mobil për menaxhimin e parkingjeve, i ndërtuar me React Native, Expo dhe Firebase për lëndën Programimi i Aplikacioneve Mobile në FIEK. Shoferët mund të gjejnë parkingje aty pranë në hartë, të kërkojnë, të rezervojnë dhe të menaxhojnë rezervimet; pronarët e parkingjeve menaxhojnë hapësirat dhe rezervimet e tyre; administratorët shqyrtojnë kërkesat për parkingje dhe menaxhojnë përdoruesit.",
+      "features": [
+        "Hyrje dhe regjistrim me qasje sipas roleve për përdoruesit, pronarët dhe administratorët, si dhe hyrje me Google",
+        "Pamja Nearby: hartë në kohë reale e vendeve të parkimit, me rezervim direkt nga harta",
+        "Kërkim i hapësirave të parkimit sipas vendndodhjes",
+        "Rezervim, ndryshim dhe anulim i rezervimeve, me historik rezervimesh",
+        "Të preferuarat, për të ruajtur parkingjet e parapëlqyera",
+        "Profil me ngarkim fotoje dhe cilësime njoftimesh, si dhe njoftime brenda aplikacionit për rezervimet",
+        "Panel për pronarët me hapësirat e parkimit, fitimet dhe rezervimet",
+        "Panel administratori për kërkesat për parkingje, listat e parkingjeve, rezervimet dhe menaxhimin e përdoruesve"
+      ],
+      "howItWorks": [
+        "Aplikacioni përdor Expo Router me grupe të veçanta rrugësh për autentifikimin, skedat e përdoruesit (Nearby, Search, Bookings, Favorites, Profile), zonën e pronarit dhe zonën e administratorit.",
+        "Firebase Authentication menaxhon hyrjen, ndërsa Firestore dhe Storage ruajnë parkingjet, rezervimet, përdoruesit dhe fotot, me përditësime në kohë reale.",
+        "Hartat janë ndërtuar me react-native-maps dhe Leaflet; distancat deri te parkingjet llogariten me haversine-distance dhe me vendndodhjen e pajisjes nga expo-location.",
+        "Konfirmimet dhe përditësimet e rezervimeve dërgohen me expo-notifications; sjellja e aplikacionit mbulohet me teste Jest dhe React Native Testing Library."
+      ],
+      "techStack": [{ "group": "Mobile" }, { "group": "Backend" }, { "group": "Hartat & pajisja" }, { "group": "Testimi" }],
+      "teamInfo": { "note": "Projekt ekipor për lëndën Programimi i Aplikacioneve Mobile në FIEK. Repozitori i përket Edonita Gashit; Erza është njëra nga gjashtë zhvilluesit." },
+      "screenshotGroups": [
+        { "title": "Hapat e parë", "items": [
+          { "alt": "Ekrani i mirëseardhjes" },
+          { "alt": "Hyrja me email ose me Google" },
+          { "alt": "Formulari i regjistrimit" },
+          { "alt": "Regjistrimi me rolin Owner dhe të dhënat e parkingut" }
+        ] },
+        { "title": "Shoferi", "items": [
+          { "alt": "Harta Nearby me vendet e parkimit dhe çmimet" },
+          { "alt": "Detajet e parkingut të hapura nga harta, me butonin Reserve Spot" },
+          { "alt": "Kërkimi i parkingjeve, i renditur sipas më të afërtit" },
+          { "alt": "Rezervimi i një vendi: data, ora, kohëzgjatja dhe mënyra e pagesës" },
+          { "alt": "Rezervimet e mia" },
+          { "alt": "Ndryshimi i një rezervimi" },
+          { "alt": "Konfirmimi i fshirjes së një rezervimi" },
+          { "alt": "Parkingjet e preferuara" },
+          { "alt": "Njoftime të planifikuara që kujtojnë rezervimin" },
+          { "alt": "Ndryshimi i profilit të përdoruesit" },
+          { "alt": "Opsionet e profilit: rreth aplikacionit, ndihmë, privatësia, kushtet dhe dalja" },
+          { "alt": "Ndryshimi i fotos së profilit nga galeria ose nga kamera" }
+        ] },
+        { "title": "Pronari", "items": [
+          { "alt": "Faqja kryesore e pronarit me rezervimet e parkingut" },
+          { "alt": "Profili i pronarit dhe të dhënat e parkingut" }
+        ] },
+        { "title": "Administratori", "items": [
+          { "alt": "Pamja e përgjithshme e panelit të administratorit" },
+          { "alt": "Administratori: menaxhimi i parkingjeve" },
+          { "alt": "Administratori: menaxhimi i përdoruesve" }
+        ] },
+        { "title": "Versioni i hershëm", "items": [
+          { "alt": "Versioni i hershëm: ekrani i mirëseardhjes" },
+          { "alt": "Versioni i hershëm: ekrani i hyrjes (në shqip)" },
+          { "alt": "Versioni i hershëm: ekrani i regjistrimit (në shqip)" },
+          { "alt": "Versioni i hershëm: parkingjet aty pranë, me hartë" },
+          { "alt": "Versioni i hershëm: kërkimi i parkingjeve" },
+          { "alt": "Versioni i hershëm: të preferuarat" },
+          { "alt": "Versioni i hershëm: ndryshimi i profilit" }
+        ] }
+      ]
+    },
+    "erza-master-project": {
+      "oneLiner": "Infrastrukturë me Terraform në AWS për një aplikacion web me disponueshmëri të lartë: një VPC multi-AZ, instanca private EC2 në një Auto Scaling Group pas një Application Load Balancer, e vendosur me GitHub Actions.",
+      "overview": "Kod Terraform që krijon infrastrukturën në AWS për një aplikacion web me disponueshmëri të lartë, i ndërtuar për lëndën DCADD Master Project. Krijon një rrjet multi-AZ, e ekzekuton aplikacionin në instanca private EC2 pas një Application Load Balancer dhe i vendos ndryshimet automatikisht me GitHub Actions.",
+      "features": [
+        "VPC (10.0.0.0/16) me tri subnet-e publike dhe tri private në eu-central-1a, 1b dhe 1c",
+        "Application Load Balancer i qasshëm nga interneti, në portin HTTP 80",
+        "Auto Scaling Group me instanca t3.micro (min. 2, e dëshiruar 3, maks. 6) në subnet-e private pa IP publike",
+        "NAT Gateway për qasje dalëse në internet nga subnet-et private",
+        "Security groups që lejojnë HTTP drejt instancave vetëm nga load balancer-i",
+        "Gjendja e Terraform-it ruhet në distancë në S3; konfigurimi bëhet përmes variablave me vlera të arsyeshme të paracaktuara"
+      ],
+      "howItWorks": [
+        "Skedarët e Terraform-it janë ndarë sipas përgjegjësisë: rrjeti, siguria, compute, balancimi i ngarkesës, të dhënat (kërkimi i AMI-së Amazon Linux 2023) dhe outputs.",
+        "Çdo instancë EC2 niset me një skript user-data që vendos aplikacionin web të grupit për lëndën.",
+        "Në çdo pull request, GitHub Actions ekzekuton terraform fmt, init, validate dhe plan; pas bashkimit në main ekzekuton terraform apply.",
+        "Pas apply-t, emri DNS i load balancer-it jepet si URL publike e aplikacionit."
+      ],
+      "techStack": [{ "group": "Infrastrukturë si kod" }, { "group": "AWS" }, { "group": "CI/CD" }],
+      "teamInfo": { "note": "Projekt individual i Erzës për lëndën DCADD Master Project." }
+    },
+    "text-rule-processor": {
+      "oneLiner": "Një aplikacion web për filtrimin e përmbajtjes me rregulla: përdoruesit krijojnë rregulla që zbulojnë modele në tekst dhe i shënojnë me theksime ose tooltip-e, me historik të teksteve të përpunuara.",
+      "overview": "Një aplikacion web për filtrimin e përmbajtjes bazuar në rregulla. Përdoruesit krijojnë rregulla që zbulojnë modele në tekst dhe e shënojnë çdo përputhje me një theksim me ngjyrë ose me një etiketë tooltip. U krijua si detyrë gjatë praktikës për të demonstruar zhvillimin full-stack.",
+      "features": [
+        "Krijim, ndryshim, fshirje, aktivizim dhe çaktivizim i rregullave",
+        "Llojet e përputhjes: përmban, fillon me dhe përputhje e saktë",
+        "Veprimet: theksim me ngjyrë të zgjedhur ose tooltip me etiketë",
+        "Përpunim i tekstit të shkruar ose i një skedari .txt të ngarkuar sipas të gjitha rregullave aktive, me statistika të përputhjeve",
+        "Historik i teksteve të përpunuara, që mund të shikohen dhe të fshihen",
+        "Prioritet i rregullave, kërkim dhe filtrim, parapamje para ruajtjes dhe njoftime toast"
+      ],
+      "howItWorks": [
+        "Frontend-i në React thërret një API në Node.js dhe Express.",
+        "API-ja i ruan rregullat dhe historikun në PostgreSQL (Neon ose lokalisht) përmes node-postgres; tabelat krijohen automatikisht gjatë nisjes.",
+        "POST /process e kontrollon tekstin sipas të gjitha rregullave aktive dhe kthen përputhjet, të cilat frontend-i i shfaq si theksime dhe tooltip-e."
+      ],
+      "techStack": [{ "group": "Frontend" }, { "group": "Backend" }, { "group": "Baza e të dhënave" }],
+      "teamInfo": { "note": "Projekt individual i Erzës, i ndërtuar si detyrë gjatë praktikës." },
+      "screenshots": [
+        { "alt": "Paneli kryesor me menaxhimin e rregullave dhe përpunimin e tekstit krah për krah" },
+        { "alt": "Formulari për shtimin e një rregulle të re, me opsione për ngjyrën dhe tooltip-in" },
+        { "alt": "Lista e rregullave me llojet e përputhjes dhe veprimet" },
+        { "alt": "Shkrimi i tekstit që do të përpunohet sipas rregullave aktive" },
+        { "alt": "Rezultati i përpunuar me përputhjet e theksuara" },
+        { "alt": "Historiku i teksteve të përpunuara" }
+      ]
+    },
+    "maze-solver": {
+      "oneLiner": "Një redaktues interaktiv labirintesh dhe vizualizues i gjetjes së rrugës, që përdor kërkimin A* me heuristikën e distancës Manhattan për të gjetur rrugën më të shkurtër.",
+      "overview": "Një redaktues interaktiv labirintesh dhe vizualizues i gjetjes së rrugës. Vizatoni një labirint në rrjetë, vendosni pikën e nisjes dhe synimin, dhe algoritmi A* e gjen dhe e vizaton rrugën më të shkurtër. Projekti e paraqet vizualisht kërkimin heuristik, funksionet e kostos dhe rindërtimin e rrugës.",
+      "features": [
+        "Redaktues labirinti në rrjetë: klikimi i majtë vendos ose heq një mur, Shift + klikimi i majtë cakton nisjen, klikimi i djathtë cakton synimin",
+        "Kërkim A* me heuristikën e distancës Manhattan dhe lëvizje në 4 drejtime",
+        "Rruga më e shkurtër theksohet dhe gjatësia e saj shfaqet në shiritin e statusit",
+        "Mesazhe statusi për konfigurime të pavlefshme (nisja ose synimi mbi një mur, nuk u gjet rrugë)",
+        "Ndërfaqe Tkinter me temë të errët, si dhe një version për konsolë"
+      ],
+      "howItWorks": [
+        "Çdo qelizë vlerësohet me f(n) = g(n) + h(n): kostoja deri tani plus distanca Manhattan deri te synimi.",
+        "Një radhë me prioritet min-heap (heapq) zgjeron gjithmonë qelizën më premtuese.",
+        "Meqë heuristika është e pranueshme (admissible), A* kthen rrugën optimale më të shkurtër kur ajo ekziston; më pas rruga rindërtohet dhe vizatohet në rrjetë."
+      ],
+      "techStack": [{ "group": "Gjuha" }, { "group": "Ndërfaqja" }, { "group": "Algoritmi" }],
+      "teamInfo": { "note": "Projekt individual i Erzës." },
+      "screenshots": [
+        { "alt": "Labirinti i paracaktuar kur niset aplikacioni" },
+        { "alt": "Ndryshimi i labirintit duke shtuar mure dhe duke lëvizur nisjen dhe synimin" },
+        { "alt": "Rruga më e shkurtër e gjetur me A*, e theksuar në rrjetë" }
+      ]
+    },
+    "firebase-auth-erza": {
+      "oneLiner": "Një demo e vogël e Firebase Authentication me Google Sign-In.",
+      "overview": "Një demo e vogël web e Firebase Authentication. Një faqe e vetme me butonin “Sign in with Google” e identifikon përdoruesin përmes një dritareje popup të Google dhe e përshëndet me emër.",
+      "features": [
+        "Google Sign-In me signInWithPopup dhe GoogleAuthProvider",
+        "Mesazh mirëseardhjeje me emrin e përdoruesit të identifikuar, dhe mesazh gabimi nëse identifikimi dështon",
+        "Faqe e vetme me animacione dhe temë rozë, në HTML, CSS dhe JavaScript të thjeshtë"
+      ],
+      "howItWorks": [
+        "index.html e ngarkon app.js si modul ES.",
+        "app.js inicializon aplikacionin Firebase dhe Auth nga Firebase JavaScript SDK (v11, i ngarkuar nga CDN).",
+        "Klikimi i butonit hap dritaren popup të hyrjes me Google; rezultati shfaqet në një mesazh të përkohshëm popup."
+      ],
+      "techStack": [{ "group": "Frontend" }, { "group": "Autentifikimi" }],
+      "teamInfo": { "note": "Projekt individual i Erzës." }
+    }
+  },
+  "experience": {
+    "role": "Praktikante në Inxhinieri Softuerike",
+    "period": "2026 — Sot",
+    "summary": "Mjedisi im i parë profesional inxhinierik: kontribuoj në zhvillimin e produkteve reale, i kthej kërkesat dhe dizajnet në ndërfaqe funksionale dhe po mësoj të punoj me kujdes brenda një baze kodi ekzistuese.",
+    "comparison": "Projektet në universitet më mësuan si të ndërtoj diçka nga fillimi. Puna profesionale më mësoi si të ndërtoj brenda diçkaje që ekziston tashmë. Ky dallim ndryshoi mënyrën si mendoj për softuerin.",
+    "learningPoints": [
+      "Puna brenda një baze kodi ekzistuese, në vend që të nis gjithçka nga zero.",
+      "Të kuptuarit se si kërkesat dhe dizajnet shndërrohen në implementim.",
+      "Bashkëpunimi me të tjerët dhe komunikimi për punën teknike.",
+      "Përdorimi i Git-it dhe i proceseve të zhvillimit në një mjedis profesional.",
+      "Të menduarit për mirëmbajtjen dhe për mënyrën si një veçori përshtatet në produktin më të gjerë.",
+      "Lidhja e punës në frontend me sistemet backend dhe me kërkesat reale të produktit."
+    ],
+    "imageAlts": ["Erza në zyrën e AnchorzUp"],
+    "imageCaptions": ["Në AnchorzUp"],
+    "course": { "label": "Po mësoj aktualisht", "status": "në vazhdim" }
+  },
+  "volunteering": {
+    "sfk-2025": {
+      "title": "SFK 2025 — Edicioni i 10-të",
+      "date": "Tetor 2025",
+      "place": "FLOSSK · Prishtinë",
+      "short": "Ndihmova në koordinimin e eventit, përgatitjen e punëtorive, udhëzimin e pjesëmarrësve dhe mbështetjen e folësve, duke e përjetuar komunitetin open source nga brenda.",
+      "body": [
+        "SFK 2025 ishte një nga mundësitë e mia të para për t’u përfshirë aktivisht në komunitetin lokal të teknologjisë dhe të open source. Në vend që ta përjetoja eventin vetëm si pjesëmarrëse, iu bashkova ekipit të vullnetarëve dhe u bëra pjesë e punës që zhvillohej prapa skenës.",
+        "Gjatë eventit ndihmova në përgatitjen e punëtorive, udhëzova pjesëmarrësit, mbështeta folësit dhe ndihmova në koordinimin e përgjithshëm të aktiviteteve."
+      ],
+      "tookFromIt": ["Komunikim", "Punë ekipore", "Përgjegjësi", "Komunitet", "Përshtatshmëri", "Open Source"],
+      "role": ["Koordinimi i eventit", "Përgatitja e punëtorive", "Mbështetja e pjesëmarrësve", "Mbështetja e folësve"],
+      "imageAlts": [
+        "Folës në podium para ekranit të SFK 2025, Edicioni i 10-të, i parë nga publiku",
+        "Vullnetarët e SFK 2025 para Fakultetit të Inxhinierisë Elektrike dhe Kompjuterike në Prishtinë",
+        "Erza me një tjetër nga vullnetarët pranë banerit të SFK 2025 në hyrje të Universitetit të Prishtinës",
+        "Vullnetarët e SFK 2025 duke ndarë pica në një tryezë të gjatë gjatë pushimit të drekës",
+        "Erza me një tjetër nga vullnetarët, me bluza të njëjta të eventit, duke ndjekur një ligjëratë në SFK 2025"
+      ],
+      "imageCaptions": ["Hapja e edicionit të 10-të", "Ekipi i vullnetarëve të SFK", "Në hyrje të universitetit", "Pushim për pica", "Duke ndjekur nga publiku"]
+    },
+    "devfest-prishtina-2025": {
+      "date": "Dhjetor 2025",
+      "place": "Prishtinë",
+      "short": "Mbështeta koordinimin e folësve, përgatitjen teknike dhe logjistikën e eventit, duke mësuar si organizohet një event i madh teknologjik.",
+      "body": [
+        "Vullnetarizmi në DevFest Prishtina më dha mundësinë ta përjetoj një event të madh teknologjik nga ana organizative.",
+        "Përgjegjësitë e mia ishin kryesisht koordinimi i folësve dhe logjistika e eventit."
+      ],
+      "tookFromIt": ["Komunikim", "Organizim", "Punë ekipore", "Rrjetëzim", "Përgjegjësi", "Përshtatshmëri"],
+      "role": ["Koordinimi i folësve", "Menaxhimi i orarit", "Përgatitja teknike", "Logjistika e eventit"],
+      "imageAlts": [
+        "Dy folës në skenë para ekranit të DevFest Kosovo 2025, me publikun të ulur në rreshta",
+        "Folës në podium para ekranit të DevFest Kosovo, i parë nga fundi i sallës",
+        "Erza me dy vullnetarë të tjerë me baxhe të DevFest në një korridor",
+        "Vullnetarët e DevFest duke pozuar me maskotën tigër"
+      ],
+      "imageCaptions": ["Ligjërata në skenën kryesore", "Nga fundi i sallës", "Me baxhet e eventit", "Me maskotën e DevFest"]
+    },
+    "digi-camp-2026": {
+      "date": "21–23 maj 2026",
+      "short": "Gjatë tri ditëve në ITP Prizren ndihmova në zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, dhe u gëzova shumë që pata rastin ta eksploroj vetë ITP-në.",
+      "body": [
+        "Nga 21 deri më 23 maj 2026, ITP Prizren priti Digi Camp & Digital Skills Festival, një festival ndërkombëtar teknologjik treditor. Si vullnetare, ndihmova në organizimin dhe zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, duke punuar krah për krah me profesionistë dhe mentorë.",
+        "U gëzova shumë që pata rastin ta eksploroj ITP-në, një qendër për sipërmarrje, inovacion dhe aftësi në Prizren."
+      ],
+      "tookFromIt": ["Punë ekipore", "Komunikim", "Përgjegjësi", "Përshtatshmëri", "Rrjetëzim", "Komunitet"],
+      "role": ["Mbështetje në punëtori", "Mbështetje në sesione", "Operacionet e eventit", "Bashkëpunim me profesionistë dhe mentorë"],
+      "imageAlts": [
+        "Erza me bluzën e Digi Camp dhe baxhin e eventit",
+        "Selfie në grup me shokë dhe kolegë, brenda në Digi Camp",
+        "Tabela orientuese e ITP-së, Innovation and Training Park Prizren, në ambient të jashtëm",
+        "Katër vullnetarë me bluza të Digi Festival jashtë, në mbrëmje",
+        "Publiku në sallën e Digi Camp para ekranit të madh të Digi Camp and Digital Skills Festival në ITP"
+      ],
+      "imageCaptions": ["Gati për Digi Camp", "Ekipi", "Innovation & Training Park Prizren", "Mbrëmje në ITP", "Sallë plot"]
+    }
+  },
+  "volunteeringQuote": {
+    "quote": "Në këto evente erdha për të ndihmuar. Nga secili prej tyre ika me diçka të mësuar.",
+    "reflection": "Vullnetarizmi më ka dhënë përvoja që nuk do t’i merrja dot vetëm nga projektet në universitet. Më mësoi si të komunikoj me njerëz të ndryshëm, të punoj si pjesë e një ekipi, të përshtatem kur planet ndryshojnë dhe të marr përgjegjësi që gjërat të funksionojnë."
+  },
+  "learning": {
+    "intern-anchorzup": {
+      "title": "Praktikante në Inxhinieri Softuerike",
+      "year": "2026 — Sot",
+      "detail": "Mjedisi im i parë profesional inxhinierik: kontribuoj në zhvillimin e produkteve reale, i kthej kërkesat dhe dizajnet në ndërfaqe funksionale dhe po mësoj të punoj me kujdes brenda një baze kodi ekzistuese."
+    },
+    "uni-se": {
+      "title": "Inxhinieri Softuerike",
+      "place": "Universiteti i Prishtinës",
+      "detail": "Po fitoj përvojë më të thellë në zhvillimin e softuerit, bazat e të dhënave, sistemet frontend, algoritmet dhe proceset moderne të zhvillimit."
+    },
+    "kren-cloud": {
+      "detail": "Lidhja e zhvillimit të aplikacioneve me infrastrukturën, vendosjen (deployment), automatizimin dhe praktikat e besueshme inxhinierike."
+    }
+  },
+  "interests": {
+    "sewing": { "title": "Qepja & punët me dorë", "text": "Krijimi i gjërave nga e para, me durim dhe vëmendje të madhe ndaj detajeve." },
+    "cooking": { "title": "Gatimi", "text": "Eksperimentimi, zgjidhja e problemeve dhe krijimi i diçkaje nga përbërës të veçantë." },
+    "sudoku": { "title": "Sudoku", "text": "Një ushtrim i qetë në logjikë, durim dhe njohje të modeleve." }
+  },
+  "skills": {
+    "languages": { "category": "Gjuhët" },
+    "web": { "category": "Frontend & UI" },
+    "backend": { "category": "Backend & API" },
+    "databases": { "category": "Bazat e të dhënave" },
+    "cloud": { "category": "Cloud & DevOps" },
+    "ai": { "category": "AI & NLP" },
+    "tools": { "category": "Mjete & testim" },
+    "exploring": { "category": "Po eksploroj aktualisht", "items": ["AI", "Cloud Computing", "DevOps", "Zhvillimi full-stack"] }
+  },
+  "about": {
+    "heading": "Diku mes dy botëve, gjeta inxhinierinë softuerike.",
+    "lead": "Në shumë mënyra, jam produkt i dy llojeve shumë të ndryshme të punës.",
+    "logicCard": "Logjika nga inxhinieria",
+    "craftCard": "Kujdesi nga zanati",
+    "paragraphs": [
+      "Babai im është mekanik; nëna ime është rrobaqepëse. Njëra botë e motorëve dhe e veglave, tjetra e pëlhurave dhe e modeleve. Nga babai mësova vlerën e përkushtimit, të durimit dhe të përfundimit të asaj që e nis, atë etikë pune që vjen nga riparimi i gjërave me kujdes, pa i anashkaluar pjesët e vështira.",
+      "Nga nëna trashëgova një lloj tjetër vëmendjeje: kreativitetin dhe zakonin për të vënë re detajet e vogla. Duke u rritur mes qepjes, modeleve, matjeve dhe punëve me dorë, mësova se krijimi i diçkaje kërkon edhe një ide, edhe durimin për ta kthyer atë ide në diçka reale.",
+      "Diku mes këtyre dy anëve, gjeta softuerin. Më pëlqen të kuptoj si funksionojnë gjërat, t’i ndaj problemet komplekse në pjesë më të vogla dhe të ndërtoj zgjidhje që kanë kuptim. Më intereson si funksionon diçka, por edhe si ndihet, si duket dhe si bashkohet në një tërësi, sepse për mua, të ndërtosh mirë ka nënkuptuar gjithmonë edhe logjikë, edhe kujdes."
+    ],
+    "quote": "„Ende nuk e di” nuk është dobësi. Është fillimi i rrugës drejt përgjigjes.",
+    "beyondLead": "Këto interesa mund të duken të palidhura me softuerin, por të gjitha kanë diçka të përbashkët: durimin, kureshtjen dhe kënaqësinë e krijimit ose të të kuptuarit të diçkaje.",
+    "mottoLabel": "Motoja ime",
+    "mottoWhy": "Në shqip: „Mjaftueshëm mirë nuk mjafton.” Nuk ka të bëjë vetëm me përfundimin e punës. Do të thotë të përpiqesh gjithmonë të përmirësohesh, në punë dhe në jetë, dhe të mos ndalesh kurrë vetëm sepse diçka duket mjaftueshëm e mirë.",
+    "funFactLabel": "Fakt argëtues",
+    "funFact": "Ende e ngatërroj të majtën me të djathtën. Si fëmijë kisha krijuar teorinë time të vogël konspirative për këtë, dhe edhe pse e di që nuk ka kuptim, kurrë nuk kam arritur ta heq qafe plotësisht."
+  },
+  "contact": {
+    "heading": "Le të ndërtojmë diçka me kujdes.",
+    "body": "Qoftë për një projekt softueri, një mundësi praktike apo thjesht një bisedë për teknologjinë, jam gjithmonë e interesuar të njihemi.",
+    "location": "Prishtinë, Kosovë"
+  },
+  "purpose": {
+    "label": "Ku dua të shkoj",
+    "heading": "Diçka që më intereson përtej kodit.",
+    "paragraphs": [
+      "U rrita pranë një fëmije me sindromën Down dhe pashë si mund të duket jeta e përditshme për një familje si e tyre. Në Kosovë, mbështetja e duhur gjendet me vështirësi dhe shumë familje mbeten t’ia dalin vetë.",
+      "Studioj inxhinieri softuerike dhe e dua këtë fushë. Një ditë dua të punoj me organizata që mbështesin fëmijët me autizëm, sindromën Down dhe nevoja të tjera të veçanta, duke ndërtuar mjete që u kursejnë kohë mësuesve, aplikacione që familjet mund t’i përdorin vërtet dhe ndërfaqe që përcjellin qetësi. Jam ende në fillim.",
+      "Dua t’i ndërtoj gjërat mirë, për njerëzit që shumë shpesh harrohen."
+    ]
+  }
+}

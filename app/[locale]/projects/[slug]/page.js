@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getProjects, getProjectBySlug } from '@/lib/api';
+import { LOCALES, getDict, localePath } from '@/lib/i18n';
 
 /**
  * Concept: dynamic route with generateStaticParams. Only published projects are
@@ -11,13 +12,13 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getProjects();
-  return projects.map((project) => ({ slug: project.slug }));
+  return LOCALES.flatMap((locale) => projects.map((project) => ({ locale, slug: project.slug })));
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const project = await getProjectBySlug(slug);
-  if (!project) return { title: 'Project not found' };
+  const { slug, locale } = await params;
+  const project = await getProjectBySlug(slug, locale);
+  if (!project) return { title: getDict(locale).meta.projectNotFound };
   return { title: project.title, description: project.oneLiner };
 }
 
@@ -58,9 +59,11 @@ function Gallery({ shots }) {
 }
 
 export default async function ProjectDetailPage({ params }) {
-  const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const { slug, locale } = await params;
+  const project = await getProjectBySlug(slug, locale);
   if (!project) notFound();
+  const t = getDict(locale).project;
+  const newTab = getDict(locale).common.newTab;
 
   // screenshotGroups (titled groups) wins; plain screenshots render as one untitled group.
   const groups = project.screenshotGroups?.length
@@ -73,8 +76,8 @@ export default async function ProjectDetailPage({ params }) {
   return (
     <article className="container-page pt-14 pb-24 sm:pt-20 sm:pb-32">
       <p className="text-sm">
-        <Link href="/projects" className="link-stitch">
-          ← All projects
+        <Link href={localePath(locale, '/projects')} className="link-stitch">
+          {t.all}
         </Link>
       </p>
 
@@ -86,7 +89,7 @@ export default async function ProjectDetailPage({ params }) {
               {project.language}
             </span>
             {project.category ? <span>· {project.category}</span> : null}
-            {project.team ? <span>· Team project</span> : null}
+            {project.team ? <span>· {getDict(locale).projects.teamProject}</span> : null}
           </p>
           <h1 className="display mt-5 text-[clamp(2.8rem,7vw,6rem)]">{project.title}</h1>
           <p className="mt-6 max-w-2xl text-xl leading-relaxed text-ink-soft">{project.oneLiner}</p>
@@ -94,14 +97,14 @@ export default async function ProjectDetailPage({ params }) {
         <div className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-end lg:justify-end">
           {project.repoUrl ? (
             <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="btn-ink">
-              View on GitHub <span aria-hidden="true">↗</span>
-              <span className="sr-only"> (opens in a new tab)</span>
+              {t.viewGithub} <span aria-hidden="true">↗</span>
+              <span className="sr-only">{newTab}</span>
             </a>
           ) : null}
           {project.liveUrl ? (
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-line">
-              Live demo <span aria-hidden="true">↗</span>
-              <span className="sr-only"> (opens in a new tab)</span>
+              {t.liveDemo} <span aria-hidden="true">↗</span>
+              <span className="sr-only">{newTab}</span>
             </a>
           ) : null}
         </div>
@@ -109,11 +112,11 @@ export default async function ProjectDetailPage({ params }) {
 
       {project.overview ? (
         <div className="mt-16 grid gap-10 lg:grid-cols-12">
-          <Section id="overview" title="Overview" className="lg:col-span-7">
+          <Section id="overview" title={t.overview} className="lg:col-span-7">
             <p className="mt-5 text-lg leading-relaxed text-ink-soft">{project.overview}</p>
           </Section>
           {project.techStack?.length ? (
-            <Section id="stack" title="Tech stack" className="lg:col-span-4 lg:col-start-9 lg:mt-16">
+            <Section id="stack" title={t.stack} className="lg:col-span-4 lg:col-start-9 lg:mt-16">
               <dl className="mt-5 space-y-4">
                 {project.techStack.map((group) => (
                   <div key={group.group}>
@@ -128,7 +131,7 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       {project.demoVideo?.src ? (
-        <Section id="demo" title="Demo" className="mt-20">
+        <Section id="demo" title={t.demo} className="mt-20">
           <figure className="sheet-shadow mt-8 bg-paper-light p-3 sm:p-4">
             <video
               controls
@@ -141,9 +144,9 @@ export default async function ProjectDetailPage({ params }) {
               className="block h-auto w-full rounded-sm bg-ink"
             >
               <source src={project.demoVideo.src} type="video/mp4" />
-              Your browser can’t play this video.{' '}
+              {t.noVideo}{' '}
               <a href={project.demoVideo.src} className="link-stitch">
-                Download the demo
+                {t.downloadDemo}
               </a>
               .
             </video>
@@ -157,7 +160,7 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       {project.features?.length ? (
-        <Section id="features" title="Features" className="mt-20 lg:ml-[16%]">
+        <Section id="features" title={t.features} className="mt-20 lg:ml-[16%]">
           <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {project.features.map((feature) => (
               <li key={feature} className="border-l-2 border-thread pl-4 text-ink-soft">
@@ -169,7 +172,7 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       {project.howItWorks?.length ? (
-        <Section id="how" title="How it works" className="mt-20 lg:mr-[16%]">
+        <Section id="how" title={t.how} className="mt-20 lg:mr-[16%]">
           <ol className="mt-6 divide-y divide-line-strong border-y border-line-strong">
             {project.howItWorks.map((step, i) => (
               <li key={step} className="grid grid-cols-[2.5rem_1fr] gap-2 py-4 text-ink-soft">
@@ -184,7 +187,7 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       {groups.length ? (
-        <Section id="screenshots" title="Screenshots" className="mt-20">
+        <Section id="screenshots" title={t.screenshots} className="mt-20">
           {groups.map((group) => (
             <div key={group.title || 'all'} className={group.title ? 'mt-12 first:mt-8' : 'mt-8'}>
               {group.title ? (
@@ -200,10 +203,10 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       {team ? (
-        <Section id="team" title={team.members?.length ? 'Team' : 'Role'} className="mt-20 max-w-2xl">
+        <Section id="team" title={team.members?.length ? t.team : t.role} className="mt-20 max-w-2xl">
           <p className="mt-5 text-ink-soft">{team.note}</p>
           {team.members?.length ? (
-            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Team members">
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label={t.members}>
               {team.members.map((member) => (
                 <li key={member} className="chip">
                   {member}
@@ -215,12 +218,12 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       <p className="mt-20 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-        <Link href="/projects" className="link-stitch">
-          ← Back to all projects
+        <Link href={localePath(locale, '/projects')} className="link-stitch">
+          {t.backAll}
         </Link>
         {project.repoUrl ? (
           <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="link-stitch">
-            Source on GitHub ↗<span className="sr-only"> (opens in a new tab)</span>
+            {t.source}<span className="sr-only">{newTab}</span>
           </a>
         ) : null}
       </p>

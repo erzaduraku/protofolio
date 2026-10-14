@@ -3,10 +3,13 @@ import { getJourney } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 import PolaroidStack from '@/components/PolaroidStack';
 import Parallax from '@/components/Parallax';
+import { getDict } from '@/lib/i18n';
 
 /** showBody (on /journey) renders the full event write-ups; Home shows the short text. */
-export default async function JourneySection({ headingLevel = 'h2', showBody = false }) {
-  const { experience, volunteering, volunteeringQuote, learning } = await getJourney();
+export default async function JourneySection({ locale = 'en', headingLevel = 'h2', showBody = false }) {
+  const { experience, volunteering, volunteeringQuote, learning } = await getJourney(locale);
+  const t = getDict(locale).journey;
+  const newTab = getDict(locale).common.newTab;
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
   const Sub = headingLevel === 'h1' ? 'h2' : 'h3';
   const Item = headingLevel === 'h1' ? 'h3' : 'h4';
@@ -21,14 +24,15 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
             03
           </span>
           <div className="relative lg:col-span-7">
-            <p className="kicker">Journey</p>
+            <p className="kicker">{t.kicker}</p>
             <Heading id="journey-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
-              Learning <em>beyond</em> the classroom.
+              {t.heading[0]}
+              <em>{t.heading[1]}</em>
+              {t.heading[2]}
             </Heading>
           </div>
           <p className="max-w-md text-lg text-ink-soft lg:col-span-4 lg:col-start-8 lg:mt-36">
-            University built the foundation. Work, training, and community taught
-            me how software lives in the real world.
+            {t.lead}
           </p>
         </div>
 
@@ -44,7 +48,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
             </Sub>
             <p className="mt-3 font-display text-3xl italic text-thread">{experience.company}</p>
             <p className="mt-10 text-paper/80">{experience.summary}</p>
-            <ul className="mt-8 flex flex-wrap gap-2" aria-label="Tools">
+            <ul className="mt-8 flex flex-wrap gap-2" aria-label={t.tools}>
               {experience.chips.map((chip) => (
                 <li key={chip} className="chip">
                   {chip}
@@ -95,7 +99,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                       className="underline decoration-line-strong underline-offset-4 hover:decoration-thread"
                     >
                       {experience.course.title}
-                      <span className="sr-only"> (opens in a new tab)</span>
+                      <span className="sr-only">{newTab}</span>
                     </a>
                   ) : (
                     experience.course.title
@@ -121,7 +125,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                 {item.place ? <p className="mt-1 text-sm font-medium text-ink">{item.place}</p> : null}
                 <p className="mt-3 max-w-md text-ink-soft">{item.detail}</p>
                 {item.chips?.length > 0 ? (
-                  <ul className="mt-4 flex flex-wrap gap-2" aria-label="Topics">
+                  <ul className="mt-4 flex flex-wrap gap-2" aria-label={t.topics}>
                     {item.chips.map((chip) => (
                       <li key={chip} className="chip">
                         {chip}
@@ -135,9 +139,9 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
         ) : null}
 
         <div className="mt-28 grid gap-6 lg:grid-cols-12">
-          <p className="kicker lg:col-span-12">Outside the code</p>
+          <p className="kicker lg:col-span-12">{t.outside}</p>
           <Sub className="display text-[clamp(2.2rem,4.6vw,4rem)] lg:col-span-9">
-            {emphasize('Community taught me to show up.', ['show up'])}
+            {emphasize(t.community, [t.communityEm])}
           </Sub>
         </div>
 
@@ -159,6 +163,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                         alts={event.imageAlts}
                         captions={event.imageCaptions}
                         title={event.title}
+                        locale={locale}
                       />
                     </Parallax>
                   ) : null}
@@ -181,7 +186,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                   </div>
                   {event.role?.length ? (
                     <div className="mt-6">
-                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">Role</p>
+                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">{t.role}</p>
                       <ul className="mt-2 space-y-1.5">
                         {event.role.map((r) => (
                           <li key={r} className="flex gap-3">
@@ -194,7 +199,7 @@ export default async function JourneySection({ headingLevel = 'h2', showBody = f
                   ) : null}
                   {showBody && event.tookFromIt?.length ? (
                     <div className="mt-6">
-                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">What I took from it</p>
+                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">{t.took}</p>
                       <ul className="mt-3 flex flex-wrap gap-2">
                         {event.tookFromIt.map((t) => (
                           <li key={t} className="chip">

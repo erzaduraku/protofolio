@@ -1,3 +1,5 @@
+import LoadingLabel from './LoadingLabel';
+
 /** Concept: Suspense / loading.js fallback. */
 export default function Skeleton({ lines = 3 }) {
   return (
@@ -17,7 +19,9 @@ export default function Skeleton({ lines = 3 }) {
 export function SectionSkeleton({ lines = 5 }) {
   return (
     <div className="container-page py-24" role="status">
-      <span className="sr-only">Loading…</span>
+      <span className="sr-only">
+        <LoadingLabel />
+      </span>
       <Skeleton lines={lines} />
     </div>
   );

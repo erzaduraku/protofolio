@@ -1,17 +1,19 @@
 import { getContact } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
+import { getDict } from '@/lib/i18n';
 import ContactForm from '@/components/ContactForm';
 import { IconMail, IconPhone, IconMapPin, IconLinkedin, IconGithub } from '@/components/SocialIcons';
 
 /** Concept: Server Component composing data + the client ContactForm. */
-export default async function ContactSection({ headingLevel = 'h2' }) {
-  const contact = await getContact();
+export default async function ContactSection({ locale = 'en', headingLevel = 'h2' }) {
+  const contact = await getContact(locale);
+  const t = getDict(locale).contact;
   const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
 
   const rows = [
-    { id: 'email', kind: 'Email', label: contact.email, href: `mailto:${contact.email}`, Icon: IconMail },
-    { id: 'phone', kind: 'Phone', label: contact.phone, href: contact.phoneHref, Icon: IconPhone },
-    { id: 'location', kind: 'Based in', label: contact.location, href: null, Icon: IconMapPin },
+    { id: 'email', kind: t.email, label: contact.email, href: `mailto:${contact.email}`, Icon: IconMail },
+    { id: 'phone', kind: t.phone, label: contact.phone, href: contact.phoneHref, Icon: IconPhone },
+    { id: 'location', kind: t.basedIn, label: contact.location, href: null, Icon: IconMapPin },
     { id: 'linkedin', kind: 'LinkedIn', label: contact.linkedinLabel, href: contact.linkedin, external: true, Icon: IconLinkedin },
     { id: 'github', kind: 'GitHub', label: contact.githubLabel, href: contact.github, external: true, Icon: IconGithub },
   ];
@@ -20,9 +22,9 @@ export default async function ContactSection({ headingLevel = 'h2' }) {
     <section id="contact" aria-labelledby="contact-heading" className="relative overflow-x-clip py-24 sm:py-32">
       <div className="container-page relative">
         <span aria-hidden="true" className="numeral absolute -top-6 right-2 sm:-top-14">06</span>
-        <p className="kicker relative">Contact</p>
+        <p className="kicker relative">{t.kicker}</p>
         <Heading id="contact-heading" className="display relative mt-5 max-w-5xl text-[clamp(2.7rem,7.4vw,6.75rem)]">
-          {emphasize(contact.heading, ['thoughtful'])}
+          {emphasize(contact.heading, ['thoughtful', 'me kujdes'])}
         </Heading>
 
         <div className="mt-14 grid gap-16 lg:mt-20 lg:grid-cols-12 lg:gap-10">
@@ -58,7 +60,7 @@ export default async function ContactSection({ headingLevel = 'h2' }) {
               <circle cx="37" cy="11" r="7" fill="var(--thread)" stroke="var(--ink)" strokeWidth="1.2" />
               <circle cx="35" cy="9" r="2" fill="var(--paper-light)" />
             </svg>
-            <ContactForm />
+            <ContactForm locale={locale} />
           </div>
         </div>
       </div>
