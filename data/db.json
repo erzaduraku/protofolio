@@ -123,20 +123,145 @@
     {
       "id": "4",
       "slug": "hr-contracts-payroll",
-      "title": "HR Contracts / Payroll",
-      "oneLiner": "A structured system for managing employee contracts and payroll-related information.",
-      "summary": "Built around reliable data modeling, clear workflows, and the practical needs of administrative software.",
-      "category": "Data",
-      "problem": "The system needed to represent employees, contracts, payroll-related information, permissions, and relationships across a larger relational model.",
-      "whatIBuilt": "Worked with the database structure, relationships, SQL, and role-based access concepts across an 18-table PostgreSQL design.",
-      "technologies": [
-        "C#",
-        "SQL",
-        "Database Design"
+      "title": "Contract and Payroll Management System",
+      "category": "Desktop",
+      "oneLiner": "A JavaFX desktop application for managing employee contracts, payroll, requests, documents, attendance, shifts, leave and training in a company.",
+      "overview": "An interactive system for managing staff contracts and salaries in a company, built by a team of six for the Human-Computer Interaction (Komunikimi Njeri-Kompjuter) course at FIEK, University of Prishtina. Administrators manage the organisation’s HR and payroll records, while employees see their own contracts, salaries, documents, requests and shifts. The interface is available in Albanian and English.",
+      "features": [
+        "Login and registration with SHA-256 password hashing and role-based dashboards for admins and employees",
+        "Albanian and English interface, switchable from the login screen",
+        "Admin dashboard with active workers, pending requests, this month’s salaries, ongoing trainings and a salary trend chart",
+        "Management of workers, users, departments, positions, contracts, salaries, bonuses and deductions",
+        "Contract search, expiry view, contract statistics chart and export of contract details to PDF",
+        "Requests with approval or rejection, leave, overtime, attendance, shifts, trainings and employee evaluations",
+        "Employee area: profile summary, own contracts and salaries, requests, shifts and requests for contract changes",
+        "Uploading, storing and opening personal documents (PDF) from inside the app"
       ],
-      "learned": "How to model a larger relational system, think about relationships between entities, and keep data access structured and controlled.",
+      "howItWorks": [
+        "It is a desktop application, not a web app: FXML views are handled by JavaFX controllers, which call service classes for validation and business logic.",
+        "Services call repository classes that run SQL against PostgreSQL through JDBC with prepared statements and map results into model classes; create and update operations use DTO classes.",
+        "The normalized PostgreSQL schema has 18 tables, among them departments, positions, users, workers, contracts, salaries, bonuses, deductions, leave, overtime, documents, attendance, shifts, evaluations, trainings and requests.",
+        "After login the user is kept in a SessionManager and sent to the admin or employee dashboard by role; texts come from Java ResourceBundle files for Albanian and English, and contract PDFs are produced with iText."
+      ],
+      "techStack": [
+        {
+          "group": "Application",
+          "items": [
+            "Java",
+            "JavaFX 17",
+            "FXML",
+            "Maven"
+          ]
+        },
+        {
+          "group": "Database",
+          "items": [
+            "PostgreSQL",
+            "JDBC"
+          ]
+        },
+        {
+          "group": "Libraries",
+          "items": [
+            "iText (PDF)",
+            "Apache Commons Codec",
+            "FontAwesomeFX",
+            "JUnit 5"
+          ]
+        }
+      ],
+      "teamInfo": {
+        "members": [
+          "Engji Osmani",
+          "Edonita Gashi",
+          "Fatlinda Osdautaj",
+          "Erza Duraku",
+          "Erinë Mujku",
+          "Elë Jerlija"
+        ],
+        "note": "Team project for the Human-Computer Interaction (Komunikimi Njeri-Kompjuter) course at FIEK, University of Prishtina. The repository is owned by Engji Osmani; Erza is one of six contributors and set up the initial project, the PostgreSQL connection and the SQL schema, and worked mostly on contracts, documents, shifts and the dashboards."
+      },
+      "technologies": [
+        "Java",
+        "JavaFX",
+        "PostgreSQL"
+      ],
+      "language": "Java",
+      "team": true,
+      "repoUrl": "https://github.com/engjiosmani/Contract-and-Payroll-Management-System",
       "featured": false,
-      "published": false
+      "published": true,
+      "screenshotGroups": [
+        {
+          "title": "Getting started",
+          "items": [
+            {
+              "src": "/projects/hr-contracts-payroll/login.jpg",
+              "width": 540,
+              "height": 487,
+              "alt": "Login screen with the language switch"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/register.jpg",
+              "width": 744,
+              "height": 565,
+              "alt": "Registration form"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/register-success.jpg",
+              "width": 745,
+              "height": 555,
+              "alt": "Successful registration message"
+            }
+          ]
+        },
+        {
+          "title": "Admin",
+          "items": [
+            {
+              "src": "/projects/hr-contracts-payroll/admin-dashboard.jpg",
+              "width": 1918,
+              "height": 909,
+              "alt": "Admin dashboard with summary cards and the salary trend chart"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/workers.jpg",
+              "width": 1919,
+              "height": 939,
+              "alt": "Worker management"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/contracts.jpg",
+              "width": 1919,
+              "height": 897,
+              "alt": "Contract management with search, expiries, PDF export and statistics"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/departments.jpg",
+              "width": 1919,
+              "height": 871,
+              "alt": "Department management"
+            }
+          ]
+        },
+        {
+          "title": "Employee",
+          "items": [
+            {
+              "src": "/projects/hr-contracts-payroll/user-profile.jpg",
+              "width": 1919,
+              "height": 668,
+              "alt": "Employee profile summary"
+            },
+            {
+              "src": "/projects/hr-contracts-payroll/contract-changes.jpg",
+              "width": 1423,
+              "height": 759,
+              "alt": "Applying for a contract change"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "5",

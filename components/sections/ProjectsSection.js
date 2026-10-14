@@ -4,7 +4,7 @@ import { getDict } from '@/lib/i18n';
 
 /** Featured: CollabAI, ParkEasy, DCADD. Cards link to /projects/[slug]. */
 const FEATURED = ['collabai-project-management', 'parkeasy', 'erza-master-project'];
-const MORE = ['predictive-text-engine', 'text-rule-processor', 'maze-solver', 'firebase-auth-erza'];
+const MORE = ['predictive-text-engine', 'text-rule-processor', 'maze-solver', 'firebase-auth-erza', 'hr-contracts-payroll'];
 
 export default async function ProjectsSection({ locale = 'en', headingLevel = 'h2' }) {
   const all = await getAllProjects(locale);

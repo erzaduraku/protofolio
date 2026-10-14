@@ -8,7 +8,12 @@
     "intro": "Studente e Inxhinierisë Softuerike në Universitetin e Prishtinës, e interesuar për zhvillimin e softuerit, AI, sistemet backend, cloud computing, DevOps dhe inxhinierinë full-stack.",
     "currently": "Praktikante në Inxhinieri Softuerike · AnchorzUp",
     "basedIn": "Prishtinë, Kosovë",
-    "facts": ["Universiteti i Prishtinës", "Inxhinieri Softuerike", "Prishtinë, Kosovë", "E hapur për mundësi"],
+    "facts": [
+      "Universiteti i Prishtinës",
+      "Inxhinieri Softuerike",
+      "Prishtinë, Kosovë",
+      "E hapur për mundësi"
+    ],
     "heroCaption": "01 / logjikë × zanat"
   },
   "projects": {
@@ -31,13 +36,36 @@
         "Për një parashikim, motori kontrollon fillimisht kontekstin e trigramit, pastaj kalon te bigrami e më pas te plotësimi sipas parashtesës, dhe i rendit rezultatet sipas probabilitetit.",
         "Në ndërfaqen grafike me Tkinter, çdo shtypje tasti aktivizon motorin dhe sugjerimet shfaqen nën fushën e shkrimit."
       ],
-      "techStack": [{ "group": "Gjuha" }, { "group": "NLP" }, { "group": "Ndërfaqja" }, { "group": "Testimi" }],
-      "teamInfo": { "note": "Projekt ekipor i Grupit 22." },
+      "techStack": [
+        {
+          "group": "Gjuha"
+        },
+        {
+          "group": "NLP"
+        },
+        {
+          "group": "Ndërfaqja"
+        },
+        {
+          "group": "Testimi"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt ekipor i Grupit 22."
+      },
       "screenshots": [
-        { "alt": "Dritarja kryesore e Predictive Text Engine me fushën e shkrimit, parashikimet në kohë reale dhe përzgjedhësin e modelit" },
-        { "alt": "Sugjerimet në modalitetin Bigram" },
-        { "alt": "Sugjerimet në modalitetin Trigram" },
-        { "alt": "Sugjerimet në modalitetin e kombinuar “Both”" }
+        {
+          "alt": "Dritarja kryesore e Predictive Text Engine me fushën e shkrimit, parashikimet në kohë reale dhe përzgjedhësin e modelit"
+        },
+        {
+          "alt": "Sugjerimet në modalitetin Bigram"
+        },
+        {
+          "alt": "Sugjerimet në modalitetin Trigram"
+        },
+        {
+          "alt": "Sugjerimet në modalitetin e kombinuar “Both”"
+        }
       ]
     },
     "collabai-project-management": {
@@ -57,9 +85,29 @@
         "Views dhe serializers ia kalojnë punën klasave të shërbimeve; të dhënat ruhen në PostgreSQL, me Redis për caching dhe Celery për punët në sfond.",
         "Për përgjigjet me AI, të dhënat e organizatës kthehen në embeddings me sentence-transformers dhe ruhen në një vector store në Redis; elementet relevante gjenden dhe i dërgohen si kontekst një modeli LLaMA 3.1 përmes Groq API."
       ],
-      "techStack": [{ "group": "Backend" }, { "group": "Të dhënat" }, { "group": "AI" }, { "group": "Frontend" }, { "group": "Mjetet" }],
-      "teamInfo": { "note": "Projekt ekipor me pesë kontribues në GitHub." },
-      "demoVideo": { "caption": "Një prezantim i CollabAI, duke nisur nga paneli i organizatës." }
+      "techStack": [
+        {
+          "group": "Backend"
+        },
+        {
+          "group": "Të dhënat"
+        },
+        {
+          "group": "AI"
+        },
+        {
+          "group": "Frontend"
+        },
+        {
+          "group": "Mjetet"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt ekipor me pesë kontribues në GitHub."
+      },
+      "demoVideo": {
+        "caption": "Një prezantim i CollabAI, duke nisur nga paneli i organizatës."
+      }
     },
     "parkeasy": {
       "oneLiner": "Një aplikacion mobil ndërplatformor për gjetjen, rezervimin dhe menaxhimin e parkingjeve në Kosovë, me përvoja të veçanta për shoferët, pronarët e parkingjeve dhe administratorët.",
@@ -80,47 +128,133 @@
         "Hartat janë ndërtuar me react-native-maps dhe Leaflet; distancat deri te parkingjet llogariten me haversine-distance dhe me vendndodhjen e pajisjes nga expo-location.",
         "Konfirmimet dhe përditësimet e rezervimeve dërgohen me expo-notifications; sjellja e aplikacionit mbulohet me teste Jest dhe React Native Testing Library."
       ],
-      "techStack": [{ "group": "Mobile" }, { "group": "Backend" }, { "group": "Hartat & pajisja" }, { "group": "Testimi" }],
-      "teamInfo": { "note": "Projekt ekipor për lëndën Programimi i Aplikacioneve Mobile në FIEK. Repozitori i përket Edonita Gashit; Erza është njëra nga gjashtë zhvilluesit." },
+      "techStack": [
+        {
+          "group": "Mobile"
+        },
+        {
+          "group": "Backend"
+        },
+        {
+          "group": "Hartat & pajisja"
+        },
+        {
+          "group": "Testimi"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt ekipor për lëndën Programimi i Aplikacioneve Mobile në FIEK. Repozitori i përket Edonita Gashit; Erza është njëra nga gjashtë zhvilluesit."
+      },
       "screenshotGroups": [
-        { "title": "Hapat e parë", "items": [
-          { "alt": "Ekrani i mirëseardhjes" },
-          { "alt": "Hyrja me email ose me Google" },
-          { "alt": "Formulari i regjistrimit" },
-          { "alt": "Regjistrimi me rolin Owner dhe të dhënat e parkingut" }
-        ] },
-        { "title": "Shoferi", "items": [
-          { "alt": "Harta Nearby me vendet e parkimit dhe çmimet" },
-          { "alt": "Detajet e parkingut të hapura nga harta, me butonin Reserve Spot" },
-          { "alt": "Kërkimi i parkingjeve, i renditur sipas më të afërtit" },
-          { "alt": "Rezervimi i një vendi: data, ora, kohëzgjatja dhe mënyra e pagesës" },
-          { "alt": "Rezervimet e mia" },
-          { "alt": "Ndryshimi i një rezervimi" },
-          { "alt": "Konfirmimi i fshirjes së një rezervimi" },
-          { "alt": "Parkingjet e preferuara" },
-          { "alt": "Njoftime të planifikuara që kujtojnë rezervimin" },
-          { "alt": "Ndryshimi i profilit të përdoruesit" },
-          { "alt": "Opsionet e profilit: rreth aplikacionit, ndihmë, privatësia, kushtet dhe dalja" },
-          { "alt": "Ndryshimi i fotos së profilit nga galeria ose nga kamera" }
-        ] },
-        { "title": "Pronari", "items": [
-          { "alt": "Faqja kryesore e pronarit me rezervimet e parkingut" },
-          { "alt": "Profili i pronarit dhe të dhënat e parkingut" }
-        ] },
-        { "title": "Administratori", "items": [
-          { "alt": "Pamja e përgjithshme e panelit të administratorit" },
-          { "alt": "Administratori: menaxhimi i parkingjeve" },
-          { "alt": "Administratori: menaxhimi i përdoruesve" }
-        ] },
-        { "title": "Versioni i hershëm", "items": [
-          { "alt": "Versioni i hershëm: ekrani i mirëseardhjes" },
-          { "alt": "Versioni i hershëm: ekrani i hyrjes (në shqip)" },
-          { "alt": "Versioni i hershëm: ekrani i regjistrimit (në shqip)" },
-          { "alt": "Versioni i hershëm: parkingjet aty pranë, me hartë" },
-          { "alt": "Versioni i hershëm: kërkimi i parkingjeve" },
-          { "alt": "Versioni i hershëm: të preferuarat" },
-          { "alt": "Versioni i hershëm: ndryshimi i profilit" }
-        ] }
+        {
+          "title": "Hapat e parë",
+          "items": [
+            {
+              "alt": "Ekrani i mirëseardhjes"
+            },
+            {
+              "alt": "Hyrja me email ose me Google"
+            },
+            {
+              "alt": "Formulari i regjistrimit"
+            },
+            {
+              "alt": "Regjistrimi me rolin Owner dhe të dhënat e parkingut"
+            }
+          ]
+        },
+        {
+          "title": "Shoferi",
+          "items": [
+            {
+              "alt": "Harta Nearby me vendet e parkimit dhe çmimet"
+            },
+            {
+              "alt": "Detajet e parkingut të hapura nga harta, me butonin Reserve Spot"
+            },
+            {
+              "alt": "Kërkimi i parkingjeve, i renditur sipas më të afërtit"
+            },
+            {
+              "alt": "Rezervimi i një vendi: data, ora, kohëzgjatja dhe mënyra e pagesës"
+            },
+            {
+              "alt": "Rezervimet e mia"
+            },
+            {
+              "alt": "Ndryshimi i një rezervimi"
+            },
+            {
+              "alt": "Konfirmimi i fshirjes së një rezervimi"
+            },
+            {
+              "alt": "Parkingjet e preferuara"
+            },
+            {
+              "alt": "Njoftime të planifikuara që kujtojnë rezervimin"
+            },
+            {
+              "alt": "Ndryshimi i profilit të përdoruesit"
+            },
+            {
+              "alt": "Opsionet e profilit: rreth aplikacionit, ndihmë, privatësia, kushtet dhe dalja"
+            },
+            {
+              "alt": "Ndryshimi i fotos së profilit nga galeria ose nga kamera"
+            }
+          ]
+        },
+        {
+          "title": "Pronari",
+          "items": [
+            {
+              "alt": "Faqja kryesore e pronarit me rezervimet e parkingut"
+            },
+            {
+              "alt": "Profili i pronarit dhe të dhënat e parkingut"
+            }
+          ]
+        },
+        {
+          "title": "Administratori",
+          "items": [
+            {
+              "alt": "Pamja e përgjithshme e panelit të administratorit"
+            },
+            {
+              "alt": "Administratori: menaxhimi i parkingjeve"
+            },
+            {
+              "alt": "Administratori: menaxhimi i përdoruesve"
+            }
+          ]
+        },
+        {
+          "title": "Versioni i hershëm",
+          "items": [
+            {
+              "alt": "Versioni i hershëm: ekrani i mirëseardhjes"
+            },
+            {
+              "alt": "Versioni i hershëm: ekrani i hyrjes (në shqip)"
+            },
+            {
+              "alt": "Versioni i hershëm: ekrani i regjistrimit (në shqip)"
+            },
+            {
+              "alt": "Versioni i hershëm: parkingjet aty pranë, me hartë"
+            },
+            {
+              "alt": "Versioni i hershëm: kërkimi i parkingjeve"
+            },
+            {
+              "alt": "Versioni i hershëm: të preferuarat"
+            },
+            {
+              "alt": "Versioni i hershëm: ndryshimi i profilit"
+            }
+          ]
+        }
       ]
     },
     "erza-master-project": {
@@ -140,8 +274,20 @@
         "Në çdo pull request, GitHub Actions ekzekuton terraform fmt, init, validate dhe plan; pas bashkimit në main ekzekuton terraform apply.",
         "Pas apply-t, emri DNS i load balancer-it jepet si URL publike e aplikacionit."
       ],
-      "techStack": [{ "group": "Infrastrukturë si kod" }, { "group": "AWS" }, { "group": "CI/CD" }],
-      "teamInfo": { "note": "Projekt individual i Erzës për lëndën DCADD Master Project." }
+      "techStack": [
+        {
+          "group": "Infrastrukturë si kod"
+        },
+        {
+          "group": "AWS"
+        },
+        {
+          "group": "CI/CD"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt individual i Erzës për lëndën DCADD Master Project."
+      }
     },
     "text-rule-processor": {
       "oneLiner": "Një aplikacion web për filtrimin e përmbajtjes me rregulla: përdoruesit krijojnë rregulla që zbulojnë modele në tekst dhe i shënojnë me theksime ose tooltip-e, me historik të teksteve të përpunuara.",
@@ -159,15 +305,39 @@
         "API-ja i ruan rregullat dhe historikun në PostgreSQL (Neon ose lokalisht) përmes node-postgres; tabelat krijohen automatikisht gjatë nisjes.",
         "POST /process e kontrollon tekstin sipas të gjitha rregullave aktive dhe kthen përputhjet, të cilat frontend-i i shfaq si theksime dhe tooltip-e."
       ],
-      "techStack": [{ "group": "Frontend" }, { "group": "Backend" }, { "group": "Baza e të dhënave" }],
-      "teamInfo": { "note": "Projekt individual i Erzës, i ndërtuar si detyrë gjatë praktikës." },
+      "techStack": [
+        {
+          "group": "Frontend"
+        },
+        {
+          "group": "Backend"
+        },
+        {
+          "group": "Baza e të dhënave"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt individual i Erzës, i ndërtuar si detyrë gjatë praktikës."
+      },
       "screenshots": [
-        { "alt": "Paneli kryesor me menaxhimin e rregullave dhe përpunimin e tekstit krah për krah" },
-        { "alt": "Formulari për shtimin e një rregulle të re, me opsione për ngjyrën dhe tooltip-in" },
-        { "alt": "Lista e rregullave me llojet e përputhjes dhe veprimet" },
-        { "alt": "Shkrimi i tekstit që do të përpunohet sipas rregullave aktive" },
-        { "alt": "Rezultati i përpunuar me përputhjet e theksuara" },
-        { "alt": "Historiku i teksteve të përpunuara" }
+        {
+          "alt": "Paneli kryesor me menaxhimin e rregullave dhe përpunimin e tekstit krah për krah"
+        },
+        {
+          "alt": "Formulari për shtimin e një rregulle të re, me opsione për ngjyrën dhe tooltip-in"
+        },
+        {
+          "alt": "Lista e rregullave me llojet e përputhjes dhe veprimet"
+        },
+        {
+          "alt": "Shkrimi i tekstit që do të përpunohet sipas rregullave aktive"
+        },
+        {
+          "alt": "Rezultati i përpunuar me përputhjet e theksuara"
+        },
+        {
+          "alt": "Historiku i teksteve të përpunuara"
+        }
       ]
     },
     "maze-solver": {
@@ -185,12 +355,30 @@
         "Një radhë me prioritet min-heap (heapq) zgjeron gjithmonë qelizën më premtuese.",
         "Meqë heuristika është e pranueshme (admissible), A* kthen rrugën optimale më të shkurtër kur ajo ekziston; më pas rruga rindërtohet dhe vizatohet në rrjetë."
       ],
-      "techStack": [{ "group": "Gjuha" }, { "group": "Ndërfaqja" }, { "group": "Algoritmi" }],
-      "teamInfo": { "note": "Projekt individual i Erzës." },
+      "techStack": [
+        {
+          "group": "Gjuha"
+        },
+        {
+          "group": "Ndërfaqja"
+        },
+        {
+          "group": "Algoritmi"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt individual i Erzës."
+      },
       "screenshots": [
-        { "alt": "Labirinti i paracaktuar kur niset aplikacioni" },
-        { "alt": "Ndryshimi i labirintit duke shtuar mure dhe duke lëvizur nisjen dhe synimin" },
-        { "alt": "Rruga më e shkurtër e gjetur me A*, e theksuar në rrjetë" }
+        {
+          "alt": "Labirinti i paracaktuar kur niset aplikacioni"
+        },
+        {
+          "alt": "Ndryshimi i labirintit duke shtuar mure dhe duke lëvizur nisjen dhe synimin"
+        },
+        {
+          "alt": "Rruga më e shkurtër e gjetur me A*, e theksuar në rrjetë"
+        }
       ]
     },
     "firebase-auth-erza": {
@@ -206,8 +394,96 @@
         "app.js inicializon aplikacionin Firebase dhe Auth nga Firebase JavaScript SDK (v11, i ngarkuar nga CDN).",
         "Klikimi i butonit hap dritaren popup të hyrjes me Google; rezultati shfaqet në një mesazh të përkohshëm popup."
       ],
-      "techStack": [{ "group": "Frontend" }, { "group": "Autentifikimi" }],
-      "teamInfo": { "note": "Projekt individual i Erzës." }
+      "techStack": [
+        {
+          "group": "Frontend"
+        },
+        {
+          "group": "Autentifikimi"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt individual i Erzës."
+      }
+    },
+    "hr-contracts-payroll": {
+      "title": "Sistemi për Menaxhimin e Kontratave dhe Pagave",
+      "oneLiner": "Një aplikacion desktop me JavaFX për menaxhimin e kontratave, pagave, kërkesave, dokumenteve, prezencës, ndërrimeve, pushimeve dhe trajnimeve të punëtorëve në një ndërmarrje.",
+      "overview": "Një sistem interaktiv për menaxhimin e kontratave dhe pagave të stafit në një ndërmarrje, i ndërtuar nga një ekip prej gjashtë vetash për lëndën Komunikimi Njeri-Kompjuter në FIEK, Universiteti i Prishtinës. Administratorët menaxhojnë të dhënat e burimeve njerëzore dhe të pagave, ndërsa punëtorët shohin kontratat, pagat, dokumentet, kërkesat dhe ndërrimet e tyre. Ndërfaqja është në shqip dhe në anglisht.",
+      "features": [
+        "Hyrje dhe regjistrim me hash-im SHA-256 të fjalëkalimeve dhe panele sipas rolit për administratorët dhe punëtorët",
+        "Ndërfaqe në shqip dhe në anglisht, e ndryshueshme nga ekrani i hyrjes",
+        "Paneli i administratorit me punëtorët aktivë, kërkesat në pritje, pagat e këtij muaji, trajnimet në vazhdim dhe grafikun e trendit të pagave",
+        "Menaxhimi i punëtorëve, përdoruesve, departamenteve, pozicioneve, kontratave, pagave, bonuseve dhe zbritjeve",
+        "Kërkim i kontratave, pamje e skadimeve, grafik statistikash dhe eksportim i detajeve të kontratës në PDF",
+        "Kërkesa me aprovim ose refuzim, pushime, orë shtesë, prezencë, ndërrime, trajnime dhe vlerësime të punëtorëve",
+        "Zona e punëtorit: përmbledhja e profilit, kontratat dhe pagat e veta, kërkesat, ndërrimet dhe kërkesat për ndryshime kontratore",
+        "Ngarkimi, ruajtja dhe hapja e dokumenteve personale (PDF) brenda aplikacionit"
+      ],
+      "howItWorks": [
+        "Është aplikacion desktop, jo aplikacion web: pamjet FXML menaxhohen nga kontrollerët JavaFX, të cilët thërrasin klasat e shërbimeve për validim dhe logjikë biznesi.",
+        "Shërbimet thërrasin klasat e repozitorëve, që ekzekutojnë SQL në PostgreSQL përmes JDBC me prepared statements dhe i kthejnë rezultatet në klasa modeli; krijimi dhe përditësimi bëhen me klasa DTO.",
+        "Skema e normalizuar PostgreSQL ka 18 tabela, ndër to departamentet, pozicionet, përdoruesit, punëtorët, kontratat, pagat, bonuset, zbritjet, pushimet, orët shtesë, dokumentet, prezenca, ndërrimet, vlerësimet, trajnimet dhe kërkesat.",
+        "Pas hyrjes, përdoruesi ruhet në SessionManager dhe dërgohet te paneli i administratorit ose i punëtorit sipas rolit; tekstet vijnë nga skedarët ResourceBundle të Java-s për shqip dhe anglisht, ndërsa PDF-të e kontratave krijohen me iText."
+      ],
+      "techStack": [
+        {
+          "group": "Aplikacioni"
+        },
+        {
+          "group": "Databaza"
+        },
+        {
+          "group": "Libraritë"
+        }
+      ],
+      "teamInfo": {
+        "note": "Projekt ekipor për lëndën Komunikimi Njeri-Kompjuter në FIEK, Universiteti i Prishtinës. Repozitori i përket Engji Osmanit; Erza është njëra nga gjashtë kontribueset dhe krijoi projektin fillestar, lidhjen me PostgreSQL dhe skemën SQL, si dhe punoi kryesisht në kontratat, dokumentet, ndërrimet dhe panelet."
+      },
+      "screenshotGroups": [
+        {
+          "title": "Hapat e parë",
+          "items": [
+            {
+              "alt": "Ekrani i hyrjes me ndërrimin e gjuhës"
+            },
+            {
+              "alt": "Formulari i regjistrimit"
+            },
+            {
+              "alt": "Mesazhi i regjistrimit të suksesshëm"
+            }
+          ]
+        },
+        {
+          "title": "Administratori",
+          "items": [
+            {
+              "alt": "Paneli i administratorit me kartelat përmbledhëse dhe grafikun e trendit të pagave"
+            },
+            {
+              "alt": "Menaxhimi i punëtorëve"
+            },
+            {
+              "alt": "Menaxhimi i kontratave me kërkim, skadime, eksport PDF dhe statistika"
+            },
+            {
+              "alt": "Menaxhimi i departamenteve"
+            }
+          ]
+        },
+        {
+          "title": "Punëtori",
+          "items": [
+            {
+              "alt": "Përmbledhja e profilit të punëtorit"
+            },
+            {
+              "alt": "Aplikimi për ndryshim kontrator"
+            }
+          ]
+        }
+      ]
     }
   },
   "experience": {
@@ -223,9 +499,16 @@
       "Të menduarit për mirëmbajtjen dhe për mënyrën si një veçori përshtatet në produktin më të gjerë.",
       "Lidhja e punës në frontend me sistemet backend dhe me kërkesat reale të produktit."
     ],
-    "imageAlts": ["Erza në zyrën e AnchorzUp"],
-    "imageCaptions": ["Në AnchorzUp"],
-    "course": { "label": "Po mësoj aktualisht", "status": "në vazhdim" }
+    "imageAlts": [
+      "Erza në zyrën e AnchorzUp"
+    ],
+    "imageCaptions": [
+      "Në AnchorzUp"
+    ],
+    "course": {
+      "label": "Po mësoj aktualisht",
+      "status": "në vazhdim"
+    }
   },
   "volunteering": {
     "sfk-2025": {
@@ -237,8 +520,20 @@
         "SFK 2025 ishte një nga mundësitë e mia të para për t’u përfshirë aktivisht në komunitetin lokal të teknologjisë dhe të open source. Në vend që ta përjetoja eventin vetëm si pjesëmarrëse, iu bashkova ekipit të vullnetarëve dhe u bëra pjesë e punës që zhvillohej prapa skenës.",
         "Gjatë eventit ndihmova në përgatitjen e punëtorive, udhëzova pjesëmarrësit, mbështeta folësit dhe ndihmova në koordinimin e përgjithshëm të aktiviteteve."
       ],
-      "tookFromIt": ["Komunikim", "Punë ekipore", "Përgjegjësi", "Komunitet", "Përshtatshmëri", "Open Source"],
-      "role": ["Koordinimi i eventit", "Përgatitja e punëtorive", "Mbështetja e pjesëmarrësve", "Mbështetja e folësve"],
+      "tookFromIt": [
+        "Komunikim",
+        "Punë ekipore",
+        "Përgjegjësi",
+        "Komunitet",
+        "Përshtatshmëri",
+        "Open Source"
+      ],
+      "role": [
+        "Koordinimi i eventit",
+        "Përgatitja e punëtorive",
+        "Mbështetja e pjesëmarrësve",
+        "Mbështetja e folësve"
+      ],
       "imageAlts": [
         "Folës në podium para ekranit të SFK 2025, Edicioni i 10-të, i parë nga publiku",
         "Vullnetarët e SFK 2025 para Fakultetit të Inxhinierisë Elektrike dhe Kompjuterike në Prishtinë",
@@ -246,7 +541,13 @@
         "Vullnetarët e SFK 2025 duke ndarë pica në një tryezë të gjatë gjatë pushimit të drekës",
         "Erza me një tjetër nga vullnetarët, me bluza të njëjta të eventit, duke ndjekur një ligjëratë në SFK 2025"
       ],
-      "imageCaptions": ["Hapja e edicionit të 10-të", "Ekipi i vullnetarëve të SFK", "Në hyrje të universitetit", "Pushim për pica", "Duke ndjekur nga publiku"]
+      "imageCaptions": [
+        "Hapja e edicionit të 10-të",
+        "Ekipi i vullnetarëve të SFK",
+        "Në hyrje të universitetit",
+        "Pushim për pica",
+        "Duke ndjekur nga publiku"
+      ]
     },
     "devfest-prishtina-2025": {
       "date": "Dhjetor 2025",
@@ -256,15 +557,32 @@
         "Vullnetarizmi në DevFest Prishtina më dha mundësinë ta përjetoj një event të madh teknologjik nga ana organizative.",
         "Përgjegjësitë e mia ishin kryesisht koordinimi i folësve dhe logjistika e eventit."
       ],
-      "tookFromIt": ["Komunikim", "Organizim", "Punë ekipore", "Rrjetëzim", "Përgjegjësi", "Përshtatshmëri"],
-      "role": ["Koordinimi i folësve", "Menaxhimi i orarit", "Përgatitja teknike", "Logjistika e eventit"],
+      "tookFromIt": [
+        "Komunikim",
+        "Organizim",
+        "Punë ekipore",
+        "Rrjetëzim",
+        "Përgjegjësi",
+        "Përshtatshmëri"
+      ],
+      "role": [
+        "Koordinimi i folësve",
+        "Menaxhimi i orarit",
+        "Përgatitja teknike",
+        "Logjistika e eventit"
+      ],
       "imageAlts": [
         "Dy folës në skenë para ekranit të DevFest Kosovo 2025, me publikun të ulur në rreshta",
         "Folës në podium para ekranit të DevFest Kosovo, i parë nga fundi i sallës",
         "Erza me dy vullnetarë të tjerë me baxhe të DevFest në një korridor",
         "Vullnetarët e DevFest duke pozuar me maskotën tigër"
       ],
-      "imageCaptions": ["Ligjërata në skenën kryesore", "Nga fundi i sallës", "Me baxhet e eventit", "Me maskotën e DevFest"]
+      "imageCaptions": [
+        "Ligjërata në skenën kryesore",
+        "Nga fundi i sallës",
+        "Me baxhet e eventit",
+        "Me maskotën e DevFest"
+      ]
     },
     "digi-camp-2026": {
       "date": "21–23 maj 2026",
@@ -273,8 +591,20 @@
         "Nga 21 deri më 23 maj 2026, ITP Prizren priti Digi Camp & Digital Skills Festival, një festival ndërkombëtar teknologjik treditor. Si vullnetare, ndihmova në organizimin dhe zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, duke punuar krah për krah me profesionistë dhe mentorë.",
         "U gëzova shumë që pata rastin ta eksploroj ITP-në, një qendër për sipërmarrje, inovacion dhe aftësi në Prizren."
       ],
-      "tookFromIt": ["Punë ekipore", "Komunikim", "Përgjegjësi", "Përshtatshmëri", "Rrjetëzim", "Komunitet"],
-      "role": ["Mbështetje në punëtori", "Mbështetje në sesione", "Operacionet e eventit", "Bashkëpunim me profesionistë dhe mentorë"],
+      "tookFromIt": [
+        "Punë ekipore",
+        "Komunikim",
+        "Përgjegjësi",
+        "Përshtatshmëri",
+        "Rrjetëzim",
+        "Komunitet"
+      ],
+      "role": [
+        "Mbështetje në punëtori",
+        "Mbështetje në sesione",
+        "Operacionet e eventit",
+        "Bashkëpunim me profesionistë dhe mentorë"
+      ],
       "imageAlts": [
         "Erza me bluzën e Digi Camp dhe baxhin e eventit",
         "Selfie në grup me shokë dhe kolegë, brenda në Digi Camp",
@@ -282,7 +612,13 @@
         "Katër vullnetarë me bluza të Digi Festival jashtë, në mbrëmje",
         "Publiku në sallën e Digi Camp para ekranit të madh të Digi Camp and Digital Skills Festival në ITP"
       ],
-      "imageCaptions": ["Gati për Digi Camp", "Ekipi", "Innovation & Training Park Prizren", "Mbrëmje në ITP", "Sallë plot"]
+      "imageCaptions": [
+        "Gati për Digi Camp",
+        "Ekipi",
+        "Innovation & Training Park Prizren",
+        "Mbrëmje në ITP",
+        "Sallë plot"
+      ]
     }
   },
   "volunteeringQuote": {
@@ -305,19 +641,50 @@
     }
   },
   "interests": {
-    "sewing": { "title": "Qepja & punët me dorë", "text": "Krijimi i gjërave nga e para, me durim dhe vëmendje të madhe ndaj detajeve." },
-    "cooking": { "title": "Gatimi", "text": "Eksperimentimi, zgjidhja e problemeve dhe krijimi i diçkaje nga përbërës të veçantë." },
-    "sudoku": { "title": "Sudoku", "text": "Një ushtrim i qetë në logjikë, durim dhe njohje të modeleve." }
+    "sewing": {
+      "title": "Qepja & punët me dorë",
+      "text": "Krijimi i gjërave nga e para, me durim dhe vëmendje të madhe ndaj detajeve."
+    },
+    "cooking": {
+      "title": "Gatimi",
+      "text": "Eksperimentimi, zgjidhja e problemeve dhe krijimi i diçkaje nga përbërës të veçantë."
+    },
+    "sudoku": {
+      "title": "Sudoku",
+      "text": "Një ushtrim i qetë në logjikë, durim dhe njohje të modeleve."
+    }
   },
   "skills": {
-    "languages": { "category": "Gjuhët" },
-    "web": { "category": "Frontend & UI" },
-    "backend": { "category": "Backend & API" },
-    "databases": { "category": "Bazat e të dhënave" },
-    "cloud": { "category": "Cloud & DevOps" },
-    "ai": { "category": "AI & NLP" },
-    "tools": { "category": "Mjete & testim" },
-    "exploring": { "category": "Po eksploroj aktualisht", "items": ["AI", "Cloud Computing", "DevOps", "Zhvillimi full-stack"] }
+    "languages": {
+      "category": "Gjuhët"
+    },
+    "web": {
+      "category": "Frontend & UI"
+    },
+    "backend": {
+      "category": "Backend & API"
+    },
+    "databases": {
+      "category": "Bazat e të dhënave"
+    },
+    "cloud": {
+      "category": "Cloud & DevOps"
+    },
+    "ai": {
+      "category": "AI & NLP"
+    },
+    "tools": {
+      "category": "Mjete & testim"
+    },
+    "exploring": {
+      "category": "Po eksploroj aktualisht",
+      "items": [
+        "AI",
+        "Cloud Computing",
+        "DevOps",
+        "Zhvillimi full-stack"
+      ]
+    }
   },
   "about": {
     "heading": "Diku mes dy botëve, gjeta inxhinierinë softuerike.",
