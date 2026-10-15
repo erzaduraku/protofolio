@@ -637,7 +637,8 @@
       "detail": "Po fitoj përvojë më të thellë në zhvillimin e softuerit, bazat e të dhënave, sistemet frontend, algoritmet dhe proceset moderne të zhvillimit."
     },
     "kren-cloud": {
-      "detail": "Lidhja e zhvillimit të aplikacioneve me infrastrukturën, vendosjen (deployment), automatizimin dhe praktikat e besueshme inxhinierike."
+      "detail": "Lidhja e zhvillimit të aplikacioneve me infrastrukturën, vendosjen (deployment), automatizimin dhe praktikat e besueshme inxhinierike.",
+      "certificate": "/certificates/cloud-computing-devops.pdf"
     }
   },
   "interests": {

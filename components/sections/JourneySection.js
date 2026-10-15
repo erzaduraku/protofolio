@@ -133,6 +133,12 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
                     ))}
                   </ul>
                 ) : null}
+                {item.certificate ? (
+                  <a href={item.certificate} target="_blank" rel="noopener noreferrer" className="link-stitch mt-4 inline-block font-medium">
+                    {getDict(locale).common.viewCertificate} <span aria-hidden="true">↗</span>
+                    <span className="sr-only">{newTab}</span>
+                  </a>
+                ) : null}
               </li>
             ))}
           </ol>

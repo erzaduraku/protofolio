@@ -88,6 +88,12 @@ export default async function CvPage({ params }) {
                 {e.details?.map((d) => (
                   <p key={d}>{d}</p>
                 ))}
+                {e.certificate ? (
+                  <a href={e.certificate} target="_blank" rel="noopener noreferrer" className="link-stitch mt-2 inline-block font-medium">
+                    {getDict(locale).common.viewCertificate} <span aria-hidden="true">↗</span>
+                    <span className="sr-only">{newTab}</span>
+                  </a>
+                ) : null}
               </Entry>
             ))}
           </ol>
