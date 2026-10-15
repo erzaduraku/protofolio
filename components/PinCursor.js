@@ -66,18 +66,14 @@ export default function PinCursor() {
       className="pointer-events-none fixed left-0 top-0 z-90"
       style={{ x: sx, y: sy }}
     >
+      {/* Over links and buttons the dot shrinks to a small thread-red dot (cream on dark); no ring. */}
       <motion.div
-        className={`-ml-1 -mt-1 h-2 w-2 rounded-full transition-colors duration-200 ${
-          mode === 'link'
-            ? onDark
-              ? 'bg-paper/30 ring-1 ring-paper'
-              : 'bg-chalk/60 ring-1 ring-ink'
-            : onDark
-              ? 'bg-paper'
-              : 'bg-ink'
+        className={`-translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200 ${
+          onDark ? 'bg-paper' : mode === 'link' ? 'bg-thread' : 'bg-ink'
         }`}
-        animate={{ opacity: visible ? 1 : 0, scale: mode === 'link' ? 4 : 1 }}
-        transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+        initial={false}
+        animate={{ opacity: visible ? 1 : 0, width: mode === 'link' ? 5 : 8, height: mode === 'link' ? 5 : 8 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 30 }}
       />
     </motion.div>
   );

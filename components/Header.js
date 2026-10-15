@@ -7,13 +7,16 @@ import { getDict, localePath } from '@/lib/i18n';
 /** Concept: Server Component composing Client Components (NavLink, MobileMenu, LanguageToggle). */
 export default function Header({ locale = 'en' }) {
   const t = getDict(locale).nav;
+  // One-page nav: everything but the CV points at a Home section ("/#about", "/sq#about").
+  const home = localePath(locale, '/');
+  const section = (id, label) => ({ href: `${home}#${id}`, section: id, label });
   const links = [
-    { href: localePath(locale, '/about'), label: t.about },
-    { href: localePath(locale, '/projects'), label: t.projects },
-    { href: localePath(locale, '/journey'), label: t.journey },
-    { href: localePath(locale, '/beyond-code'), label: t.beyond },
+    section('about', t.about),
+    section('projects', t.projects),
+    section('journey', t.journey),
+    section('beyond-code', t.beyond),
     { href: localePath(locale, '/cv'), label: t.cv },
-    { href: localePath(locale, '/contact'), label: t.contact },
+    section('contact', t.contact),
   ];
 
   return (
@@ -21,7 +24,7 @@ export default function Header({ locale = 'en' }) {
       <div className="container-page flex h-full items-center justify-between gap-4">
         <HomeLink
           locale={locale}
-          className="flex shrink-0 items-baseline gap-1.5 text-ink"
+          className="no-thread flex shrink-0 items-baseline gap-1.5 text-ink"
           aria-label={t.homeAria}
         >
           <span className="font-display text-[1.15rem] sm:text-[1.35rem] italic leading-none">Erza</span>
@@ -33,7 +36,9 @@ export default function Header({ locale = 'en' }) {
             <ul className="flex items-center gap-0.5 whitespace-nowrap sm:gap-2">
               {links.map((link) => (
                 <li key={link.href}>
-                  <NavLink href={link.href}>{link.label}</NavLink>
+                  <NavLink href={link.href} section={link.section}>
+                    {link.label}
+                  </NavLink>
                 </li>
               ))}
             </ul>

@@ -76,7 +76,7 @@ export default async function ProjectDetailPage({ params }) {
   return (
     <article className="container-page pt-14 pb-24 sm:pt-20 sm:pb-32">
       <p className="text-sm">
-        <Link href={localePath(locale, '/projects')} className="link-stitch">
+        <Link href={`${localePath(locale, '/')}#projects`} className="link-stitch">
           {t.all}
         </Link>
       </p>
@@ -218,7 +218,7 @@ export default async function ProjectDetailPage({ params }) {
       ) : null}
 
       <p className="mt-20 flex flex-wrap gap-x-8 gap-y-3 text-sm">
-        <Link href={localePath(locale, '/projects')} className="link-stitch">
+        <Link href={`${localePath(locale, '/')}#projects`} className="link-stitch">
           {t.backAll}
         </Link>
         {project.repoUrl ? (

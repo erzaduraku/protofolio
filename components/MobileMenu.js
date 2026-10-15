@@ -7,12 +7,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
 import LanguageToggle from './LanguageToggle';
 import { getDict, stripLocale } from '@/lib/i18n';
+import { useActiveSection } from '@/lib/sections';
+import SectionLink from './SectionLink';
 
 /** Hamburger + full-screen menu below md. Closes on link click, Esc and route change; locks scroll. */
 export default function MobileMenu({ links, homeHref = '/', homeLabel = 'Home', locale = 'en' }) {
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState(null);
   const pathname = usePathname();
+  const activeSection = useActiveSection();
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const buttonRef = useRef(null);
   const panelRef = useRef(null);
@@ -62,9 +65,10 @@ export default function MobileMenu({ links, homeHref = '/', homeLabel = 'Home', 
   }, [isOpen]);
 
   const path = stripLocale(pathname || '/');
-  const isActive = (href) => {
-    const target = stripLocale(href);
-    return target === '/' ? path === '/' : path === target || path.startsWith(`${target}/`);
+  const isActive = (link) => {
+    if (link.section) return path === '/' && activeSection === link.section;
+    const target = stripLocale(link.href);
+    return target === '/' ? path === '/' && !activeSection : path === target || path.startsWith(`${target}/`);
   };
   const nav = getDict(locale).nav;
   const t = reducedMotion ? { duration: 0 } : { duration: 0.28, ease: [0.2, 0.7, 0.2, 1] };
@@ -121,7 +125,9 @@ export default function MobileMenu({ links, homeHref = '/', homeLabel = 'Home', 
               <span aria-hidden="true" className="absolute left-4 top-10 bottom-10 w-0.5 bg-thread sm:left-6" />
               <ul className="space-y-1 pl-6">
                 {[{ href: homeHref, label: homeLabel }, ...links].map((link, i) => {
-                  const active = isActive(link.href);
+                  const active = isActive(link);
+                  const Item = link.section ? SectionLink : Link;
+                  const extra = link.section ? { section: link.section, delay: 60 } : {};
                   return (
                     <motion.li
                       key={link.href}
@@ -129,16 +135,17 @@ export default function MobileMenu({ links, homeHref = '/', homeLabel = 'Home', 
                       animate={{ opacity: 1, x: 0 }}
                       transition={reducedMotion ? { duration: 0 } : { ...t, delay: 0.04 * i }}
                     >
-                      <Link
+                      <Item
                         href={link.href}
+                        {...extra}
                         onClick={() => close(false)}
-                        aria-current={active ? 'page' : undefined}
+                        aria-current={active ? (link.section ? 'location' : 'page') : undefined}
                         className={`block py-2.5 font-display text-xl leading-snug ${
                           active ? 'italic text-thread' : 'text-ink'
                         }`}
                       >
                         {link.label}
-                      </Link>
+                      </Item>
                     </motion.li>
                   );
                 })}

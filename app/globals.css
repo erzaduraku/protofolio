@@ -447,3 +447,22 @@ html.pin-cursor select { cursor: text !important; }
 .chat-scroll::-webkit-scrollbar-track { background: transparent; }
 .chat-scroll::-webkit-scrollbar-thumb { background: rgb(245 241 234 / 0.25); border-radius: 999px; }
 .chat-scroll:hover::-webkit-scrollbar-thumb { background: rgb(245 241 234 / 0.45); }
+
+/* Hover "thread": a red underline that draws in from left to right on text links.
+   Buttons, chips, icon links and the active nav link keep their own styling. */
+@layer components {
+  a:not([class*="btn-"], .chip, .skip-link, .nav-link-active, .no-thread, :has(img, svg)) {
+    background-image: linear-gradient(var(--thread), var(--thread));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 250ms var(--ease-thread), text-decoration-color 250ms var(--ease-thread);
+  }
+  a:not([class*="btn-"], .chip, .skip-link, .nav-link-active, .no-thread, :has(img, svg)):is(:hover, :focus-visible) {
+    background-size: 100% 1px;
+    text-decoration-color: transparent;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a:not([class*="btn-"], .chip, .skip-link, .nav-link-active, .no-thread, :has(img, svg)) { transition: none; }
+  }
+}

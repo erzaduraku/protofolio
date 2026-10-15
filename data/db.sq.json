@@ -51,7 +51,7 @@
         }
       ],
       "teamInfo": {
-        "note": "Projekt ekipor i Grupit 22."
+        "note": "Projekt ekipor i Grupit 22 me katër kontribues."
       },
       "screenshots": [
         {
@@ -143,7 +143,7 @@
         }
       ],
       "teamInfo": {
-        "note": "Projekt ekipor për lëndën Programimi i Aplikacioneve Mobile në FIEK. Repozitori i përket Edonita Gashit; Erza është njëra nga gjashtë zhvilluesit."
+        "note": "Projekt ekipor me gjashtë zhvillues."
       },
       "screenshotGroups": [
         {
@@ -438,7 +438,7 @@
         }
       ],
       "teamInfo": {
-        "note": "Projekt ekipor për lëndën Komunikimi Njeri-Kompjuter në FIEK, Universiteti i Prishtinës. Repozitori i përket Engji Osmanit; Erza është njëra nga gjashtë kontribueset dhe krijoi projektin fillestar, lidhjen me PostgreSQL dhe skemën SQL, si dhe punoi kryesisht në kontratat, dokumentet, ndërrimet dhe panelet."
+        "note": "Projekt ekipor me gjashtë kontribues në GitHub."
       },
       "screenshotGroups": [
         {
@@ -515,7 +515,7 @@
       "title": "SFK 2025 — Edicioni i 10-të",
       "date": "Tetor 2025",
       "place": "FLOSSK · Prishtinë",
-      "short": "Ndihmova në koordinimin e eventit, përgatitjen e punëtorive, udhëzimin e pjesëmarrësve dhe mbështetjen e folësve, duke e përjetuar komunitetin open source nga brenda.",
+      "short": "SFK 2025 ishte një nga mundësitë e mia të para për t’u përfshirë në komunitetin lokal të teknologjisë dhe të open source, kësaj radhe si pjesë e ekipit të vullnetarëve prapa skenës. Ndihmova në përgatitjen e punëtorive, udhëzova pjesëmarrësit, mbështeta folësit dhe ndihmova në koordinimin e aktiviteteve.",
       "body": [
         "SFK 2025 ishte një nga mundësitë e mia të para për t’u përfshirë aktivisht në komunitetin lokal të teknologjisë dhe të open source. Në vend që ta përjetoja eventin vetëm si pjesëmarrëse, iu bashkova ekipit të vullnetarëve dhe u bëra pjesë e punës që zhvillohej prapa skenës.",
         "Gjatë eventit ndihmova në përgatitjen e punëtorive, udhëzova pjesëmarrësit, mbështeta folësit dhe ndihmova në koordinimin e përgjithshëm të aktiviteteve."
@@ -552,7 +552,7 @@
     "devfest-prishtina-2025": {
       "date": "Dhjetor 2025",
       "place": "Prishtinë",
-      "short": "Mbështeta koordinimin e folësve, përgatitjen teknike dhe logjistikën e eventit, duke mësuar si organizohet një event i madh teknologjik.",
+      "short": "Vullnetarizmi në DevFest Prishtina 2025 më dha mundësinë ta përjetoj një event të madh teknologjik nga ana organizative. U përqendrova kryesisht te koordinimi i folësve dhe logjistika e eventit, dhe pashë si organizohet një event i kësaj madhësie.",
       "body": [
         "Vullnetarizmi në DevFest Prishtina më dha mundësinë ta përjetoj një event të madh teknologjik nga ana organizative.",
         "Përgjegjësitë e mia ishin kryesisht koordinimi i folësve dhe logjistika e eventit."
@@ -586,7 +586,7 @@
     },
     "digi-camp-2026": {
       "date": "21–23 maj 2026",
-      "short": "Gjatë tri ditëve në ITP Prizren ndihmova në zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, dhe u gëzova shumë që pata rastin ta eksploroj vetë ITP-në.",
+      "short": "Nga 21 deri më 23 maj 2026, ITP Prizren priti Digi Camp & Digital Skills Festival, një festival ndërkombëtar teknologjik treditor. Si vullnetare, ndihmova në zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, krah për krah me profesionistë dhe mentorë.",
       "body": [
         "Nga 21 deri më 23 maj 2026, ITP Prizren priti Digi Camp & Digital Skills Festival, një festival ndërkombëtar teknologjik treditor. Si vullnetare, ndihmova në organizimin dhe zhvillimin e punëtorive, sesioneve dhe aktiviteteve të festivalit, duke punuar krah për krah me profesionistë dhe mentorë.",
         "U gëzova shumë që pata rastin ta eksploroj ITP-në, një qendër për sipërmarrje, inovacion dhe aftësi në Prizren."

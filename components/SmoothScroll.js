@@ -9,6 +9,7 @@ export default function SmoothScroll() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return undefined;
     }
+    // Anchor scrolls respect the html scroll-padding-top, i.e. the sticky-header offset.
     const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.12 });
     window.__lenis = lenis; // lets HomeLink scroll smoothly without a second scroller
     return () => {

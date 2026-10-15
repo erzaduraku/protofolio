@@ -5,8 +5,8 @@ import PolaroidStack from '@/components/PolaroidStack';
 import Parallax from '@/components/Parallax';
 import { getDict } from '@/lib/i18n';
 
-/** showBody (on /journey) renders the full event write-ups; Home shows the short text. */
-export default async function JourneySection({ locale = 'en', headingLevel = 'h2', showBody = false }) {
+/** Each event shows one concise summary (about two sentences) plus the role list. */
+export default async function JourneySection({ locale = 'en', headingLevel = 'h2' }) {
   const { experience, volunteering, volunteeringQuote, learning } = await getJourney(locale);
   const t = getDict(locale).journey;
   const newTab = getDict(locale).common.newTab;
@@ -186,9 +186,7 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
                     {event.title}
                   </Item>
                   <div className="mt-5 space-y-4 text-ink-soft">
-                    {showBody
-                      ? event.body.map((p) => <p key={p.slice(0, 48)}>{p}</p>)
-                      : <p>{event.short}</p>}
+                    <p>{event.short}</p>
                   </div>
                   {event.role?.length ? (
                     <div className="mt-6">
@@ -198,18 +196,6 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
                           <li key={r} className="flex gap-3">
                             <span aria-hidden="true" className="mt-[0.8em] h-px w-5 shrink-0 border-t border-ink" />
                             {r}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                  {showBody && event.tookFromIt?.length ? (
-                    <div className="mt-6">
-                      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink">{t.took}</p>
-                      <ul className="mt-3 flex flex-wrap gap-2">
-                        {event.tookFromIt.map((t) => (
-                          <li key={t} className="chip">
-                            {t}
                           </li>
                         ))}
                       </ul>

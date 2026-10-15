@@ -10,6 +10,7 @@ import JourneySection from '@/components/sections/JourneySection';
 import BeyondSection from '@/components/sections/BeyondSection';
 import PurposeSection from '@/components/sections/PurposeSection';
 import ContactSection from '@/components/sections/ContactSection';
+import ScrollSpy from '@/components/ScrollSpy';
 
 /*
  * Hero headline options (written from Erza's story: tailor mother, mechanic
@@ -29,6 +30,7 @@ export default async function HomePage({ params }) {
 
   return (
     <>
+      <ScrollSpy />
       <section data-no-reveal id="top" aria-labelledby="hero-heading" className="relative overflow-x-clip">
         <div className="container-page relative pb-24 pt-12 sm:pt-16 lg:pb-32 lg:pt-20">
           <p aria-hidden="true" className="side-label absolute left-0 top-20 hidden xl:block">
@@ -95,7 +97,7 @@ export default async function HomePage({ params }) {
       </section>
 
       <Suspense fallback={<SectionSkeleton />}>
-        <AboutSection locale={locale} />
+        <AboutSection locale={locale} showSkills />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <ProjectsSection locale={locale} />

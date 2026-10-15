@@ -6,8 +6,28 @@ import { NextResponse } from 'next/server';
  * the clean URL. Albanian is served from "/sq/...". A visitor who picked SQ
  * (cookie "lang=sq", set by the EN/SQ toggle) is sent from "/..." to "/sq/...".
  */
+// Old standalone routes now live on Home as sections (one-page scroll).
+const SECTION_ROUTES = {
+  '/about': 'about',
+  '/projects': 'projects',
+  '/journey': 'journey',
+  '/beyond-code': 'beyond-code',
+  '/contact': 'contact',
+};
+
 export function proxy(request) {
   const { pathname, search } = request.nextUrl;
+
+  const isSq = pathname === '/sq' || pathname.startsWith('/sq/');
+  const bare = isSq || pathname === '/en' || pathname.startsWith('/en/') ? pathname.slice(3) || '/' : pathname;
+  const section = SECTION_ROUTES[bare.replace(/\/+$/, '') || '/'];
+  if (section) {
+    const url = request.nextUrl.clone();
+    url.pathname = isSq || request.cookies.get('lang')?.value === 'sq' ? '/sq' : '/';
+    url.search = '';
+    url.hash = section;
+    return NextResponse.redirect(url, 308);
+  }
 
   if (pathname === '/sq' || pathname.startsWith('/sq/')) {
     return NextResponse.next();

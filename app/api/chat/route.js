@@ -98,9 +98,9 @@ function buildSystemPrompt(locale) {
     `06 · ${t.contact.kicker} — "${db.contact.heading}" ${db.contact.body} (content: contact)`,
   ].join('\n');
   const pages = [
-    [t.nav.home, '/'], [t.nav.about, '/about', 'section 01 plus her skills list'], [t.nav.projects, '/projects', 'section 02; each project has its own page'],
-    [t.nav.journey, '/journey', 'section 03 with the full volunteering stories'], [t.nav.beyond, '/beyond-code', 'sections 04 and 05'],
-    [t.nav.cv, '/cv', 'her full CV and a PDF download'], [t.nav.contact, '/contact', 'section 06 and a contact form'],
+    [t.nav.home, '/'], [t.nav.about, '/#about', 'section 01 with her skills list'], [t.nav.projects, '/#projects', 'section 02; each project has its own page under /projects/'],
+    [t.nav.journey, '/#journey', 'section 03'], [t.nav.beyond, '/#beyond-code', 'sections 04 and 05'],
+    [t.nav.cv, '/cv', 'her full CV and a PDF download'], [t.nav.contact, '/#contact', 'section 06 with the contact form'],
   ].map(([name, path, what]) => `- ${name}: ${pagePrefix}${path === '/' ? '' : path}${pagePrefix || path !== '/' ? '' : '/'}${what ? ` (${what})` : ' (all six sections)'}`).join('\n');
 
   return `You are the assistant on Erza Duraku's portfolio website. Erza is a software engineering student in Prishtina, Kosovo, and a software engineering intern at ${db.experience.company} (${db.experience.period}).

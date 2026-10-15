@@ -18,7 +18,7 @@ export default async function BeyondSection({ locale = 'en', headingLevel = 'h2'
   const Item = headingLevel === 'h1' ? 'h2' : 'h3';
 
   return (
-    <section id="beyond" aria-labelledby="beyond-heading" className="relative overflow-x-clip py-24 sm:py-32">
+    <section id="beyond-code" aria-labelledby="beyond-heading" className="relative overflow-x-clip py-24 sm:py-32">
       <div className="container-page relative">
         <p aria-hidden="true" className="side-label absolute -left-1 top-24 hidden lg:block">
           {t.side}

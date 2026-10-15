@@ -50,13 +50,19 @@ function CardTitle({ project, locale, as: Tag, className }) {
 }
 
 /** "View project" cue plus a separate GitHub link layered above the stretched card link (no nested anchors). */
-function RepoHint({ project, t, onInk = false }) {
+function RepoHint({ project, t, locale, onInk = false }) {
   return (
     <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium">
       {project.published ? (
-        <span aria-hidden="true" className={onInk ? 'text-paper' : 'text-thread'}>
+        // Real link above the stretched title link; keyboard and screen readers use the title link.
+        <Link
+          href={localePath(locale, `/projects/${project.slug}`)}
+          tabIndex={-1}
+          aria-hidden="true"
+          className={`relative z-5 ${onInk ? 'text-paper' : 'text-thread'}`}
+        >
           {t.viewProject} <span className="nudge inline-block">→</span>
-        </span>
+        </Link>
       ) : null}
       {project.repoUrl ? (
         <a
@@ -87,7 +93,7 @@ export default function ProjectCard({ project, locale = 'en', variant = 'feature
           <div>
             <p className="text-ink-soft">{project.oneLiner}</p>
             <Tags items={project.technologies} label={t.technologies} className="mt-4" />
-            <RepoHint project={project} t={t} />
+            <RepoHint project={project} t={t} locale={locale} />
           </div>
         </div>
         <span aria-hidden="true" className="absolute right-0 top-6 text-thread">→</span>
@@ -111,7 +117,7 @@ export default function ProjectCard({ project, locale = 'en', variant = 'feature
           <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
           <p className="mt-4 text-paper/80">{project.oneLiner}</p>
           <Tags items={project.technologies} label={t.technologies} />
-          <RepoHint project={project} t={t} onInk />
+          <RepoHint project={project} t={t} locale={locale} onInk />
         </div>
       </article>
     );
@@ -131,7 +137,7 @@ export default function ProjectCard({ project, locale = 'en', variant = 'feature
             <CardTitle project={project} locale={locale} as={titleLevel} className="project-title display mt-2 text-[clamp(2rem,3.4vw,2.9rem)]" />
             <p className="mt-4 text-ink-soft">{project.oneLiner}</p>
             <Tags items={project.technologies} label={t.technologies} />
-            <RepoHint project={project} t={t} />
+            <RepoHint project={project} t={t} locale={locale} />
           </div>
         </div>
       </article>
@@ -157,7 +163,7 @@ export default function ProjectCard({ project, locale = 'en', variant = 'feature
           </div>
         </div>
         <Tags items={project.technologies} label={t.technologies} />
-        <RepoHint project={project} t={t} />
+        <RepoHint project={project} t={t} locale={locale} />
       </div>
     </article>
   );
