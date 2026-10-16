@@ -71,6 +71,9 @@ export default function ChatWidget() {
   const eggCtl = useRef(null);
   const clicks = useRef({ n: 0, t: null });
   const quiet = useRef(false); // user closed the bubbles with X (kept for this session)
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const photoCount = useRef(t.robotPhotoJokes.length);
+  photoCount.current = t.robotPhotoJokes.length;
   const [jokeIdx, setJokeIdx] = useState(-1); // -1 = first time: reveal the secret
 
   useEffect(() => {
@@ -342,6 +345,36 @@ export default function ChatWidget() {
         }, 1100);
       }, 1300);
     };
+    // Photo comments: when someone hovers or taps a photo, the robot makes a joke about it
+    // (at most once every 20s, never while the chat is open or it is idle/hidden).
+    let lastPhoto = 0;
+    let lastPhotoIdx = -1;
+    const onPhoto = (e) => {
+      const fig = e.target instanceof Element ? e.target.closest('figure') : null;
+      if (!fig || !fig.querySelector('img') || paused() || idle || quiet.current) return;
+      if (Date.now() - lastPhoto < (debug ? 3000 : 20000)) return;
+      lastPhoto = Date.now();
+      const n = photoCount.current;
+      let i = Math.floor(Math.random() * n);
+      if (i === lastPhotoIdx && n > 1) i = (i + 1) % n;
+      lastPhotoIdx = i;
+      clear();
+      goHome();
+      setPhotoIdx(i);
+      setBubbleIdx('photo');
+      setRobotMode('trick-jump');
+      placeBubble();
+      setBubbleShown(true);
+      timer = setTimeout(() => {
+        setRobotMode('normal');
+        timer = setTimeout(() => {
+          setBubbleShown(false);
+          resume(GAP * 2);
+        }, 3500);
+      }, 1200);
+    };
+    document.addEventListener('pointerover', onPhoto, { passive: true });
+    document.addEventListener('pointerdown', onPhoto, { passive: true });
     bubbleCtl.current = (isOpen) => {
       if (isOpen === chatOpen) return;
       chatOpen = isOpen;
@@ -364,6 +397,8 @@ export default function ChatWidget() {
       clearTimeout(idleTimer);
       bubbleCtl.current = null;
       eggCtl.current = null;
+      document.removeEventListener('pointerover', onPhoto);
+      document.removeEventListener('pointerdown', onPhoto);
       EVENTS.forEach((ev) => window.removeEventListener(ev, onActivity));
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', placeBubble);
@@ -772,7 +807,7 @@ export default function ChatWidget() {
           >
             ✕
           </span>
-          {bubbleIdx === 'joke' ? (jokeIdx < 0 ? t.robotSecret : t.robotJokes[jokeIdx]) : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
+          {bubbleIdx === 'photo' ? t.robotPhotoJokes[photoIdx] : bubbleIdx === 'joke' ? (jokeIdx < 0 ? t.robotSecret : t.robotJokes[jokeIdx]) : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
         </span>
         <ChatRobot mode={open ? 'normal' : robotMode} />
         </span>
