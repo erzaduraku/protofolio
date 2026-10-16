@@ -1,0 +1,19 @@
+@reference "../globals.css";
+
+/* Segment error page (app/[locale]/error.js), matching the 404 page.
+   Global classes (.container-page, .display, .btn-ink) are combined in className. */
+.page {
+  @apply relative overflow-x-clip py-24 sm:py-32;
+}
+
+.heading {
+  @apply text-[clamp(2.4rem,5vw,4.4rem)];
+}
+
+.body {
+  @apply mt-6 max-w-md text-lg text-ink-soft;
+}
+
+.retry {
+  @apply mt-10;
+}

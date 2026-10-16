@@ -1,0 +1,107 @@
+﻿.float {
+  display: block;
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+.robot {
+  display: block;
+  width: 3.75rem;
+  height: 4.1rem;
+  overflow: visible;
+  filter: drop-shadow(0 5px 6px rgb(0 0 0 / 0.22));
+}
+
+.head {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+  animation: tilt 6s ease-in-out infinite;
+}
+
+.eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.5s infinite, glow 2.4s ease-in-out infinite;
+}
+
+.chest {
+  animation: glow 2.4s ease-in-out infinite;
+}
+
+.antennaL,
+.antennaR {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: wiggle 2.6s ease-in-out infinite;
+}
+
+.antennaR {
+  animation-delay: -1.3s;
+}
+
+.arm {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  animation: wave 7s ease-in-out infinite;
+}
+
+:global(button):hover .arm,
+:global(button):focus-visible .arm {
+  animation: waveFast 0.5s ease-in-out infinite;
+}
+
+:global(button):hover .head,
+:global(button):focus-visible .head {
+  animation: none;
+  transform: rotate(-8deg);
+  transition: transform 0.25s ease;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-5deg); }
+  60% { transform: rotate(4deg); }
+}
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes wave {
+  0%, 80%, 100% { transform: rotate(0); }
+  84%, 92% { transform: rotate(-25deg); }
+  88%, 96% { transform: rotate(12deg); }
+}
+
+@keyframes waveFast {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(-28deg); }
+}
+
+@media (min-width: 640px) {
+  .robot { width: 4.75rem; height: 5.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .head, .eyes, .chest, .antennaL, .antennaR, .arm,
+  :global(button):hover .arm,
+  :global(button):focus-visible .arm { animation: none; }
+  :global(button):hover .head,
+  :global(button):focus-visible .head { transform: none; transition: none; }
+}

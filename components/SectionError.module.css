@@ -1,0 +1,12 @@
+@reference "../app/globals.css";
+
+/* Fallback note for a Home section that failed (see app/[locale]/page.js).
+   .container-page/.display/.btn-ink are plain global classes, not Tailwind utilities,
+   so they stay in className; @apply is used for the theme's utilities. */
+.wrap {
+  @apply py-16;
+}
+
+.note {
+  @apply border-l-2 border-thread pl-4 italic text-ink-soft;
+}

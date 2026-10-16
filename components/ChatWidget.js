@@ -1,9 +1,10 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
 import ChatMarkdown from './ChatMarkdown';
+import ChatRobot from './ChatRobot';
 import { useLocale } from './LocaleProvider';
 import { getDict } from '@/lib/i18n';
 
@@ -39,6 +40,76 @@ export default function ChatWidget() {
   const drag = useRef(null);
   const justDragged = useRef(false);
   const [panelStyle, setPanelStyle] = useState(undefined);
+  // Robot speech bubble. One self-scheduling timeout chain: wait ~3s, show a prompt
+  // for ~8s, hide for ~12s, repeat. Paused while the chat is open or the tab is hidden.
+  // The prompt index and visibility are separate, so the text never swaps mid-fade.
+  const [bubbleIdx, setBubbleIdx] = useState(0);
+  const [bubbleShown, setBubbleShown] = useState(false);
+  const promptCount = useRef(t.robotPrompts.length);
+  promptCount.current = t.robotPrompts.length;
+  const lastPrompt = useRef(-1);
+  const bubbleCtl = useRef(null);
+
+  useEffect(() => {
+    const FIRST = 3000;
+    const VISIBLE = 8000;
+    const GAP = 12000;
+    let timer = null;
+    let chatOpen = false;
+
+    const paused = () => chatOpen || document.visibilityState === 'hidden';
+    const clear = () => {
+      clearTimeout(timer);
+      timer = null;
+    };
+    const pickNext = () => {
+      const count = promptCount.current;
+      const last = lastPrompt.current;
+      if (last < 0 || count < 2) return 0; // prompt 1 first
+      let next = Math.floor(Math.random() * (count - 1));
+      if (next >= last) next += 1; // never the same twice in a row
+      return next;
+    };
+    const show = () => {
+      if (paused()) return;
+      const next = pickNext();
+      lastPrompt.current = next;
+      setBubbleIdx(next);
+      setBubbleShown(true);
+      timer = setTimeout(hide, VISIBLE);
+    };
+    function hide() {
+      setBubbleShown(false);
+      timer = setTimeout(show, GAP);
+    }
+    const pause = () => {
+      clear();
+      setBubbleShown(false);
+    };
+    const resume = (delay) => {
+      clear();
+      if (!paused()) timer = setTimeout(show, delay);
+    };
+    const onVisibility = () => (document.visibilityState === 'hidden' ? pause() : resume(FIRST));
+
+    bubbleCtl.current = (isOpen) => {
+      if (isOpen === chatOpen) return;
+      chatOpen = isOpen;
+      if (isOpen) pause();
+      else resume(FIRST);
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    resume(FIRST);
+    return () => {
+      clear();
+      bubbleCtl.current = null;
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    bubbleCtl.current?.(open);
+  }, [open]);
 
   function clampOffset(next) {
     const el = launcherRef.current;
@@ -386,16 +457,20 @@ export default function ChatWidget() {
         onPointerCancel={onPointerEnd}
         aria-expanded={open}
         aria-controls="chat-title"
-        className={`fixed right-4 bottom-4 z-70 cursor-grab touch-none items-center gap-2 rounded-full select-none data-[dragging=true]:cursor-grabbing bg-ink p-3.5 text-paper sm:py-3 sm:pr-5 sm:pl-4 shadow-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-chalk motion-reduce:transition-none sm:right-6 sm:bottom-6 ${
+        aria-label={open ? t.close : t.robotLabel}
+        className={`group fixed right-3 bottom-3 z-70 cursor-grab touch-none items-center rounded-full select-none data-[dragging=true]:cursor-grabbing p-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-chalk sm:right-5 sm:bottom-5 ${
           open ? 'hidden sm:flex' : 'flex'
         }`}
       >
-        <span aria-hidden="true" className="hidden h-2 w-2 rounded-full bg-thread sm:inline-block" />
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 sm:hidden" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
-          <path d="M4 5h16v11H9l-5 4z" />
-          <circle cx="17.5" cy="6.5" r="2.5" fill="var(--color-thread)" stroke="none" />
-        </svg>
-        <span className="sr-only font-display text-lg italic leading-none sm:not-sr-only">{open ? t.closeShort : t.title}</span>
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute right-full bottom-[60%] mr-1 w-max max-w-[min(220px,calc(100vw-6rem))] whitespace-normal break-words rounded-2xl rounded-br-sm border border-ink/15 bg-paper px-3 py-2 text-left text-sm leading-snug text-ink shadow-lg transition-[opacity,translate] duration-500 ease-out motion-reduce:transition-none ${
+            bubbleShown && !open ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'
+          }`}
+        >
+          {t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0]}
+        </span>
+        <ChatRobot />
       </button>
     </>
   );

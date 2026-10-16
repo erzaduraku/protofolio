@@ -11,6 +11,8 @@ import BeyondSection from '@/components/sections/BeyondSection';
 import PurposeSection from '@/components/sections/PurposeSection';
 import ContactSection from '@/components/sections/ContactSection';
 import ScrollSpy from '@/components/ScrollSpy';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import SectionError from '@/components/SectionError';
 
 /*
  * Hero headline options (written from Erza's story: tailor mother, mechanic
@@ -27,6 +29,8 @@ export default async function HomePage({ params }) {
   const { locale } = await params;
   const profile = await getProfile(locale);
   const t = getDict(locale).hero;
+  // One failing section shows this note instead of taking the whole page down.
+  const sectionError = <SectionError locale={locale} />;
 
   return (
     <>
@@ -96,24 +100,36 @@ export default async function HomePage({ params }) {
         </div>
       </section>
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <AboutSection locale={locale} showSkills />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <ProjectsSection locale={locale} />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton lines={8} />}>
-        <JourneySection locale={locale} />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <BeyondSection locale={locale} />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <PurposeSection locale={locale} />
-      </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <ContactSection locale={locale} />
-      </Suspense>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AboutSection locale={locale} showSkills />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ProjectsSection locale={locale} />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton lines={8} />}>
+          <JourneySection locale={locale} />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton />}>
+          <BeyondSection locale={locale} />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton />}>
+          <PurposeSection locale={locale} />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={sectionError}>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ContactSection locale={locale} />
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }
