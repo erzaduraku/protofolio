@@ -354,13 +354,12 @@ export default function ChatWidget() {
     const photoSeen = {};
     const onPhoto = (e) => {
       const fig = e.target instanceof Element ? e.target.closest('figure') : null;
-      if (!fig || !fig.querySelector('img') || paused() || idle || quiet.current) return;
-      if (Date.now() - lastPhoto < (debug ? 2000 : 6000)) return; // a few seconds between comments
+      // Only a real tap/click on a photo (not hovering past it), so the comment is always about that photo.
+      if (!fig || !fig.querySelector('img') || paused() || idle) return;
       // Which photo? next/image encodes the path in ?url=, e.g. /events/sfk-04.jpg -> 'sfk-04'.
       const img = fig.querySelector('img');
       const raw = decodeURIComponent(img.currentSrc || img.src || '');
       const key = (raw.match(/\/([\w-]+)\.(?:jpe?g|png|webp)/i) || [])[1];
-      if (key && Date.now() - (photoSeen[key] || 0) < 60000) return; // same photo: once a minute
       lastPhoto = Date.now();
       if (key) photoSeen[key] = lastPhoto;
       const n = photoCount.current;
@@ -378,11 +377,10 @@ export default function ChatWidget() {
         setRobotMode('normal');
         timer = setTimeout(() => {
           setBubbleShown(false);
-          resume(GAP * 2);
-        }, 3500);
+          resume(GAP * 3);
+        }, 4800);
       }, 1200);
     };
-    document.addEventListener('pointerover', onPhoto, { passive: true });
     document.addEventListener('pointerdown', onPhoto, { passive: true });
     bubbleCtl.current = (isOpen) => {
       if (isOpen === chatOpen) return;
@@ -406,7 +404,6 @@ export default function ChatWidget() {
       clearTimeout(idleTimer);
       bubbleCtl.current = null;
       eggCtl.current = null;
-      document.removeEventListener('pointerover', onPhoto);
       document.removeEventListener('pointerdown', onPhoto);
       EVENTS.forEach((ev) => window.removeEventListener(ev, onActivity));
       document.removeEventListener('visibilitychange', onVisibility);
