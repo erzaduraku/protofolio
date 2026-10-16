@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 import { localePath, stripLocale } from '@/lib/i18n';
 
 /**
- * EN / SQ switch. Links to the same path in the other language and sets a
- * cookie so proxy.js can land returning visitors on their preferred locale.
+ * EN / SQ switch. Links to the same path in the other language. The URL alone
+ * decides the locale ("/sq/..." is Albanian, everything else English).
  */
 export default function LanguageToggle({ locale, ariaLabel, switchLabel, className = '' }) {
   const pathname = usePathname() || '/';
@@ -27,9 +27,6 @@ export default function LanguageToggle({ locale, ariaLabel, switchLabel, classNa
         aria-current={locale === 'en' ? 'true' : undefined}
         aria-label={locale === 'sq' ? switchLabel : undefined}
         className={locale === 'en' ? 'font-medium text-ink' : 'text-ink-soft hover:text-ink'}
-        onClick={() => {
-          document.cookie = 'lang=en;path=/;max-age=31536000;samesite=lax';
-        }}
       >
         EN
       </Link>
@@ -43,9 +40,6 @@ export default function LanguageToggle({ locale, ariaLabel, switchLabel, classNa
         aria-current={locale === 'sq' ? 'true' : undefined}
         aria-label={locale === 'en' ? switchLabel : undefined}
         className={locale === 'sq' ? 'font-medium text-ink' : 'text-ink-soft hover:text-ink'}
-        onClick={() => {
-          document.cookie = 'lang=sq;path=/;max-age=31536000;samesite=lax';
-        }}
       >
         SQ
       </Link>

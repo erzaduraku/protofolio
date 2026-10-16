@@ -3,8 +3,10 @@ import { NextResponse } from 'next/server';
 /**
  * Locale routing. Pages live under app/[locale]. English keeps clean URLs:
  * "/about" is rewritten to "/en/about" internally, and "/en/..." redirects to
- * the clean URL. Albanian is served from "/sq/...". A visitor who picked SQ
- * (cookie "lang=sq", set by the EN/SQ toggle) is sent from "/..." to "/sq/...".
+ * the clean URL. Albanian is served only from "/sq/...", which visitors reach by
+ * clicking SQ in the EN/SQ toggle. Locale-less paths are always English: no
+ * cookie or Accept-Language redirect. An old "lang" cookie from the previous
+ * sticky-locale logic is cleared.
  */
 // Old standalone routes now live on Home as sections (one-page scroll).
 const SECTION_ROUTES = {
@@ -23,7 +25,7 @@ export function proxy(request) {
   const section = SECTION_ROUTES[bare.replace(/\/+$/, '') || '/'];
   if (section) {
     const url = request.nextUrl.clone();
-    url.pathname = isSq || request.cookies.get('lang')?.value === 'sq' ? '/sq' : '/';
+    url.pathname = isSq ? '/sq' : '/';
     url.search = '';
     url.hash = section;
     return NextResponse.redirect(url, 308);
@@ -39,16 +41,12 @@ export function proxy(request) {
     return NextResponse.redirect(url);
   }
 
-  if (request.cookies.get('lang')?.value === 'sq') {
-    const url = request.nextUrl.clone();
-    url.pathname = pathname === '/' ? '/sq' : `/sq${pathname}`;
-    return NextResponse.redirect(url);
-  }
-
   const url = request.nextUrl.clone();
   url.pathname = pathname === '/' ? '/en' : `/en${pathname}`;
   url.search = search;
-  return NextResponse.rewrite(url);
+  const res = NextResponse.rewrite(url);
+  if (request.cookies.has('lang')) res.cookies.delete('lang');
+  return res;
 }
 
 export const config = {
