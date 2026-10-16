@@ -353,12 +353,20 @@ export default function ChatWidget() {
     let lastPhotoIdx = -1;
     const photoSeen = {};
     const onPhoto = (e) => {
-      const fig = e.target instanceof Element ? e.target.closest('figure') : null;
-      // Only a real tap/click on a photo (not hovering past it), so the comment is always about that photo.
-      if (!fig || !fig.querySelector('img') || paused() || idle) return;
+      const shown = e.type === 'photo-shown';
+      const fig = shown ? null : e.target instanceof Element ? e.target.closest('figure') : null;
+      if (shown) return commentOn(e.detail?.src || '');
+      if (fig?.closest('[data-polaroid]')) return undefined; // stacks report via 'photo-shown'
+      if (!fig) return undefined;
+      const im = fig.querySelector('img');
+      if (im) commentOn(im.currentSrc || im.src || '');
+      return undefined;
+    };
+    // Comment on one photo: a tapped photo, or the new top print of a polaroid stack.
+    const commentOn = (src) => {
+      if (!src || paused() || idle) return;
       // Which photo? next/image encodes the path in ?url=, e.g. /events/sfk-04.jpg -> 'sfk-04'.
-      const img = fig.querySelector('img');
-      const raw = decodeURIComponent(img.currentSrc || img.src || '');
+      const raw = decodeURIComponent(src);
       const key = (raw.match(/\/([\w-]+)\.(?:jpe?g|png|webp)/i) || [])[1];
       lastPhoto = Date.now();
       if (key) photoSeen[key] = lastPhoto;
@@ -370,7 +378,7 @@ export default function ChatWidget() {
       goHome();
       setPhotoIdx(i);
       setBubbleIdx('photo');
-      setRobotMode('trick-jump');
+      setRobotMode('trick-dance');
       placeBubble();
       setBubbleShown(true);
       timer = setTimeout(() => {
@@ -382,6 +390,7 @@ export default function ChatWidget() {
       }, 1200);
     };
     document.addEventListener('pointerdown', onPhoto, { passive: true });
+    window.addEventListener('photo-shown', onPhoto);
     bubbleCtl.current = (isOpen) => {
       if (isOpen === chatOpen) return;
       chatOpen = isOpen;
@@ -405,6 +414,7 @@ export default function ChatWidget() {
       bubbleCtl.current = null;
       eggCtl.current = null;
       document.removeEventListener('pointerdown', onPhoto);
+      window.removeEventListener('photo-shown', onPhoto);
       EVENTS.forEach((ev) => window.removeEventListener(ev, onActivity));
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', placeBubble);

@@ -35,7 +35,12 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
     ? { duration: 0 }
     : { type: 'spring', stiffness: 210, damping: 24, mass: 0.8 };
 
-  const next = () => setOrder((prev) => [...prev.slice(1), prev[0]]);
+  // Tell the chat robot which photo is now on top, so it comments on the one you see.
+  const next = () => {
+    const nextTop = order[1 % count];
+    setOrder((prev) => [...prev.slice(1), prev[0]]);
+    window.dispatchEvent(new CustomEvent('photo-shown', { detail: { src: images[nextTop] } }));
+  };
 
   function poseFor(i) {
     const depth = order.indexOf(i);
@@ -48,7 +53,7 @@ export default function PolaroidStack({ images = [], alts = [], captions = [], t
   }
 
   return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div data-polaroid onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div
         ref={areaRef}
         role="button"
