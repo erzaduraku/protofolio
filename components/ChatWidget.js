@@ -71,9 +71,11 @@ export default function ChatWidget() {
   const eggCtl = useRef(null);
   const clicks = useRef({ n: 0, t: null });
   const quiet = useRef(false); // user closed the bubbles with X (kept for this session)
-  const [photoIdx, setPhotoIdx] = useState(0);
+  const [photoIdx, setPhotoIdx] = useState(0); // number = generic joke, string = photo key
   const photoCount = useRef(t.robotPhotoJokes.length);
   photoCount.current = t.robotPhotoJokes.length;
+  const photoKeys = useRef(Object.keys(t.robotPhotoComments));
+  photoKeys.current = Object.keys(t.robotPhotoComments);
   const [jokeIdx, setJokeIdx] = useState(-1); // -1 = first time: reveal the secret
 
   useEffect(() => {
@@ -349,14 +351,21 @@ export default function ChatWidget() {
     // (at most once every 20s, never while the chat is open or it is idle/hidden).
     let lastPhoto = 0;
     let lastPhotoIdx = -1;
+    const photoSeen = {};
     const onPhoto = (e) => {
       const fig = e.target instanceof Element ? e.target.closest('figure') : null;
       if (!fig || !fig.querySelector('img') || paused() || idle || quiet.current) return;
-      if (Date.now() - lastPhoto < (debug ? 3000 : 20000)) return;
+      if (Date.now() - lastPhoto < (debug ? 2000 : 6000)) return; // a few seconds between comments
+      // Which photo? next/image encodes the path in ?url=, e.g. /events/sfk-04.jpg -> 'sfk-04'.
+      const img = fig.querySelector('img');
+      const raw = decodeURIComponent(img.currentSrc || img.src || '');
+      const key = (raw.match(/\/([\w-]+)\.(?:jpe?g|png|webp)/i) || [])[1];
+      if (key && Date.now() - (photoSeen[key] || 0) < 60000) return; // same photo: once a minute
       lastPhoto = Date.now();
+      if (key) photoSeen[key] = lastPhoto;
       const n = photoCount.current;
-      let i = Math.floor(Math.random() * n);
-      if (i === lastPhotoIdx && n > 1) i = (i + 1) % n;
+      let i = key && photoKeys.current.includes(key) ? key : Math.floor(Math.random() * n);
+      if (typeof i === 'number' && i === lastPhotoIdx && n > 1) i = (i + 1) % n;
       lastPhotoIdx = i;
       clear();
       goHome();
@@ -807,7 +816,7 @@ export default function ChatWidget() {
           >
             ✕
           </span>
-          {bubbleIdx === 'photo' ? t.robotPhotoJokes[photoIdx] : bubbleIdx === 'joke' ? (jokeIdx < 0 ? t.robotSecret : t.robotJokes[jokeIdx]) : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
+          {bubbleIdx === 'photo' ? (typeof photoIdx === 'string' ? t.robotPhotoComments[photoIdx] : t.robotPhotoJokes[photoIdx]) : bubbleIdx === 'joke' ? (jokeIdx < 0 ? t.robotSecret : t.robotJokes[jokeIdx]) : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
         </span>
         <ChatRobot mode={open ? 'normal' : robotMode} />
         </span>
