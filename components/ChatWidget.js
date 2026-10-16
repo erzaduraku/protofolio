@@ -309,7 +309,24 @@ export default function ChatWidget() {
       const first = !eggSeen;
       eggSeen = true;
       // first time: the secret hint, then a random joke (never the same twice)
-      setJokeIdx((j) => (first ? -1 : (Math.max(j, 0) + 1 + Math.floor(Math.random() * (jokeCount.current - 1))) % jokeCount.current));
+      // Shuffle bag saved in localStorage: every joke is shown once before any repeats,
+      // even across visits. When all were seen, start a new round (not with the last one).
+      const pickJoke = () => {
+        const n = jokeCount.current;
+        let seen = [];
+        try { seen = JSON.parse(localStorage.getItem('robot-jokes-seen') || '[]'); } catch {}
+        seen = seen.filter((i) => Number.isInteger(i) && i < n);
+        let left = [...Array(n).keys()].filter((i) => !seen.includes(i));
+        if (!left.length) {
+          const last = seen[seen.length - 1];
+          seen = [];
+          left = [...Array(n).keys()].filter((i) => i !== last);
+        }
+        const pick = left[Math.floor(Math.random() * left.length)];
+        try { localStorage.setItem('robot-jokes-seen', JSON.stringify([...seen, pick])); } catch {}
+        return pick;
+      };
+      setJokeIdx(first ? -1 : pickJoke());
       setBubbleIdx('joke');
       setRobotMode('trick-dance');
       placeBubble();
