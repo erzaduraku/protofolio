@@ -71,7 +71,7 @@ export default function ChatWidget() {
   const eggCtl = useRef(null);
   const clicks = useRef({ n: 0, t: null });
   const quiet = useRef(false); // user closed the bubbles with X (kept for this session)
-  const [jokeIdx, setJokeIdx] = useState(0);
+  const [jokeIdx, setJokeIdx] = useState(-1); // -1 = first time: reveal the secret
 
   useEffect(() => {
     // Dev-only fast mode for testing: add ?robotdebug=1 to the URL (ignored in production).
@@ -301,11 +301,15 @@ export default function ChatWidget() {
     };
 
     // Easter egg (double click): dance, spin, tell a joke, then carry on.
+    let eggSeen = false;
     eggCtl.current = () => {
       if (idle) return;
       clear();
       goHome();
-      setJokeIdx((j) => (j + 1 + Math.floor(Math.random() * (jokeCount.current - 1))) % jokeCount.current); // never the same twice
+      const first = !eggSeen;
+      eggSeen = true;
+      // first time: the secret hint, then a random joke (never the same twice)
+      setJokeIdx((j) => (first ? -1 : (Math.max(j, 0) + 1 + Math.floor(Math.random() * (jokeCount.current - 1))) % jokeCount.current));
       setBubbleIdx('joke');
       setRobotMode('trick-dance');
       placeBubble();
@@ -751,7 +755,7 @@ export default function ChatWidget() {
           >
             ✕
           </span>
-          {bubbleIdx === 'joke' ? t.robotJokes[jokeIdx] : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
+          {bubbleIdx === 'joke' ? (jokeIdx < 0 ? t.robotSecret : t.robotJokes[jokeIdx]) : bubbleIdx === 'idle' ? t.robotIdle : bubbleIdx === 'back' ? t.robotBack : (t.robotPrompts[bubbleIdx] ?? t.robotPrompts[0])}
         </span>
         <ChatRobot mode={open ? 'normal' : robotMode} />
         </span>
