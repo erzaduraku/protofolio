@@ -48,7 +48,7 @@ function Gallery({ shots }) {
               height={shot.height}
               sizes={portrait ? '(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 45vw' : i === 0 && wideFirst ? '(min-width: 768px) 80vw, 100vw' : '(min-width: 768px) 40vw, 100vw'}
               className="h-auto w-full"
-              unoptimized
+              quality={90}
             />
             <figcaption className="mt-3 px-1 font-display text-base italic text-ink-soft">{shot.alt}</figcaption>
           </figure>

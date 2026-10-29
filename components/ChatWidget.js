@@ -68,6 +68,8 @@ export default function ChatWidget() {
   jokeCount.current = t.robotJokes.length;
   const lastPrompt = useRef(-1);
   const bubbleCtl = useRef(null);
+  const textsRef = useRef(t);
+  textsRef.current = t;
   const eggCtl = useRef(null);
   const clicks = useRef({ n: 0, t: null });
   const quiet = useRef(false); // user closed the bubbles with X (kept for this session)
@@ -306,6 +308,12 @@ export default function ChatWidget() {
     };
 
     // Easter egg (double click): dance, spin, tell a joke, then carry on.
+    // How long a bubble stays: ~2.5s + 70ms per character (5-14s), so long jokes can be read.
+    const readTime = (text = '') => Math.min(14000, Math.max(5000, 2500 + text.length * 70));
+    let eggNext = null;
+    const eggText = () => (eggNext == null ? textsRef.current.robotSecret : textsRef.current.robotJokes[eggNext]) || '';
+    const photoText = (i) =>
+      (typeof i === 'string' ? textsRef.current.robotPhotoComments[i] : textsRef.current.robotPhotoJokes[i]) || '';
     let eggSeen = false;
     eggCtl.current = () => {
       if (idle) return;
@@ -331,7 +339,8 @@ export default function ChatWidget() {
         try { localStorage.setItem('robot-jokes-seen', JSON.stringify([...seen, pick])); } catch {}
         return pick;
       };
-      setJokeIdx(first ? -1 : pickJoke());
+      eggNext = first ? null : pickJoke();
+      setJokeIdx(eggNext ?? -1);
       setBubbleIdx('joke');
       setRobotMode('trick-dance');
       placeBubble();
@@ -343,7 +352,7 @@ export default function ChatWidget() {
           timer = setTimeout(() => {
             setBubbleShown(false);
             resume(GAP);
-          }, 3500);
+          }, Math.max(2500, readTime(eggText()) - 2400));
         }, 1100);
       }, 1300);
     };
@@ -386,7 +395,7 @@ export default function ChatWidget() {
         timer = setTimeout(() => {
           setBubbleShown(false);
           resume(GAP * 3);
-        }, 4800);
+        }, Math.max(3500, readTime(photoText(i)) - 1200));
       }, 1200);
     };
     document.addEventListener('pointerdown', onPhoto, { passive: true });
