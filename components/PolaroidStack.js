@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { REDUCED_MOTION } from '@/hooks/use-media-query';
 import { getDict } from '@/lib/i18n';
 
 /** Reduced motion: no fan animation and no dragging. */

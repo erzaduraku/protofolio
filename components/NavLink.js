@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { stripLocale } from '@/lib/i18n';
-import { useActiveSection } from '@/lib/sections';
+import { useActiveSection } from '@/hooks/use-active-section';
 import SectionLink from './SectionLink';
 
 /** Header link. With `section`, it points at a Home section and is active while that section is in view. */

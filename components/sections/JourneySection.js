@@ -56,7 +56,8 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
               ))}
             </ul>
             {experience.images?.[0] ? (
-              <figure className="relative mt-10 max-w-md lg:max-w-none">
+              <figure data-robot-photo className="relative mt-10 max-w-md lg:max-w-none">
+                {/* data-robot-photo: a real photo of Erza, so the chat robot may joke about it */}
                 <span aria-hidden="true" className="polaroid-tape" />
                 <div className="relative aspect-6/5 overflow-hidden border border-paper/20">
                   <Image

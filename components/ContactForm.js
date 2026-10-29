@@ -8,6 +8,8 @@ import { getDict } from '@/lib/i18n';
  * Submits straight from the browser to Web3Forms: its Cloudflare protection
  * blocks server-side requests (403 challenge), and access keys are public by design.
  * Falls back to the /api/contact Route Handler if no public key is set.
+ * Two keys on purpose: NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY (browser, main path) and
+ * WEB3FORMS_ACCESS_KEY (server fallback in app/api/contact/route.js). Usually the same value.
  */
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 function validate(t, name, email, message) {

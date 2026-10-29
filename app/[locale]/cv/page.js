@@ -1,9 +1,17 @@
 import { getCv, CV_PDF } from '@/lib/cv';
-import { getDict } from '@/lib/i18n';
+import { getDict, localePath } from '@/lib/i18n';
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  return getDict(locale).meta.cv;
+  const meta = getDict(locale).meta.cv;
+  // Same title/description, plus openGraph/twitter so a shared /cv link has its own preview.
+  // They replace the layout's values, so the share image from opengraph-image.js is repeated.
+  const images = [localePath(locale, '/opengraph-image')];
+  return {
+    ...meta,
+    openGraph: { type: 'profile', siteName: 'Erza Duraku', title: meta.title, description: meta.description, images },
+    twitter: { card: 'summary_large_image', title: meta.title, description: meta.description, images },
+  };
 }
 
 function Block({ id, title, children }) {

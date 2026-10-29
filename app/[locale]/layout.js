@@ -41,6 +41,9 @@ const dmMono = DM_Mono({
 const MOTION_BOOT =
   "try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){document.documentElement.classList.add('motion-ready')}}catch(e){}";
 
+// Public site address, used by metadataBase below.
+const SITE_URL = 'https://protofolio-gamma-self.vercel.app';
+
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
@@ -53,6 +56,21 @@ export async function generateMetadata({ params }) {
     description: t.description,
     authors: [{ name: 'Erza Duraku' }],
     alternates: { languages: { en: '/', sq: '/sq' } },
+    // Base URL so relative links (og:image, canonical) become absolute on social media.
+    metadataBase: new URL(SITE_URL),
+    // Open Graph: how the link looks when shared (LinkedIn, Facebook...). Image comes from opengraph-image.js.
+    openGraph: {
+      type: 'website',
+      siteName: 'Erza Duraku',
+      title: t.title,
+      description: t.description,
+      url: locale === 'sq' ? '/sq' : '/',
+      locale: locale === 'sq' ? 'sq_AL' : 'en_US',
+    },
+    // Twitter/X card with a large image preview.
+    twitter: { card: 'summary_large_image', title: t.title, description: t.description },
+    // Let search engines index the site and follow links.
+    robots: { index: true, follow: true },
   };
 }
 

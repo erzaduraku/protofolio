@@ -1,5 +1,7 @@
 'use client';
 
+// Moved from lib/sections.js: client-only (hook + DOM scrolling), so it lives in hooks/ next to the other hooks.
+
 import { useSyncExternalStore } from 'react';
 
 /** Home sections reachable from the main nav (one-page scroll). */

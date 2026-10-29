@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, startTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { useLocale } from '@/components/LocaleProvider';
 import { getDict } from '@/lib/i18n';
 import styles from './error.module.css';
@@ -9,6 +10,16 @@ import styles from './error.module.css';
 export default function Error({ error, reset }) {
   const locale = useLocale();
   const t = getDict(locale).errorPage;
+  const router = useRouter();
+
+  // Recovery (course lecture 45): reset() alone re-renders only the client part; router.refresh()
+  // re-fetches the Server Component data too. startTransition runs both together.
+  function retry() {
+    startTransition(() => {
+      router.refresh();
+      reset();
+    });
+  }
 
   useEffect(() => {
     console.error(error);
@@ -21,7 +32,7 @@ export default function Error({ error, reset }) {
         <em>{t.heading[1]}</em>
       </h1>
       <p className={styles.body}>{t.body}</p>
-      <button type="button" onClick={() => reset()} className={`btn-ink ${styles.retry}`}>
+      <button type="button" onClick={retry} className={`btn-ink ${styles.retry}`}>
         {t.retry} <span aria-hidden="true">↻</span>
       </button>
     </section>

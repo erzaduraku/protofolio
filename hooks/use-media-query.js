@@ -1,3 +1,4 @@
+// Moved from lib/useMediaQuery.js: all custom hooks now live in hooks/ (kebab-case, like use-active-section.js).
 import { useCallback, useSyncExternalStore } from 'react';
 
 /** Server snapshot is always false, so SSR output never depends on the device. */

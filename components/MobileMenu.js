@@ -4,10 +4,10 @@ import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { REDUCED_MOTION } from '@/hooks/use-media-query';
 import LanguageToggle from './LanguageToggle';
 import { getDict, stripLocale } from '@/lib/i18n';
-import { useActiveSection } from '@/lib/sections';
+import { useActiveSection } from '@/hooks/use-active-section';
 import SectionLink from './SectionLink';
 
 /** Hamburger + full-screen menu below md. Closes on link click, Esc and route change; locks scroll. */

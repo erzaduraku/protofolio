@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import useMediaQuery, { FINE_POINTER_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { FINE_POINTER_MOTION } from '@/hooks/use-media-query';
 
 /** Load animation is CSS keyframes so it runs before hydration; mouse parallax on fine pointers only. */
 const SRC = '/engineering-craft-ink.jpg';

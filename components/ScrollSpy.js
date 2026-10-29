@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { NAV_SECTIONS, scrollToSection, sectionTop, setActiveSection } from '@/lib/sections';
+import { NAV_SECTIONS, scrollToSection, sectionTop, setActiveSection } from '@/hooks/use-active-section';
 
 // Sections that don't have their own nav item count as the one they belong to.
 const OWNER = { top: null, purpose: 'beyond-code' };

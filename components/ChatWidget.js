@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { REDUCED_MOTION } from '@/hooks/use-media-query';
 import ChatMarkdown from './ChatMarkdown';
 import ChatRobot from './ChatRobot';
 import { useLocale } from './LocaleProvider';
@@ -363,7 +363,9 @@ export default function ChatWidget() {
     const photoSeen = {};
     const onPhoto = (e) => {
       const shown = e.type === 'photo-shown';
-      const fig = shown ? null : e.target instanceof Element ? e.target.closest('figure') : null;
+      // Opt-in: only elements marked data-robot-photo (real photos of Erza) trigger a joke,
+      // so decorative figures (hero blueprint, project screenshots) stay quiet.
+      const fig = shown ? null : e.target instanceof Element ? e.target.closest('[data-robot-photo]') : null;
       if (shown) return commentOn(e.detail?.src || '');
       if (fig?.closest('[data-polaroid]')) return undefined; // stacks report via 'photo-shown'
       if (!fig) return undefined;

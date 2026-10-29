@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import useMediaQuery, { REDUCED_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { REDUCED_MOTION } from '@/hooks/use-media-query';
 
 /** Transform only, rAF-throttled, disabled for reduced motion. */
 export default function Parallax({ children, strength = 14, className = '' }) {

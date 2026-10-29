@@ -19,7 +19,15 @@ export async function generateMetadata({ params }) {
   const { slug, locale } = await params;
   const project = await getProjectBySlug(slug, locale);
   if (!project) return { title: getDict(locale).meta.projectNotFound };
-  return { title: project.title, description: project.oneLiner };
+  // openGraph/twitter replace the layout's (no deep merge), so repeat siteName and the
+  // share image from app/[locale]/opengraph-image.js here.
+  const images = [localePath(locale, '/opengraph-image')];
+  return {
+    title: project.title,
+    description: project.oneLiner,
+    openGraph: { type: 'article', siteName: 'Erza Duraku', title: project.title, description: project.oneLiner, images },
+    twitter: { card: 'summary_large_image', title: project.title, description: project.oneLiner, images },
+  };
 }
 
 function Section({ id, title, children, className = '' }) {

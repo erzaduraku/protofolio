@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import useMediaQuery, { FINE_POINTER_MOTION } from '@/lib/useMediaQuery';
+import useMediaQuery, { FINE_POINTER_MOTION } from '@/hooks/use-media-query';
 
 /** Fine pointers with motion allowed only; never on touch. Text fields keep the native caret. */
 const INTERACTIVE = 'a, button, [role="button"], summary, label[for]';

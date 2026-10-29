@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { stripLocale } from '@/lib/i18n';
-import { scrollToSection, setActiveSection } from '@/lib/sections';
+import { scrollToSection, setActiveSection } from '@/hooks/use-active-section';
 
 /**
  * Link to a Home section ("/#about", "/sq#about"). On Home it scrolls smoothly with the
