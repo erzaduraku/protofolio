@@ -195,8 +195,9 @@ export async function POST(request) {
       }),
       signal: AbortSignal.timeout(30_000),
     });
-  } catch (err) {
-    console.error('[api/chat] Groq request failed:', err?.message);
+  } catch (fetchErr) {
+    // Do not shadow locale err (ERRORS[locale]) - return the localized unreachable message.
+    console.error('[api/chat] Groq request failed:', fetchErr?.message);
     return json({ error: err.unreachable }, 502);
   }
   if (!upstream.ok || !upstream.body) {

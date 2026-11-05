@@ -1,93 +1,57 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { getDict } from '@/lib/i18n';
+import { createContactSchema } from '@/lib/contact-validation';
+import { submitContact } from '@/app/[locale]/contact/actions';
 
 /**
- * Concept: Client Component with form state.
- * Submits straight from the browser to Web3Forms: its Cloudflare protection
- * blocks server-side requests (403 challenge), and access keys are public by design.
- * Falls back to the /api/contact Route Handler if no public key is set.
- * Two keys on purpose: NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY (browser, main path) and
- * WEB3FORMS_ACCESS_KEY (server fallback in app/api/contact/route.js). Usually the same value.
+ * Contact form (course: react-hook-form + zodResolver + Server Action).
+ * Client validates with Zod via RHF; the Server Action validates again and emails via Web3Forms
+ * using WEB3FORMS_ACCESS_KEY (server-only - no NEXT_PUBLIC key in the browser).
  */
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-function validate(t, name, email, message) {
-  if (!name || !email || !message) return t.missing;
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return t.badEmail;
-  if (message.length < 10) return t.short;
-  return '';
-}
-
 export default function ContactForm({ locale = 'en' }) {
   const t = getDict(locale).form;
   const FALLBACK_ERROR = t.failed;
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState('idle');
-  const [error, setError] = useState('');
-  const [botcheck, setBotcheck] = useState(false); // honeypot: real visitors never tick it
+  const [status, setStatus] = useState('idle'); // idle | success (errors come from RHF / submitError)
+  const [submitError, setSubmitError] = useState('');
 
-  async function onSubmit(e) {
-    e.preventDefault();
-    setStatus('loading');
-    setError('');
+  const schema = useMemo(
+    () =>
+      createContactSchema({
+        missing: t.missing,
+        badEmail: t.badEmail,
+        short: t.short,
+      }),
+    [t.missing, t.badEmail, t.short]
+  );
 
-    const fields = { name: name.trim(), email: email.trim(), message: message.trim() };
-    const invalid = validate(t, fields.name, fields.email, fields.message);
-    if (invalid) {
-      setStatus('error');
-      setError(invalid);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { name: '', email: '', message: '', botcheck: false },
+  });
+
+  async function onSubmit(values) {
+    setSubmitError('');
+    const result = await submitContact(locale, values);
+    if (!result?.ok) {
+      setSubmitError(result?.error || FALLBACK_ERROR);
       return;
     }
-
-    try {
-      let ok;
-      let data;
-      if (ACCESS_KEY) {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: ACCESS_KEY,
-            subject: `Portfolio contact from ${fields.name}`,
-            from_name: fields.name,
-            ...fields,
-            botcheck,
-          }),
-        });
-        data = await res.json().catch(() => ({}));
-        ok = res.ok && data.success !== false;
-      } else {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(fields),
-        });
-        data = await res.json().catch(() => ({}));
-        ok = res.ok && data.ok;
-        data.message = data.error;
-      }
-
-      if (!ok) {
-        setStatus('error');
-        setError(data.message || FALLBACK_ERROR);
-        return;
-      }
-
-      setStatus('success');
-      setName('');
-      setEmail('');
-      setMessage('');
-    } catch {
-      setStatus('error');
-      setError(FALLBACK_ERROR);
-    }
+    setStatus('success');
+    reset({ name: '', email: '', message: '', botcheck: false });
   }
 
   const labelClass = 'block text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft';
   const sheetClass = 'sheet-shadow relative bg-paper-light p-7 sm:p-10';
+  const fieldErrorClass = 'mt-2 text-sm text-ink-soft';
 
   if (status === 'success') {
     return (
@@ -113,7 +77,7 @@ export default function ContactForm({ locale = 'en' }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className={sheetClass} noValidate={false}>
+    <form onSubmit={handleSubmit(onSubmit)} className={sheetClass} noValidate={false}>
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className={labelClass}>
@@ -121,16 +85,18 @@ export default function ContactForm({ locale = 'en' }) {
           </label>
           <input
             id="contact-name"
-            name="name"
             type="text"
-            required
             autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
             className="field mt-1"
             placeholder={t.namePh}
-            disabled={status === 'loading'}
+            disabled={isSubmitting}
+            {...register('name')}
           />
+          {errors.name ? (
+            <p role="alert" className={fieldErrorClass}>
+              {errors.name.message}
+            </p>
+          ) : null}
         </div>
 
         <div>
@@ -139,16 +105,18 @@ export default function ContactForm({ locale = 'en' }) {
           </label>
           <input
             id="contact-email"
-            name="email"
             type="email"
-            required
             autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className="field mt-1"
             placeholder={t.emailPh}
-            disabled={status === 'loading'}
+            disabled={isSubmitting}
+            {...register('email')}
           />
+          {errors.email ? (
+            <p role="alert" className={fieldErrorClass}>
+              {errors.email.message}
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -158,36 +126,39 @@ export default function ContactForm({ locale = 'en' }) {
         </label>
         <textarea
           id="contact-message"
-          name="message"
-          required
           rows={6}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
           className="field mt-1 min-h-40 resize-y"
           placeholder={t.messagePh}
-          disabled={status === 'loading'}
+          disabled={isSubmitting}
+          {...register('message')}
         />
+        {errors.message ? (
+          <p role="alert" className={fieldErrorClass}>
+            {errors.message.message}
+          </p>
+        ) : null}
       </div>
 
+      {/* Honeypot: real visitors never tick it (course-style spam guard). */}
       <input
         type="checkbox"
-        name="botcheck"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
         className="hidden"
-        checked={botcheck}
-        onChange={(e) => setBotcheck(e.target.checked)}
+        {...register('botcheck')}
       />
 
-      <button type="submit" disabled={status === 'loading'} className="btn-ink mt-10 w-full justify-center sm:w-auto">
-        {status === 'loading' ? t.sending : t.send}
-        <span aria-hidden="true" className="nudge inline-block">→</span>
+      <button type="submit" disabled={isSubmitting} className="btn-ink mt-10 w-full justify-center sm:w-auto">
+        {isSubmitting ? t.sending : t.send}
+        <span aria-hidden="true" className="nudge inline-block">
+          →
+        </span>
       </button>
 
-      {status === 'error' ? (
+      {submitError ? (
         <p role="alert" className="mt-6 border-l-2 border-thread pl-4 text-sm text-ink-soft">
-          {error}{' '}
+          {submitError}{' '}
           <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
             erzaaduraku15@gmail.com
           </a>
