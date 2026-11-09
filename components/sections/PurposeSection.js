@@ -1,9 +1,8 @@
 import { getPurpose } from '@/lib/api';
 import { emphasize } from '@/lib/emphasize';
 
-export default async function PurposeSection({ locale = 'en', headingLevel = 'h2' }) {
+export default async function PurposeSection({ locale = 'en' }) {
   const purpose = await getPurpose(locale);
-  const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
   const last = purpose.paragraphs.length - 1;
 
   return (
@@ -12,9 +11,9 @@ export default async function PurposeSection({ locale = 'en', headingLevel = 'h2
         <span aria-hidden="true" className="numeral absolute -top-8 left-4">05</span>
         <div className="relative lg:col-span-5 lg:pt-40">
           <p className="text-[0.78rem] font-semibold uppercase tracking-[0.24em] text-paper/70">{purpose.label}</p>
-          <Heading id="purpose-heading" className="display mt-5 text-[clamp(2.3rem,4.6vw,4rem)]">
+          <h2 id="purpose-heading" className="display mt-5 text-[clamp(2.3rem,4.6vw,4rem)]">
             {emphasize(purpose.heading, ['beyond code', 'përtej kodit'])}
-          </Heading>
+          </h2>
         </div>
         <div className="relative space-y-6 text-lg text-paper/80 lg:col-span-6 lg:col-start-7">
           {purpose.paragraphs.map((paragraph, i) => (

@@ -6,13 +6,10 @@ import Parallax from '@/components/Parallax';
 import { getDict } from '@/lib/i18n';
 
 /** Each event shows one concise summary (about two sentences) plus the role list. */
-export default async function JourneySection({ locale = 'en', headingLevel = 'h2' }) {
+export default async function JourneySection({ locale = 'en' }) {
   const { experience, volunteering, volunteeringQuote, learning } = await getJourney(locale);
   const t = getDict(locale).journey;
   const newTab = getDict(locale).common.newTab;
-  const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
-  const Sub = headingLevel === 'h1' ? 'h2' : 'h3';
-  const Item = headingLevel === 'h1' ? 'h3' : 'h4';
   // The internship already has its own card; keep the rest of the timeline.
   const timeline = learning.filter((item) => item.place !== experience.company);
 
@@ -25,11 +22,11 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
           </span>
           <div className="relative lg:col-span-7">
             <p className="kicker">{t.kicker}</p>
-            <Heading id="journey-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
+            <h2 id="journey-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
               {t.heading[0]}
               <em>{t.heading[1]}</em>
               {t.heading[2]}
-            </Heading>
+            </h2>
           </div>
           <p className="max-w-md text-lg text-ink-soft lg:col-span-4 lg:col-start-8 lg:mt-36">
             {t.lead}
@@ -43,9 +40,9 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
         >
           <div className="on-ink bg-ink p-8 text-paper sm:p-10 lg:col-span-5">
             <p className="mono-label text-paper/75">{experience.period}</p>
-            <Sub id="exp-heading" className="display mt-6 text-[clamp(2.2rem,3.8vw,3.4rem)]">
+            <h3 id="exp-heading" className="display mt-6 text-[clamp(2.2rem,3.8vw,3.4rem)]">
               {experience.role}
-            </Sub>
+            </h3>
             <p className="mt-3 font-display text-3xl italic text-thread">{experience.company}</p>
             <p className="mt-10 text-paper/80">{experience.summary}</p>
             <ul className="mt-8 flex flex-wrap gap-2" aria-label={t.tools}>
@@ -122,7 +119,7 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
               <li key={item.id} className="relative">
                 <span aria-hidden="true" className="absolute top-[-2.9rem] left-0 h-5 w-0.5 bg-thread" />
                 <p className="mono-label text-thread">{item.year}</p>
-                <Item className="display mt-3 text-[1.9rem]">{item.title}</Item>
+                <h4 className="display mt-3 text-[1.9rem]">{item.title}</h4>
                 {item.place ? <p className="mt-1 text-sm font-medium text-ink">{item.place}</p> : null}
                 <p className="mt-3 max-w-md text-ink-soft">{item.detail}</p>
                 {item.chips?.length > 0 ? (
@@ -147,9 +144,9 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
 
         <div className="mt-28 grid gap-6 lg:grid-cols-12">
           <p className="kicker lg:col-span-12">{t.outside}</p>
-          <Sub className="display text-[clamp(2.2rem,4.6vw,4rem)] lg:col-span-9">
+          <h3 className="display text-[clamp(2.2rem,4.6vw,4rem)] lg:col-span-9">
             {emphasize(t.community, [t.communityEm])}
-          </Sub>
+          </h3>
         </div>
 
         <div className="mt-16 space-y-24 sm:space-y-28">
@@ -183,9 +180,9 @@ export default async function JourneySection({ locale = 'en', headingLevel = 'h2
                   <p className="mono-label text-thread">
                     {event.date} · {event.place}
                   </p>
-                  <Item id={`event-${event.id}`} className="display mt-4 text-[clamp(2rem,3.4vw,2.9rem)]">
+                  <h4 id={`event-${event.id}`} className="display mt-4 text-[clamp(2rem,3.4vw,2.9rem)]">
                     {event.title}
-                  </Item>
+                  </h4>
                   <div className="mt-5 space-y-4 text-ink-soft">
                     <p>{event.short}</p>
                   </div>

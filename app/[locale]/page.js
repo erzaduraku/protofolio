@@ -14,16 +14,6 @@ import ScrollSpy from '@/components/ScrollSpy';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import SectionError from '@/components/SectionError';
 
-/*
- * Hero headline options (written from Erza's story: tailor mother, mechanic
- * father, software engineering student in Prishtina, logic × craft, building
- * for people too often forgotten). Option 1 is live below.
- *
- * 1. "A tailor's eye, a mechanic's patience — in code."
- * 2. "Between engines and fabric, I found software."
- * 3. "Software, cut to fit the people too often forgotten."
- */
-
 /** Concept: the hero renders immediately; each section streams in through its own <Suspense>. */
 export default async function HomePage({ params }) {
   const { locale } = await params;
@@ -102,7 +92,7 @@ export default async function HomePage({ params }) {
 
       <ErrorBoundary fallback={sectionError}>
         <Suspense fallback={<SectionSkeleton />}>
-          <AboutSection locale={locale} showSkills />
+          <AboutSection locale={locale} />
         </Suspense>
       </ErrorBoundary>
       <ErrorBoundary fallback={sectionError}>

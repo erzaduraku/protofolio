@@ -2,6 +2,7 @@
 
 import { createContactSchema, CONTACT_ERRORS_EN } from '@/lib/contact-validation';
 import { getDict, isLocale } from '@/lib/i18n';
+import { getContact } from '@/lib/api';
 
 /**
  * Server Action for the contact form (course: "use server" + Zod on the server).
@@ -59,7 +60,8 @@ export async function submitContact(locale, raw) {
         from_name: name,
         email,
         message,
-        to: 'erzaaduraku15@gmail.com',
+        // Inbox address from db.json `contact` (single source, Finance §32).
+        to: (await getContact()).email,
       }),
     });
 

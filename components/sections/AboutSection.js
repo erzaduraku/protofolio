@@ -4,14 +4,12 @@ import { emphasize } from '@/lib/emphasize';
 import { getDict } from '@/lib/i18n';
 
 /** Concept: async Server Component that fetches its own data. */
-export default async function AboutSection({ locale = 'en', headingLevel = 'h2', showSkills = false }) {
+export default async function AboutSection({ locale = 'en' }) {
   const [about, skills] = await Promise.all([
     getAbout(locale),
-    showSkills ? getSkills(locale) : Promise.resolve([]),
+    getSkills(locale),
   ]);
   const t = getDict(locale).about;
-  const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
-  const SubHeading = headingLevel === 'h1' ? 'h2' : 'h3';
   const [first, second, ...rest] = about.paragraphs;
 
   return (
@@ -24,9 +22,9 @@ export default async function AboutSection({ locale = 'en', headingLevel = 'h2',
         <div className="relative grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <p className="kicker">{t.kicker}</p>
-            <Heading id="about-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
+            <h2 id="about-heading" className="display mt-5 text-[clamp(2.4rem,5.4vw,4.75rem)]">
               {emphasize(about.heading, ['two worlds', 'dy botëve'])}
-            </Heading>
+            </h2>
           </div>
           <p className="display-italic max-w-sm text-[1.6rem] leading-snug lg:col-span-4 lg:mt-48">
             {about.lead}
@@ -96,13 +94,13 @@ export default async function AboutSection({ locale = 'en', headingLevel = 'h2',
           </blockquote>
         </figure>
 
-        {showSkills && skills.length > 0 ? (
+        {skills.length > 0 ? (
           <div className="mt-24 grid gap-8 lg:grid-cols-12">
-            <SubHeading className="display text-3xl lg:col-span-3">
+            <h3 className="display text-3xl lg:col-span-3">
               {t.tools[0]}
               <em>{t.tools[1]}</em>
               {t.tools[2]}
-            </SubHeading>
+            </h3>
             <dl className="divide-y divide-line-strong border-y border-line-strong lg:col-span-9">
               {skills.map((group, i) => (
                 <div key={group.id} className="grid gap-1 py-4 sm:grid-cols-[3rem_13rem_1fr] sm:gap-4">

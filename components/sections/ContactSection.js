@@ -5,10 +5,9 @@ import ContactForm from '@/components/ContactForm';
 import { IconMail, IconPhone, IconMapPin, IconLinkedin, IconGithub } from '@/components/SocialIcons';
 
 /** Concept: Server Component composing data + the client ContactForm. */
-export default async function ContactSection({ locale = 'en', headingLevel = 'h2' }) {
+export default async function ContactSection({ locale = 'en' }) {
   const contact = await getContact(locale);
   const t = getDict(locale).contact;
-  const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
 
   const rows = [
     { id: 'email', kind: t.email, label: contact.email, href: `mailto:${contact.email}`, Icon: IconMail },
@@ -23,9 +22,9 @@ export default async function ContactSection({ locale = 'en', headingLevel = 'h2
       <div className="container-page relative">
         <span aria-hidden="true" className="numeral absolute -top-6 right-2 sm:-top-14">06</span>
         <p className="kicker relative">{t.kicker}</p>
-        <Heading id="contact-heading" className="display relative mt-5 max-w-5xl text-[clamp(2.7rem,7.4vw,6.75rem)]">
+        <h2 id="contact-heading" className="display relative mt-5 max-w-5xl text-[clamp(2.7rem,7.4vw,6.75rem)]">
           {emphasize(contact.heading, ['thoughtful', 'me kujdes'])}
-        </Heading>
+        </h2>
 
         <div className="mt-14 grid gap-16 lg:mt-20 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
@@ -60,7 +59,8 @@ export default async function ContactSection({ locale = 'en', headingLevel = 'h2
               <circle cx="37" cy="11" r="7" fill="var(--thread)" stroke="var(--ink)" strokeWidth="1.2" />
               <circle cx="35" cy="9" r="2" fill="var(--paper-light)" />
             </svg>
-            <ContactForm locale={locale} />
+            {/* Email comes from db.json `contact` (single source, Finance §32). */}
+            <ContactForm locale={locale} email={contact.email} />
           </div>
         </div>
       </div>

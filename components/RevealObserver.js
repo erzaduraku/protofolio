@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 /**
  * Hydration-safe: never changes DOM attributes or classes (streamed sections may
  * not be hydrated yet). Watched elements live in a WeakSet and reveals use the
- * Web Animations API. The hidden start state only applies with html.motion-ready.
+ * Web Animations API. The hidden start state comes from CSS (prefers-reduced-motion: no-preference).
  */
 const SELECTOR = 'main section:not([data-no-reveal]), main [data-reveal]';
 const KEYFRAMES = [
@@ -17,11 +17,12 @@ const TIMING = { duration: 800, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', fil
 export default function RevealObserver() {
   useEffect(() => {
     const root = document.documentElement;
-    if (!root.classList.contains('motion-ready')) return undefined;
+    // reduced motion: CSS never hides anything, so there is nothing to reveal
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     const main = document.querySelector('main');
     if (!main || !('IntersectionObserver' in window) || !Element.prototype.animate) {
-      root.classList.remove('motion-ready');
+      root.classList.add('reveal-off'); // can't animate -> show everything
       return undefined;
     }
 

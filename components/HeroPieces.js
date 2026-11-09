@@ -56,7 +56,8 @@ function Piece({ piece, mx, my, first }) {
             src={SRC}
             alt=""
             fill
-            priority={first}
+            // Next 16: `priority` is deprecated; `preload` adds the <link rel=preload> for the first piece.
+            preload={first}
             loading={first ? undefined : 'eager'}
             sizes="(min-width: 1024px) 52vw, 100vw"
             className="object-cover"

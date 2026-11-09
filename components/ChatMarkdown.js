@@ -3,6 +3,9 @@
  * "- " / "1. " lists and line breaks. Builds React elements only (no HTML injection);
  * links are limited to http(s) and site-relative paths.
  */
+import { useLocale } from './LocaleProvider';
+import { getDict } from '@/lib/i18n';
+
 const INLINE = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)\s]+)\)|(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"])/g;
 
 function safeHref(url) {
@@ -24,6 +27,8 @@ function shortLabel(url) {
 
 function LinkOut({ href, children }) {
   const external = /^https?:\/\//i.test(href);
+  // Screen-reader hint in the page language (" (opens in a new tab)" / " (hapet në skedë të re)").
+  const newTab = getDict(useLocale()).common.newTab;
   return (
     <a
       href={href}
@@ -31,7 +36,7 @@ function LinkOut({ href, children }) {
       className="underline decoration-paper/40 underline-offset-2 hover:decoration-chalk hover:text-chalk"
     >
       {children}
-      {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+      {external ? <span className="sr-only">{newTab}</span> : null}
     </a>
   );
 }

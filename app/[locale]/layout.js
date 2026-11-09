@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import Script from 'next/script';
 import { Fraunces, Instrument_Sans, DM_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -9,7 +8,8 @@ import PinCursor from '@/components/PinCursor';
 import Thread from '@/components/Thread';
 import RevealObserver from '@/components/RevealObserver';
 import PaperGrain from '@/components/PaperGrain';
-import ChatWidget from '@/components/ChatWidget';
+// Lazy: the chatbot loads in its own chunk after hydration (not in the initial JS).
+import ChatWidget from '@/components/chat/ChatWidgetLazy';
 import LocaleProvider from '@/components/LocaleProvider';
 import { LOCALES, isLocale, getDict } from '@/lib/i18n';
 import '../globals.css';
@@ -36,10 +36,10 @@ const dmMono = DM_Mono({
   display: 'swap',
 });
 
-// Runs before paint: enables the scroll-reveal start state only when JS runs
-// and motion is allowed. Without JS (or with reduced motion) nothing is hidden.
-const MOTION_BOOT =
-  "try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){document.documentElement.classList.add('motion-ready')}}catch(e){}";
+// Scroll-reveal start state now lives in CSS (globals.css). No boot <script> in the layout:
+// React warns about any script tag rendered on the client (the EN/SQ switch remounts this layout).
+// Without JS the <noscript> style below keeps every section visible.
+const NO_JS_REVEAL = 'main section,main [data-reveal]{opacity:1!important;transform:none!important}';
 
 // Public site address, used by metadataBase below.
 const SITE_URL = 'https://protofolio-gamma-self.vercel.app';
@@ -87,10 +87,9 @@ export default async function RootLayout({ children, params }) {
       className={`${fraunces.variable} ${instrument.variable} ${dmMono.variable} h-full antialiased`}
     >
       <head>
-        {/* next/script, not a raw <script>: React warns when a raw script tag is rendered on the client (EN/SQ switch remounts this layout). */}
-        <Script id="motion-boot" strategy="beforeInteractive">
-          {MOTION_BOOT}
-        </Script>
+        <noscript>
+          <style>{NO_JS_REVEAL}</style>
+        </noscript>
       </head>
       <body className="flex min-h-full flex-col bg-paper font-sans text-ink">
         <LocaleProvider locale={locale}>

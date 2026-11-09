@@ -12,7 +12,8 @@ import { submitContact } from '@/app/[locale]/contact/actions';
  * Client validates with Zod via RHF; the Server Action validates again and emails via Web3Forms
  * using WEB3FORMS_ACCESS_KEY (server-only - no NEXT_PUBLIC key in the browser).
  */
-export default function ContactForm({ locale = 'en' }) {
+// `email` is passed by ContactSection from db.json `contact` (single source, Finance §32).
+export default function ContactForm({ locale = 'en', email }) {
   const t = getDict(locale).form;
   const FALLBACK_ERROR = t.failed;
   const [status, setStatus] = useState('idle'); // idle | success (errors come from RHF / submitError)
@@ -64,8 +65,8 @@ export default function ContactForm({ locale = 'en' }) {
         </p>
         <p className="mt-4 max-w-md text-ink-soft">
           {t.reply}{' '}
-          <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
-            erzaaduraku15@gmail.com
+          <a href={`mailto:${email}`} className="link-stitch text-ink">
+            {email}
           </a>
           .
         </p>
@@ -77,7 +78,7 @@ export default function ContactForm({ locale = 'en' }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={sheetClass} noValidate={false}>
+    <form onSubmit={handleSubmit(onSubmit)} className={sheetClass}>
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className={labelClass}>
@@ -159,8 +160,8 @@ export default function ContactForm({ locale = 'en' }) {
       {submitError ? (
         <p role="alert" className="mt-6 border-l-2 border-thread pl-4 text-sm text-ink-soft">
           {submitError}{' '}
-          <a href="mailto:erzaaduraku15@gmail.com" className="link-stitch text-ink">
-            erzaaduraku15@gmail.com
+          <a href={`mailto:${email}`} className="link-stitch text-ink">
+            {email}
           </a>
         </p>
       ) : null}

@@ -38,6 +38,7 @@
       ],
       "learned": "How language can be represented computationally, how different n-gram approaches behave, and how data structures such as Tries can support fast autocomplete.",
       "featured": false,
+      "order": 4,
       "published": true,
       "repoUrl": "https://github.com/erzaduraku/grupi22-predictive-text-engine",
       "language": "Python",
@@ -190,6 +191,7 @@
       "team": true,
       "repoUrl": "https://github.com/engjiosmani/Contract-and-Payroll-Management-System",
       "featured": false,
+      "order": 8,
       "published": true,
       "screenshotGroups": [
         {
@@ -279,6 +281,7 @@
       ],
       "learned": "How cloud services can be combined into a backend system, and how serverless architecture changes the way application components communicate.",
       "featured": false,
+      "order": 9,
       "published": false
     },
     {
@@ -300,6 +303,7 @@
       "repoUrl": "https://github.com/erzaduraku/collabai-project-management",
       "showcase": 0,
       "featured": true,
+      "order": 1,
       "published": true,
       "overview": "CollabAI is a full-stack project management platform for organizing teams, projects, tasks and collaboration, with a built-in AI assistant powered by retrieval-augmented generation (RAG) and semantic search. It is built for multi-tenant use: one platform can serve several organizations while keeping each organization’s data isolated.",
       "features": [
@@ -458,6 +462,7 @@
       "team": true,
       "repoUrl": "https://github.com/edonitagashi/ParkEasy",
       "featured": true,
+      "order": 2,
       "published": true,
       "showcase": 1,
       "screenshotGroups": [
@@ -672,6 +677,7 @@
       "repoUrl": "https://github.com/erzaduraku/erza-master-project",
       "showcase": 2,
       "featured": true,
+      "order": 3,
       "published": true,
       "overview": "Terraform code that provisions AWS infrastructure for a highly available web application, built for the DCADD Master Project course. It creates a multi-AZ network, runs the app on private EC2 instances behind an Application Load Balancer, and deploys changes automatically with GitHub Actions.",
       "features": [
@@ -734,6 +740,7 @@
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/text-rule-processor",
       "featured": false,
+      "order": 5,
       "published": true,
       "overview": "A rule-based content filter web app. Users define rules that detect patterns in text and mark every match with a coloured highlight or a tooltip label. It was created as an internship assignment to demonstrate full-stack development.",
       "features": [
@@ -829,6 +836,7 @@
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/Maze_Solver_Project",
       "featured": false,
+      "order": 6,
       "published": true,
       "overview": "An interactive maze editor and pathfinding visualizer. You draw a grid maze, place a start and a goal, and the A* algorithm finds and draws the shortest path. It demonstrates heuristic search, cost functions and path reconstruction visually.",
       "features": [
@@ -904,6 +912,7 @@
       "team": false,
       "repoUrl": "https://github.com/erzaduraku/firebase-auth-erza",
       "featured": false,
+      "order": 7,
       "published": true,
       "overview": "A small web demo of Firebase Authentication. A single page with a “Sign in with Google” button signs the user in through a Google popup and greets them by name.",
       "features": [

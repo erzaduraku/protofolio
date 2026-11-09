@@ -11,11 +11,9 @@ const LAYOUT = [
   'lg:col-span-5 lg:col-start-7 rotate-[-1.5deg] bg-paper-deep',
 ];
 
-export default async function BeyondSection({ locale = 'en', headingLevel = 'h2' }) {
+export default async function BeyondSection({ locale = 'en' }) {
   const [about, interests] = await Promise.all([getAbout(locale), getInterests(locale)]);
   const t = getDict(locale).beyond;
-  const Heading = headingLevel === 'h1' ? 'h1' : 'h2';
-  const Item = headingLevel === 'h1' ? 'h2' : 'h3';
 
   return (
     <section id="beyond-code" aria-labelledby="beyond-heading" className="relative overflow-x-clip py-24 sm:py-32">
@@ -26,9 +24,9 @@ export default async function BeyondSection({ locale = 'en', headingLevel = 'h2'
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-6 lg:col-start-2">
             <span aria-hidden="true" className="numeral block">04</span>
-            <Heading id="beyond-heading" className="display -mt-10 text-[clamp(2.4rem,5vw,4.4rem)] sm:-mt-16">
+            <h2 id="beyond-heading" className="display -mt-10 text-[clamp(2.4rem,5vw,4.4rem)] sm:-mt-16">
               {emphasize(t.heading, [t.headingEm])}
-            </Heading>
+            </h2>
           </div>
           <p className="max-w-md text-lg text-ink-soft lg:col-span-4 lg:col-start-8 lg:self-end">
             {about.beyondLead}
@@ -47,9 +45,9 @@ export default async function BeyondSection({ locale = 'en', headingLevel = 'h2'
                 }`}
               >
                 <Icon className={`h-7 w-7 ${big ? 'text-thread' : 'text-ink'}`} aria-hidden="true" strokeWidth={1.4} />
-                <Item className={`display mt-8 ${big ? 'text-[clamp(2.2rem,4vw,3.4rem)]' : 'text-[1.9rem]'}`}>
+                <h3 className={`display mt-8 ${big ? 'text-[clamp(2.2rem,4vw,3.4rem)]' : 'text-[1.9rem]'}`}>
                   {interest.title}
-                </Item>
+                </h3>
                 <p className={`mt-3 text-ink-soft ${big ? 'max-w-sm text-lg' : ''}`}>{interest.text}</p>
                 {interest.id === 'sudoku' ? (
                   <svg aria-hidden="true" viewBox="0 0 60 60" className="absolute right-6 top-6 h-14 w-14" fill="none" stroke="var(--line-strong)">

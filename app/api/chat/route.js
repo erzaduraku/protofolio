@@ -12,6 +12,10 @@ const MAX_CHARS = 1000;
 const RATE_LIMIT = 15; // requests per IP per window
 const RATE_WINDOW = 60_000;
 const hits = new Map(); // ip -> timestamps (in-memory, per server instance)
+// Optional shared limit (server-only env, never NEXT_PUBLIC_): counts across all Vercel instances.
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+let upstashErrorLogged = false;
 
 function rateLimited(ip) {
   const now = Date.now();
@@ -20,6 +24,33 @@ function rateLimited(ip) {
   hits.set(ip, recent);
   if (hits.size > 5000) hits.clear(); // keep memory bounded
   return recent.length > RATE_LIMIT;
+}
+
+// Fixed 1-minute window in Upstash Redis via its REST pipeline (INCR + EXPIRE), no extra package.
+// Returns null when Upstash is not configured or fails, so the caller falls back to the memory limit.
+async function sharedRateLimited(ip) {
+  if (!UPSTASH_URL || !UPSTASH_TOKEN) return null;
+  const key = `chat:rl:${ip}:${Math.floor(Date.now() / RATE_WINDOW)}`;
+  try {
+    const res = await fetch(`${UPSTASH_URL.replace(/\/+$/, '')}/pipeline`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${UPSTASH_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify([['INCR', key], ['EXPIRE', key, String(RATE_WINDOW / 1000)]]),
+      cache: 'no-store',
+      signal: AbortSignal.timeout(2000),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const [incr] = await res.json();
+    const count = Number(incr?.result);
+    if (incr?.error || !Number.isFinite(count)) throw new Error(incr?.error || 'unexpected INCR result');
+    return count > RATE_LIMIT;
+  } catch (e) {
+    if (!upstashErrorLogged) {
+      upstashErrorLogged = true; // log once per instance, then quietly use memory
+      console.error('[api/chat] Upstash rate limit failed, using in-memory limit:', e?.message);
+    }
+    return null;
+  }
 }
 
 const ERRORS = {
@@ -50,7 +81,7 @@ function localizedDb(locale) {
 // presentation (images, screenshot captions, long write-ups that repeat shorter fields).
 const SKIP = new Set([
   'id', 'src', 'width', 'height', 'image', 'images', 'imageAlts', 'imageCaptions', 'icon', 'poster', 'showcase',
-  'featured', 'published', 'phoneHref', 'headlineLine1', 'headlineLine2', 'screenshots', 'screenshotGroups',
+  'featured', 'order', 'published', 'phoneHref', 'headlineLine1', 'headlineLine2', 'screenshots', 'screenshotGroups',
   'techStack', 'howItWorks', 'demoVideo', 'body', 'detail', 'heroCaption', 'logicCard', 'craftCard', 'linkedinLabel',
   'githubLabel', 'href', 'external', 'learningPoints', 'comparison', 'overview', 'tookFromIt', 'whatIBuilt', 'problem', 'learned',
 ]);
@@ -166,7 +197,9 @@ export async function POST(request) {
   }
 
   const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'local';
-  if (rateLimited(ip)) {
+  // Shared Upstash limit when configured, else (or on failure) the in-memory one.
+  const limited = (await sharedRateLimited(ip)) ?? rateLimited(ip);
+  if (limited) {
     return json({ error: err.tooMany }, 429);
   }
 

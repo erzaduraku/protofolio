@@ -342,13 +342,16 @@ html.pin-cursor input,
 html.pin-cursor textarea,
 html.pin-cursor select { cursor: text !important; }
 
-/* Reveal-on-scroll: hidden start state exists only when the inline boot
-   script set html.motion-ready (JS on + motion allowed). RevealObserver then
-   animates each element in with the Web Animations API (no DOM changes). */
-.motion-ready main section:not([data-no-reveal]),
-.motion-ready main [data-reveal] {
-  opacity: 0;
-  transform: translate3d(0, 28px, 0);
+/* Reveal-on-scroll: hidden start state only when motion is allowed.
+   No JS: the <noscript> style in the layout shows everything.
+   Old browser (no IntersectionObserver / animate): RevealObserver adds html.reveal-off.
+   RevealObserver animates each element in with the Web Animations API (no DOM changes). */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.reveal-off) main section:not([data-no-reveal]),
+  html:not(.reveal-off) main [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
 }
 
 /* Headline lines are always block-level; the mask only matters when animating */
