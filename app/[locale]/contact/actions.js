@@ -37,12 +37,13 @@ export async function submitContact(locale, raw) {
     return { ok: true };
   }
 
+  // Never show raw/developer errors to visitors (Finance §41): one translated message, details go to the server log
+  const failed = form.failed || 'Could not send your message right now. Please try again or email me directly.';
+
   const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
   if (!accessKey) {
-    return {
-      ok: false,
-      error: 'Contact form is not configured yet. Add WEB3FORMS_ACCESS_KEY to .env.local.',
-    };
+    console.error('[submitContact] WEB3FORMS_ACCESS_KEY is missing (add it to .env.local / Vercel env).');
+    return { ok: false, error: failed };
   }
 
   try {
@@ -74,21 +75,13 @@ export async function submitContact(locale, raw) {
       console.error(
         `[submitContact] Web3Forms ${res.status} (${res.headers.get('content-type')}): ${(data.message || text).slice(0, 200)}`
       );
-      return {
-        ok: false,
-        error:
-          data.message ||
-          form.failed ||
-          'Could not send your message right now. Please try again or email me directly.',
-      };
+      // data.message stays in the log above, the visitor only gets the generic text
+      return { ok: false, error: failed };
     }
 
     return { ok: true };
   } catch (err) {
     console.error('[submitContact] failed:', err?.message);
-    return {
-      ok: false,
-      error: form.failed || 'Something went wrong. Please try again or email me directly.',
-    };
+    return { ok: false, error: failed };
   }
 }
